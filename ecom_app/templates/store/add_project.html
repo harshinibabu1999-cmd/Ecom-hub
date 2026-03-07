@@ -1,0 +1,37 @@
+{% extends 'store/base.html' %}
+{% block content %}
+
+
+
+
+
+<div class="container">
+    <h2>Upload New Project</h2>
+
+    <form method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+
+        <input type="text" name="title" placeholder="Project Title" required>
+
+        <textarea name="description" placeholder="Description" required></textarea>
+
+        <select name="category" required>
+            <option value="">Select Category</option>
+            <option value="CSE">Computer Science</option>
+            <option value="ECE">Electronics</option>
+            <option value="EEE">Electrical</option>
+            <option value="IT">Information Technology</option>
+            <option value="MECH">Mechanical</option>
+        </select>
+
+        <input type="number" step="0.01" name="price" placeholder="Price" required>
+
+        <input type="url" name="drive_link" placeholder="Google Drive Link" required>
+
+        <input type="file" name="image" required>
+
+        <button type="submit">Upload Project</button>
+    </form>
+</div>
+
+{% endblock %}

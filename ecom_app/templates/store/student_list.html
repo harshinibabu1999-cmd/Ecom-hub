@@ -1,0 +1,32 @@
+{% extends 'store/base.html' %}
+{% block content %}
+
+<h2 style="text-align:center; font-size:28px; font-weight:bold; margin-top:40px; margin-bottom:25px;">
+    Student List
+</h2>
+
+<table border="1" cellpadding="10">
+
+<tr>
+    <th>ID</th>
+    <th>Username</th>
+    <th>Details</th>
+</tr>
+
+{% for student in students %}
+
+<tr>
+    <td>{{ student.id }}</td>
+    <td>{{ student.username }}</td>
+    <td>
+        <a href="{% url 'student_details' student.id %}">
+            View
+        </a>
+    </td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

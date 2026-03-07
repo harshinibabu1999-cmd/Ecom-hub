@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>E-Commerce System</title>
+
+<style>
+
+/* GENERAL */
+
+body{
+margin:0;
+font-family:Arial, Helvetica, sans-serif;
+background:#f4f6f9;
+}
+
+/* HEADER */
+
+.header{
+background:#3853c0d2;
+color:white;
+padding:15px;
+font-size:22px;
+font-weight:bold;
+display:flex;
+align-items:center;
+justify-content:space-between;
+}
+
+/* LEFT HEADER PART */
+
+.header-left{
+display:flex;
+align-items:center;
+}
+
+/* TOGGLE BUTTON */
+
+.toggle-btn{
+background:#0f2a44;
+color:white;
+border:none;
+padding:8px 12px;
+cursor:pointer;
+border-radius:4px;
+font-size:18px;
+margin-right:15px;
+}
+
+/* PROFILE MENU */
+
+.profile-menu{
+position:relative;
+}
+
+.profile-icon{
+background: #ffffff;
+color:white;
+padding:8px 12px;
+border-radius:50%;
+cursor:pointer;
+font-size:16px;
+}
+
+/* DROPDOWN */
+
+.dropdown{
+display:none;
+position:absolute;
+right:0;
+top:40px;
+background:white;
+border-radius:6px;
+box-shadow:0 3px 10px rgba(0,0,0,0.2);
+min-width:120px;
+}
+
+.dropdown a{
+display:block;
+padding:10px;
+text-decoration:none;
+color:#333;
+font-size:14px;
+}
+
+.dropdown a:hover{
+background:#f2f2f2;
+}
+
+/* PAGE LAYOUT */
+
+.page{
+display:flex;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+width:250px;
+background:#0f2a44;
+min-height:100vh;
+transition:0.3s;
+}
+
+/* SIDEBAR HIDE */
+
+.sidebar.closed{
+width:0;
+overflow:hidden;
+}
+
+/* SIDEBAR LINKS */
+
+.sidebar a{
+display:block;
+color:white;
+padding:14px 20px;
+text-decoration:none;
+font-size:16px;
+}
+
+.sidebar a:hover{
+background:#1f4c74;
+}
+
+/* MAIN CONTENT */
+
+.main-content{
+flex:1;
+padding:20px;
+transition:0.3s;
+}
+
+/* NAV */
+
+.nav{
+margin-bottom:20px;
+}
+
+.nav a{
+text-decoration:none;
+margin-right:15px;
+color:#4d67db;
+font-weight:500;
+}
+
+.nav a:hover{
+text-decoration:underline;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<div class="header">
+
+<div class="header-left">
+
+<button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+
+E-Commerce System
+
+</div>
+
+<div class="profile-menu">
+
+<div class="profile-icon" onclick="toggleProfile()">👤</div>
+
+<div class="dropdown" id="profileDropdown">
+<a href="{% url 'logout_view' %}">Logout</a>
+</div>
+
+</div>
+
+</div>
+
+<div class="page">
+
+<div class="sidebar" id="sidebar">
+
+{% if user.is_authenticated %}
+
+    {% if not user.is_student_registered %}
+
+        <a href="{% url 'student_register' %}">User Dashboard</a>
+
+    {% else %}
+
+        <a href="{% url 'user_home' %}">Home</a>
+        <a href="{% url 'user_project_list' %}">View Projects</a>
+        <a href="{% url 'payment_details' %}">Payment Details</a>
+        <a href="#">Purchased Projects</a>
+
+    {% endif %}
+
+{% else %}
+
+    <a href="{% url 'login_view' %}">Login</a>
+    <a href="{% url 'register_view' %}">Register</a>
+
+{% endif %}
+
+</div>
+
+<div class="main-content">
+
+<div class="nav">
+
+{% if user.is_authenticated %}
+
+
+
+{% endif %}
+
+</div>
+
+<div class="content">
+
+{% block content %}
+{% endblock %}
+
+</div>
+
+</div>
+
+</div>
+
+<script>
+
+function toggleSidebar(){
+let sidebar = document.getElementById("sidebar");
+sidebar.classList.toggle("closed");
+}
+
+function toggleProfile(){
+let menu = document.getElementById("profileDropdown");
+
+if(menu.style.display === "block"){
+menu.style.display = "none";
+}else{
+menu.style.display = "block";
+}
+
+}
+
+</script>
+
+</body>
+</html>

@@ -1,0 +1,84 @@
+{% extends 'store/base.html' %}
+{% block content %}
+
+
+
+<div class="project-container">
+
+   <h2 style="font-size:28px; color:#2f5fd0; text-align:center; margin-bottom:20px; font-weight:bold;">
+    Available Projects
+</h2>
+
+    <table class="project-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Project Name</th>
+                <th>Department</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for project in projects %}
+            <tr>
+                <td>{{ project.id }}</td>
+                <td>{{ project.project_name }}</td>
+                <td>{{ project.department }}</td>
+                <td>₹ {{ project.price }}</td>
+                <td>
+                    <a href="{% url 'student_details' project.id %}" class="view-btn">View</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "store/base.html" %}
+{% block content %}
+
+
+
+<div class="container">
+
+<div class="card">
+
+<h2 class="title">Edit Project</h2>
+
+<form method="POST">
+{% csrf_token %}
+
+<input type="text" name="title" value="{{ project.title }}" placeholder="Project Title">
+
+<textarea name="description" placeholder="Description">{{ project.description }}</textarea>
+
+<input type="text" name="category" value="{{ project.category }}" placeholder="Category">
+
+<input type="number" name="price" value="{{ project.price }}" placeholder="Price">
+
+<input type="text" name="drive_link" value="{{ project.drive_link }}" placeholder="Google Drive Link">
+
+<button type="submit">Update Project</button>
+
+</form>
+
+<a href="{% url 'project' %}" class="back">Back</a>
+
+</div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "user/user_base.html" %}
+
+{% block content %}
+
+<h2>My Payment Details</h2>
+
+<table border="1" cellpadding="10">
+<tr>
+    <th>Transaction ID</th>
+    <th>PhonePe Transaction</th>
+    <th>Project</th>
+    <th>Payment Mode</th>
+    <th>Amount</th>
+    <th>Status</th>
+    <th>Date</th>
+</tr>
+
+{% for payment in payments %}
+
+<tr>
+    <td>{{ payment.transaction_id }}</td>
+    <td>{{ payment.phonepe_transaction_id }}</td>
+    <td>{{ payment.project.title }}</td>
+    <td>{{ payment.payment_mode }}</td>
+    <td>{{ payment.amount }}</td>
+    <td>{{ payment.status }}</td>
+    <td>{{ payment.created_at }}</td>
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="7">No Payment History</td>
+</tr>
+
+{% endfor %}
+
+</table>
+
+{% endblock %}

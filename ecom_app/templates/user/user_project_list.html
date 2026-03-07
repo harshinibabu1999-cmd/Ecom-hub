@@ -1,0 +1,129 @@
+{% extends 'user/user_base.html' %}
+{% block content %}
+<style>
+
+
+
+
+.project-table{
+width:80%;
+margin:40px auto;
+border-collapse:collapse;
+background:white;
+border-radius:10px;
+overflow:hidden;
+box-shadow:0 4px 10px rgba(168, 168, 174, 0.892);
+}
+
+.project-table th{
+background:#2b6edc;
+color:white;
+padding:12px;
+text-align:center;
+}
+
+.project-table td{
+padding:12px;
+text-align:center;
+border-bottom:1px solid #ddd;
+}
+
+.project-table tr:hover{
+background:#f5f5f5;
+}
+
+.view-btn{
+background:#2b6edc;
+color:white;
+padding:6px 15px;
+border-radius:6px;
+text-decoration:none;
+}
+
+.view-btn:hover{
+background:#1f55b5;
+}
+
+
+</style>
+
+
+<div class="project-container">
+
+   <h2 style="font-size:28px; color:#2f5fd0; text-align:center; margin-bottom:20px; font-weight:bold;">
+    Available Projects
+</h2>
+
+    <table class="project-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Project Name</th>
+                <th>Department</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for project in projects %}
+            <tr>
+                <td>{{ project.id }}</td>
+                <td>{{ project.project_name }}</td>
+                <td>{{ project.department }}</td>
+                <td>₹ {{ project.price }}</td>
+                <td>
+                    <a href="#" class="view-btn">View</a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+{% endblock %}

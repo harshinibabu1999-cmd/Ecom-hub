@@ -1,0 +1,108 @@
+{% extends 'user/user_base.html' %}
+{% block content %}
+
+<style>
+    .register-container {
+        width: 50%;
+        margin: 60px auto;
+        background: white;
+        padding: 40px;
+        border-radius: 15px;
+        box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    }
+
+    .register-title {
+        text-align: center;
+        color: #0d6efd;
+        margin-bottom: 30px;
+        font-size: 26px;
+        font-weight: 600;
+    }
+
+    .form-group {
+        margin-bottom: 18px;
+    }
+
+    .form-control {
+        width: 100%;
+        padding: 10px 14px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        font-size: 14px;
+        transition: 0.3s;
+    }
+
+    .form-control:focus {
+        border-color: #0d6efd;
+        outline: none;
+        box-shadow: 0 0 6px rgba(13,110,253,0.2);
+    }
+
+    .submit-btn {
+        width: 100%;
+        background: #0d6efd;
+        color: white;
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        font-size: 15px;
+        font-weight: 500;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    .submit-btn:hover {
+        background: #0b5ed7;
+    }
+
+    textarea.form-control {
+        resize: none;
+        height: 80px;
+    }
+</style>
+
+<div class="register-container">
+    <h2 class="register-title">Student Registration</h2>
+
+    <form method="POST">
+        {% csrf_token %}
+
+        <div class="form-group">
+            <input type="text" name="username" placeholder="Username" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <input type="email" name="email" placeholder="Email" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <input type="password" name="password" placeholder="Password" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <input type="phone_number" name="phone_number" placeholder="phone number" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <input type="college_name" name="college_name" placeholder="college name" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <input type="year_of_study" name="year_of_study" placeholder="year of study" class="form-control" required>
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="department" placeholder="Department" class="form-control" required>
+        </div>
+
+        
+
+        <div class="form-group">
+            <textarea name="address" placeholder="Address" class="form-control" required></textarea>
+        </div>
+
+        <button type="submit" class="submit-btn">
+            Register
+        </button>
+    </form>
+</div>
+
+{% endblock %}

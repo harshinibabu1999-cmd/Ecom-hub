@@ -1,0 +1,33 @@
+{% extends 'store/base.html' %}
+
+{% block content %}
+
+<h2>Available IEEE Projects</h2>
+
+<div class="project-container">
+
+{% for project in projects %}
+
+<div class="card">
+
+    <img src="{{ project.image.url }}" width="200">
+
+    <h3>{{ project.title }}</h3>
+
+    <p>{{ project.description|truncatewords:15 }}</p>
+
+    <p><b>Category:</b> {{ project.category }}</p>
+
+    <p><b>Price:</b> ₹{{ project.price }}</p>
+
+    <a href="{{ project.drive_link }}" target="_blank">
+     
+    </a>
+
+</div>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}
