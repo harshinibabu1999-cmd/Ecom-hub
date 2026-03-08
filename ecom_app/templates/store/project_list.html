@@ -1,33 +1,134 @@
 {% extends 'store/base.html' %}
 
 {% block content %}
+<style>
+    /* Main container to give some breathing room from the sidebar */
+    .content-wrapper {
+        padding: 30px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
-<h2>Available IEEE Projects</h2>
+    .title {
+        margin-bottom: 20px;
+        color: #333;
+        font-weight: 600;
+    }
 
-<div class="project-container">
+    /* Table Styling */
+    .table-container {
+        width: 100%;
+        overflow-x: auto; /* Handles small screens */
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
 
-{% for project in projects %}
+    .project-table {
+        width: 100%;
+        border-collapse: collapse;
+        min-width: 800px; /* Ensures it doesn't look squashed */
+    }
 
-<div class="card">
+    .project-table thead {
+        background-color: #f8f9fa;
+        border-bottom: 2px solid #eee;
+    }
 
-    <img src="{{ project.image.url }}" width="200">
+    .project-table th {
+        text-align: left;
+        padding: 15px;
+        color: #666;
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 13px;
+    }
 
-    <h3>{{ project.title }}</h3>
+    .project-table td {
+        padding: 15px;
+        vertical-align: middle;
+        border-bottom: 1px solid #eee;
+        color: #444;
+    }
 
-    <p>{{ project.description|truncatewords:15 }}</p>
+    /* Fix for that giant image */
+    .project-img {
+        width: 80px;      /* Set a fixed size for the thumbnail */
+        height: 60px;
+        object-fit: cover;
+        border-radius: 4px;
+        display: block;
+    }
 
-    <p><b>Category:</b> {{ project.category }}</p>
+    /* Button Styling */
+    .view-btn {
+        background: #2f5be7;
+        color: white !important;
+        text-decoration: none;
+        padding: 8px 16px;
+        border-radius: 4px;
+        font-size: 14px;
+        transition: background 0.3s;
+        display: inline-block;
+    }
 
-    <p><b>Price:</b> ₹{{ project.price }}</p>
+    .view-btn:hover {
+        background: #1e3fb8;
+    }
 
-    <a href="{{ project.drive_link }}" target="_blank">
-     
-    </a>
+    /* Hover effect for rows */
+    .project-table tbody tr:hover {
+        background-color: #fcfdff;
+    }
 
+    /* Mobile Responsiveness */
+    @media (max-width: 768px) {
+        .project-table, .project-table thead, .project-table tbody, .project-table th, .project-table td, .project-table tr {
+            display: block;
+        }
+        .project-table thead { display: none; } /* Hide headers on mobile */
+        .project-table td {
+            padding-left: 50%;
+            position: relative;
+            text-align: right;
+            border-bottom: 1px solid #eee;
+        }
+    }
+</style>
+
+<div class="content-wrapper">
+    <h2 class="title">Available IEEE Projects</h2>
+
+    <div class="table-container">
+        <table class="project-table">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                <tr>
+                    <td>
+                        <img src="{{ project.project_image.url }}" class="project-img" alt="{{ project.title }}">
+                    </td>
+                    <td><strong>{{ project.title }}</strong></td>
+                    <td>{{ project.description|truncatewords:10 }}</td>
+                    <td><span class="badge">{{ project.category }}</span></td>
+                    <td>₹{{ project.price }}</td>
+                    <td>
+                        <a href="{{ project }}" target="_blank" class="view-btn">
+                            View
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
-
-{% endfor %}
-
-</div>
-
 {% endblock %}

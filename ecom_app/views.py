@@ -57,6 +57,12 @@ def register_view(request):
         confirm_password = request.POST.get('confirm_password')
         role = request.POST.get('role')
 
+        phone_number = request.POST.get('phone_number')
+        college_name = request.POST.get('college_name')
+        department = request.POST.get('department')
+        year_of_study = request.POST.get('year_of_study')
+        address = request.POST.get('address')
+
         if password != confirm_password:
             return render(request, 'store/register.html', {'error': 'Passwords do not match'})
 
@@ -66,13 +72,16 @@ def register_view(request):
         if User.objects.filter(email=email).exists():
             return render(request, 'store/register.html', {'error': 'Email already exists'})
 
-        # 🔥 Create CustomUser with role
         user = CustomUser.objects.create_user(
             username=username,
             email=email,
             password=password,
             role=role,
-            
+            phone_number=phone_number,
+            college_name=college_name,
+            department=department,
+            year_of_study=year_of_study,
+            address=address
         )
 
         user.save()
@@ -81,13 +90,6 @@ def register_view(request):
 
     return render(request, 'store/register.html')
 
-
-@login_required
-def admin_dashboard(request):
-   projects = Project.objects.all()
-   return render(request, 'store/admin_dashboard.html', {
-       'projects': projects
-   })
 
 
 @login_required
@@ -103,6 +105,26 @@ def home(request):
 def logout_view(request):
     logout(request)
     return redirect('login_view')
+
+
+
+
+
+
+
+
+
+
+@login_required
+def admin_dashboard(request):
+   projects = Project.objects.all()
+   return render(request, 'store/admin_dashboard.html', {
+       'projects': projects
+   })
+
+
+
+
 
 def add_project(request):
     if request.method == "POST":
@@ -133,7 +155,7 @@ def edit_project(request, id):
             project.image = request.FILES.get("image")
 
         project.save()
-        return redirect("manage_projects")
+        return redirect("projects")
 
     return render(request, "store/edit_project.html", {"project": project})
 
@@ -151,12 +173,12 @@ def block_user(request, id):
     user.save()
     return redirect("view_students")
 
-@login_required
-def delete_user(request, id):
-    user = get_object_or_404(User, id=id)
+# @login_required
+def delete_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
     user.delete()
-    return redirect("view_students")
-
+    # This string MUST match the 'name' in urls.py
+    return redirect('view_students')
 
 @login_required
 def add_project(request):
@@ -183,7 +205,7 @@ def view_students(request):
 
     students = StudentProfile.objects.select_related("user")
 
-    return render(request, "store/view_students.html", {"students": students})
+    return render(request, "store/students_detail.html", {"students": students})
 
 @login_required
 def project(request):

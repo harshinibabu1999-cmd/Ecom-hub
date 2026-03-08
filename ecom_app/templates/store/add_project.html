@@ -1,9 +1,87 @@
 {% extends 'store/base.html' %}
 {% block content %}
 
+<style>
+    .container {
+        max-width: 600px;
+        margin: 40px auto;
+        background: #ffffff;
+        padding: 30px;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
 
+    h2 {
+        color: #2f5be7;
+        margin-bottom: 25px;
+        text-align: center;
+        font-weight: 600;
+    }
 
+    form {
+        display: flex;
+        flex-direction: column;
+        gap: 15px; /* Spacing between fields */
+    }
 
+    input[type="text"],
+    input[type="number"],
+    input[type="url"],
+    textarea,
+    select {
+        width: 100%;
+        padding: 12px 15px;
+        border: 1px solid #ddd;
+        border-radius: 6px;
+        font-size: 15px;
+        outline: none;
+        transition: border-color 0.3s, box-shadow 0.3s;
+        box-sizing: border-box; /* Crucial for width alignment */
+    }
+
+    /* Focus effect for better UX */
+    input:focus, textarea:focus, select:focus {
+        border-color: #2f5be7;
+        box-shadow: 0 0 5px rgba(47, 91, 231, 0.2);
+    }
+
+    textarea {
+        height: 120px;
+        resize: vertical;
+    }
+
+    /* File input styling */
+    input[type="file"] {
+        padding: 10px 0;
+        cursor: pointer;
+    }
+
+    button[type="submit"] {
+        background-color: #2f5be7;
+        color: white;
+        padding: 14px;
+        border: none;
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s ease;
+        margin-top: 10px;
+    }
+
+    button[type="submit"]:hover {
+        background-color: #1e3fb8;
+    }
+
+    /* Labeling for the file input (Optional UI hint) */
+    form::after {
+        content: "Accepted formats: JPG, PNG, PDF";
+        font-size: 11px;
+        color: #888;
+        text-align: center;
+    }
+</style>
 
 <div class="container">
     <h2>Upload New Project</h2>
@@ -25,9 +103,7 @@
         </select>
 
         <input type="number" step="0.01" name="price" placeholder="Price" required>
-
         <input type="url" name="drive_link" placeholder="Google Drive Link" required>
-
         <input type="file" name="image" required>
 
         <button type="submit">Upload Project</button>
