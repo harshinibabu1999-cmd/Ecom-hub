@@ -78,6 +78,7 @@ class Project(models.Model):
         ('DATA', 'Data Science'),
 
     )
+
  
     title = models.CharField(max_length=255)
 

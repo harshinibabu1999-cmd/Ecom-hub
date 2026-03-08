@@ -205,7 +205,7 @@ def payment_page(request, project_id):
 
     project = Project.objects.get(id=project_id)
 
-    return render(request, 'store/payment.html', {'project': project})
+    return render(request, 'user/payment.html', {'project': project})
 
 
 @login_required

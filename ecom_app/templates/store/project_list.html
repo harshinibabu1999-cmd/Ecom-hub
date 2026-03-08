@@ -2,6 +2,108 @@
 
 {% block content %}
 
+<style>
+
+/* PAGE TITLE */
+
+h2{
+    text-align:center;
+    margin:40px 0;
+    font-family:'Segoe UI',sans-serif;
+    font-size:28px;
+    font-weight:600;
+    color:#333;
+}
+
+/* GRID LAYOUT */
+
+.project-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:30px;
+    padding:20px 60px;
+}
+
+/* CARD */
+
+.card{
+    background:#ffffff;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 6px 20px rgba(0,0,0,0.08);
+    transition:all 0.3s ease;
+}
+
+/* CARD HOVER */
+
+.card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 15px 35px rgba(0,0,0,0.15);
+}
+
+/* IMAGE */
+
+.card img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+    transition:transform 0.4s ease;
+}
+
+/* IMAGE ZOOM */
+
+.card:hover img{
+    transform:scale(1.05);
+}
+
+/* TITLE */
+
+.card h3{
+    font-size:19px;
+    margin:15px 18px 8px;
+    color:#222;
+    font-weight:600;
+}
+
+/* DESCRIPTION */
+
+.card p{
+    font-size:14px;
+    margin:6px 18px;
+    color:#666;
+    line-height:1.5;
+}
+
+/* PRICE */
+
+.card p b{
+    color:#0d6efd;
+}
+
+/* BUTTON */
+
+.card a{
+    display:block;
+    margin:18px;
+    padding:11px;
+    text-align:center;
+    background:#0d6efd;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:500;
+    font-size:14px;
+    transition:0.3s;
+}
+
+/* BUTTON HOVER */
+
+.card a:hover{
+    background:#084298;
+}
+
+</style>
+
 <h2>Available IEEE Projects</h2>
 
 <div class="project-container">
@@ -10,19 +112,21 @@
 
 <div class="card">
 
-    <img src="{{ project.image.url }}" width="200">
+{% if project.project_image %}
+<img src="{{ project.project_image.url }}">
+{% endif %}
 
-    <h3>{{ project.title }}</h3>
+<h3>{{ project.title }}</h3>
 
-    <p>{{ project.description|truncatewords:15 }}</p>
+<p>{{ project.description|truncatewords:15 }}</p>
 
-    <p><b>Category:</b> {{ project.category }}</p>
+<p><b>Category:</b> {{ project.category }}</p>
 
-    <p><b>Price:</b> ₹{{ project.price }}</p>
+<p><b>Price:</b> ₹{{ project.price }}</p>
 
-    <a href="{{ project.drive_link }}" target="_blank">
-     
-    </a>
+<a href="{% url 'project_detail' project.id %}">
+View Project
+</a>
 
 </div>
 

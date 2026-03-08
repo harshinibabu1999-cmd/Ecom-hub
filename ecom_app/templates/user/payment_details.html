@@ -2,18 +2,92 @@
 
 {% block content %}
 
-<h2>My Payment Details</h2>
+<style>
 
-<table border="1" cellpadding="10">
+.page-title{
+    font-size:28px;
+    font-weight:600;
+    margin-bottom:20px;
+}
+
+/* Card container */
+.payment-card{
+    background:white;
+    padding:25px;
+    border-radius:12px;
+    box-shadow:0 4px 20px rgba(0,0,0,0.08);
+}
+
+/* Table */
+.payment-table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:15px;
+}
+
+.payment-table thead{
+    background:#0d6efd;
+    color:white;
+}
+
+.payment-table th,
+.payment-table td{
+    padding:12px 15px;
+    text-align:center;
+}
+
+.payment-table tbody tr{
+    border-bottom:1px solid #eee;
+}
+
+.payment-table tbody tr:hover{
+    background:#f5f8ff;
+}
+
+/* Status badge */
+.status-success{
+    background:#d4edda;
+    color:#155724;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:13px;
+}
+
+.status-pending{
+    background:#fff3cd;
+    color:#856404;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:13px;
+}
+
+.empty-msg{
+    text-align:center;
+    padding:20px;
+    color:#888;
+}
+
+</style>
+
+<div class="payment-card">
+
+<h2 class="page-title">💳 My Payment History</h2>
+
+<table class="payment-table">
+
+<thead>
 <tr>
     <th>Transaction ID</th>
-    <th>PhonePe Transaction</th>
+    <th>PhonePe ID</th>
     <th>Project</th>
     <th>Payment Mode</th>
     <th>Amount</th>
     <th>Status</th>
     <th>Date</th>
 </tr>
+</thead>
+
+<tbody>
 
 {% for payment in payments %}
 
@@ -22,19 +96,33 @@
     <td>{{ payment.phonepe_transaction_id }}</td>
     <td>{{ payment.project.title }}</td>
     <td>{{ payment.payment_mode }}</td>
-    <td>{{ payment.amount }}</td>
-    <td>{{ payment.status }}</td>
-    <td>{{ payment.created_at }}</td>
+    <td>₹{{ payment.amount }}</td>
+
+    <td>
+        {% if payment.payment_status == "SUCCESS" %}
+        <span class="status-success">Success</span>
+        {% else %}
+        <span class="status-pending">Pending</span>
+        {% endif %}
+    </td>
+
+    <td>{{ payment.created_at|date:"d M Y" }}</td>
 </tr>
 
 {% empty %}
 
 <tr>
-<td colspan="7">No Payment History</td>
+<td colspan="7" class="empty-msg">
+No Payment History Found
+</td>
 </tr>
 
 {% endfor %}
 
+</tbody>
+
 </table>
+
+</div>
 
 {% endblock %}

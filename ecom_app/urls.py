@@ -57,8 +57,11 @@ urlpatterns = [
     path('projects/',views.user_project_list,name='user_project_list'),
     path('projects/<int:pk>/', views.project_detail, name='project_detail'),
     path('student-register/',views.student_register,name='student_register'),
-    
-    
-
+    path('project/<int:id>/',views.project_detail,name='project_detail'),
+    path('buy/<int:pk>/', views.initiate_payment, name='initiate_payment'),
+    path('payment/<int:pk>/', views.user_payment_page, name='user_payment_page'),
+    path('payment-form/<int:pk>/', views.payment_form, name='payment_form'),
+    path('payment-success/<int:pk>/', views.payment_success, name='payment_success'),
+    path('purchased-projects/', views.purchased_projects, name='purchased_projects'),
 ]
 

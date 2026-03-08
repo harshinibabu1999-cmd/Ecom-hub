@@ -123,16 +123,7 @@ AUTH_USER_MODEL = 'ecom_app.CustomUser'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-
-MEDIA_URL = '/media/'
-MEDIA_ROOT = BASE_DIR / 'media'
-
-
 PHONEPE_MERCHANT_ID = "YOUR_MERCHANT_ID"
 PHONEPE_SALT_KEY = "YOUR_SALT_KEY"
-PHONEPE_SALT_INDEX = "1"
 
-PHONEPE_BASE_URL = "https://api-preprod.phonepe.com/apis/pg-sandbox"
 
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
