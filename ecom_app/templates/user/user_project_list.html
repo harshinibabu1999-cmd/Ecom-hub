@@ -1,129 +1,137 @@
-{% extends 'user/user_base.html' %}
+{% extends 'store/base.html' %}
+
 {% block content %}
+
 <style>
 
+/* PAGE TITLE */
 
-
-
-.project-table{
-width:80%;
-margin:40px auto;
-border-collapse:collapse;
-background:white;
-border-radius:10px;
-overflow:hidden;
-box-shadow:0 4px 10px rgba(168, 168, 174, 0.892);
+h2{
+    text-align:center;
+    margin:40px 0;
+    font-family:'Segoe UI',sans-serif;
+    font-size:28px;
+    font-weight:600;
+    color:#333;
 }
 
-.project-table th{
-background:#2b6edc;
-color:white;
-padding:12px;
-text-align:center;
+/* GRID LAYOUT */
+
+.project-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+    gap:30px;
+    padding:20px 60px;
 }
 
-.project-table td{
-padding:12px;
-text-align:center;
-border-bottom:1px solid #ddd;
+/* CARD */
+
+.card{
+    background:#ffffff;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 6px 20px rgba(0,0,0,0.08);
+    transition:all 0.3s ease;
 }
 
-.project-table tr:hover{
-background:#f5f5f5;
+/* CARD HOVER */
+
+.card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 15px 35px rgba(0,0,0,0.15);
 }
 
-.view-btn{
-background:#2b6edc;
-color:white;
-padding:6px 15px;
-border-radius:6px;
-text-decoration:none;
+/* IMAGE */
+
+.card img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+    transition:transform 0.4s ease;
 }
 
-.view-btn:hover{
-background:#1f55b5;
+/* IMAGE ZOOM */
+
+.card:hover img{
+    transform:scale(1.05);
 }
 
+/* TITLE */
+
+.card h3{
+    font-size:19px;
+    margin:15px 18px 8px;
+    color:#222;
+    font-weight:600;
+}
+
+/* DESCRIPTION */
+
+.card p{
+    font-size:14px;
+    margin:6px 18px;
+    color:#666;
+    line-height:1.5;
+}
+
+/* PRICE */
+
+.card p b{
+    color:#0d6efd;
+}
+
+/* BUTTON */
+
+.card a{
+    display:block;
+    margin:18px;
+    padding:11px;
+    text-align:center;
+    background:#0d6efd;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    font-weight:500;
+    font-size:14px;
+    transition:0.3s;
+}
+
+/* BUTTON HOVER */
+
+.card a:hover{
+    background:#084298;
+}
 
 </style>
 
+<h2>Available IEEE Projects</h2>
 
 <div class="project-container">
 
-   <h2 style="font-size:28px; color:#2f5fd0; text-align:center; margin-bottom:20px; font-weight:bold;">
-    Available Projects
-</h2>
+{% for project in projects %}
 
-    <table class="project-table">
-        <thead>
-            <tr>
-                <th>ID</th>
-                <th>Project Name</th>
-                <th>Department</th>
-                <th>Price</th>
-                <th>Action</th>
-            </tr>
-        </thead>
+<div class="card">
 
-        <tbody>
-            {% for project in projects %}
-            <tr>
-                <td>{{ project.id }}</td>
-                <td>{{ project.project_name }}</td>
-                <td>{{ project.department }}</td>
-                <td>₹ {{ project.price }}</td>
-                <td>
-                    <a href="#" class="view-btn">View</a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+{% if project.project_image %}
+<img src="{{ project.project_image.url }}">
+{% endif %}
+
+<h3>{{ project.title }}</h3>
+
+<p>{{ project.description|truncatewords:15 }}</p>
+
+<p><b>Category:</b> {{ project.category }}</p>
+
+<p><b>Price:</b> ₹{{ project.price }}</p>
+
+<a href="{% url 'project_detail' project.id %}">
+View Project
+</a>
 
 </div>
 
+{% endfor %}
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+</div>
 
 {% endblock %}

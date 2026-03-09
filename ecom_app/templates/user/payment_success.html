@@ -1,0 +1,83 @@
+{% extends 'user/user_base.html' %}
+{% block content %}
+
+<style>
+
+.success-wrapper{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:70vh;
+    font-family:'Segoe UI',sans-serif;
+}
+
+.success-card{
+    background:white;
+    padding:40px;
+    width:420px;
+    border-radius:12px;
+    text-align:center;
+    box-shadow:0 6px 25px rgba(0,0,0,0.1);
+}
+
+.success-icon{
+    font-size:60px;
+    color:#28a745;
+}
+
+.success-card h2{
+    margin-top:10px;
+    margin-bottom:20px;
+}
+
+.details{
+    background:#f5f7fb;
+    padding:15px;
+    border-radius:8px;
+    margin-top:15px;
+}
+
+.details p{
+    margin:8px 0;
+    font-size:16px;
+}
+
+.home-btn{
+    display:inline-block;
+    margin-top:20px;
+    padding:10px 25px;
+    background:#0d6efd;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    font-size:15px;
+}
+
+.home-btn:hover{
+    background:#0b5ed7;
+}
+
+</style>
+
+<div class="success-wrapper">
+
+<div class="success-card">
+
+<div class="success-icon">✔</div>
+
+<h2>Payment Successful 🎉</h2>
+
+<p>Your payment has been completed successfully.</p>
+
+<div class="details">
+<p><b>Project:</b> {{ payment.project.title }}</p>
+<p><b>Amount Paid:</b> ₹{{ payment.amount }}</p>
+</div>
+
+<a href="{% url 'user_home' %}" class="home-btn">Back to Projects</a>
+
+</div>
+
+</div>
+
+{% endblock %}

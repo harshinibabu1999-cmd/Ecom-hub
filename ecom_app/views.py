@@ -208,7 +208,7 @@ def admin_view_students(request):
     return render(request, "store/admin_students_detail.html", {"students": students})
 
 @login_required
-def admin_project(request):
+def project(request):
     if not request.user.is_superuser:
         return redirect("login")
 
@@ -227,7 +227,7 @@ def payment_page(request, project_id):
 
     project = Project.objects.get(id=project_id)
 
-    return render(request, 'store/payment.html', {'project': project})
+    return render(request, 'user/payment.html', {'project': project})
 
 
 @login_required

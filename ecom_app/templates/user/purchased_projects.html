@@ -1,0 +1,174 @@
+{% extends 'user/user_base.html' %}
+
+{% block content %}
+
+<style>
+
+.page-title{
+    text-align:center;
+    margin:35px 0;
+    font-family:'Segoe UI',sans-serif;
+    font-size:28px;
+    font-weight:600;
+}
+
+/* Grid */
+.project-container{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(270px,1fr));
+    gap:25px;
+    padding:20px 50px;
+}
+
+
+/* Card Container */
+.card{
+    background:white;
+    border-radius:12px;
+    box-shadow:0 6px 18px rgba(0,0,0,0.08);
+    overflow:hidden;
+    transition:0.3s;
+    position:relative;
+    width:300px;   /* proper card width */
+}
+
+/* Hover effect */
+.card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.15);
+}
+
+/* Image */
+.card img{
+    width:100%;
+    height:200px;
+    object-fit:cover;
+    display:block;
+}
+
+/* Card Content */
+.card-content{
+    padding:15px;
+}
+
+.card h3{
+    font-size:18px;
+    margin-bottom:8px;
+}
+
+.card p{
+    font-size:14px;
+    color:#555;
+}
+
+/* Button */
+.card button{
+    margin-top:10px;
+    padding:8px 15px;
+    border:none;
+    background:#0a58ca;
+    color:white;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.card button:hover{
+    background:#084298;
+}
+/* Content */
+.card-content{
+    padding:15px;
+}
+
+.card-content h3{
+    margin-bottom:8px;
+    font-size:18px;
+}
+
+.card-content p{
+    color:#666;
+    font-size:14px;
+}
+
+/* Price Badge */
+.price{
+    font-weight:bold;
+    color:#0d6efd;
+    margin-top:6px;
+}
+
+/* Download Button */
+.download-btn{
+    display:block;
+    margin-top:12px;
+    padding:10px;
+    text-align:center;
+    background:#198754;
+    color:white;
+    text-decoration:none;
+    border-radius:6px;
+    font-weight:500;
+}
+
+.download-btn:hover{
+    background:#157347;
+}
+
+/* Purchased Badge */
+.badge{
+    position:absolute;
+    top:10px;
+    right:10px;
+    background:#0d6efd;
+    color:white;
+    padding:5px 10px;
+    font-size:12px;
+    border-radius:20px;
+}
+
+/* Empty message */
+.empty-msg{
+    text-align:center;
+    font-size:16px;
+    color:#888;
+}
+
+</style>
+
+<h2 class="page-title">📂 My Purchased Projects</h2>
+
+<div class="project-container">
+
+{% for payment in payments %}
+
+<div class="card">
+
+<div class="badge">Purchased</div>
+
+{% if payment.project.project_image %}
+<img src="{{ payment.project.project_image.url }}">
+{% endif %}
+
+<div class="card-content">
+
+<h3>{{ payment.project.title }}</h3>
+
+<p class="price">₹{{ payment.amount }}</p>
+
+<a href="{{ payment.project.drive_link }}" target="_blank" class="download-btn">
+⬇ Download Project
+</a>
+
+</div>
+
+</div>
+
+{% empty %}
+
+<p class="empty-msg">You have not purchased any projects yet.</p>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

@@ -25,21 +25,21 @@ class CustomUser(AbstractUser):
  
    
 
-    phone_number = models.CharField(max_length=15)
+    phone_number = models.CharField(max_length=15, null=True, blank=True)
 
-    college_name = models.CharField(max_length=255)
+    college_name = models.CharField(max_length=255, null=True, blank=True)
 
-    department = models.CharField(max_length=255)
+    department = models.CharField(max_length=255, null=True, blank=True)
 
-    year_of_study = models.CharField(max_length=50)
+    year_of_study = models.CharField(max_length=50, null=True, blank=True)
 
-    address = models.TextField()
+    address = models.TextField(max_length=255, null=True, blank=True)
 
-    city = models.CharField(max_length=100)
+    city = models.CharField(max_length=100, null=True, blank=True)
 
-    state = models.CharField(max_length=100)
+    state = models.CharField(max_length=100, null=True, blank=True)
 
-    pincode = models.CharField(max_length=10)
+    pincode = models.CharField(max_length=10, null=True, blank=True)
 
     is_student_registered = models.BooleanField(default=False)
 
@@ -78,6 +78,7 @@ class Project(models.Model):
         ('DATA', 'Data Science'),
 
     )
+
  
     title = models.CharField(max_length=255)
 
