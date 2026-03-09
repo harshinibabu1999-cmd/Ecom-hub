@@ -1,9 +1,84 @@
-
 {% extends 'store/base.html' %}
 
 {% block content %}
 
+<style>
+    /* Container for the whole page */
+    .card {
+        background: #fff;
+        padding: 25px;
+        margin: 20px;
+        border-radius: 10px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        font-family: 'Segoe UI', sans-serif;
+    }
 
+    .section-title {
+        color: #2f5be7;
+        font-size: 24px;
+        margin-bottom: 20px;
+        border-bottom: 2px solid #f0f2f5;
+        padding-bottom: 10px;
+    }
+
+    /* Table Wrapper for horizontal scrolling on small screens */
+    .table-responsive {
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+    }
+
+    .styled-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 14px;
+        text-align: left;
+    }
+
+    .styled-table thead tr {
+        background-color: #2f5be7;
+        color: #ffffff;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .styled-table th,
+    .styled-table td {
+        padding: 15px 12px;
+        border-bottom: 1px solid #edf0f5;
+    }
+
+    .styled-table tbody tr:hover {
+        background-color: #f8faff;
+    }
+
+    /* Action Buttons */
+    .btn {
+        text-decoration: none;
+        padding: 6px 12px;
+        border-radius: 4px;
+        font-size: 13px;
+        font-weight: 600;
+        transition: 0.3s;
+    }
+
+    .delete-btn {
+        background-color: #fff1f0;
+        color: #ff4d4f;
+        border: 1px solid #ffa39e;
+    }
+
+    .delete-btn:hover {
+        background-color: #ff4d4f;
+        color: #fff;
+    }
+
+    /* Empty state styling */
+    .no-data {
+        text-align: center;
+        color: #888;
+        padding: 40px !important;
+    }
+</style>
 
 
 
@@ -30,13 +105,13 @@
             <tr>
                 <td>{{ student.username }}</td>
                 <td>{{ student.email }}</td>
-                <td>{{ student.phone }}</td>
-                <td>{{ student.college }}</td>
+                <td>{{ student.phone_number }}</td>
+                <td>{{ student.college_name }}</td>
                 <td>{{ student.department }}</td>
-                <td>{{ student.year }}</td>
+                <td>{{ student.year_of_study }}</td>
                 <td>{{ student.address }}</td>
                 <td>
-                    <a href="{% url 'edit_user' student.id %}" class="btn edit-btn">Edit</a>
+
                     <a href="{% url 'delete_user' student.id %}" class="btn delete-btn">Delete</a>
                 </td>
             </tr>

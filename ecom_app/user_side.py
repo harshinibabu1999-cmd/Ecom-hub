@@ -21,7 +21,6 @@ def student_register(request):
         college_name = request.POST.get("college_name")
         year_of_study = request.POST.get("year_of_study")
 
-
         request.user.phone_number = phone_number
         request.user.college_name = college_name
         request.user.year_of_study = year_of_study
@@ -32,19 +31,9 @@ def student_register(request):
 
     return render(request, "user/student_register.html")
 
-@login_required
 def user_project_list(request):
     projects = Project.objects.all()
     return render(request, "user/user_project_list.html", {"projects": projects})
-
-
-def project_detail(request, id):
-    project = get_object_or_404(Project, id=id)
-    
-    context={
-        'project':project
-    }
-    return render(request, 'user/project_detail.html',context)
 
 
 @login_required
@@ -53,6 +42,8 @@ def payment_details(request):
     payments = Payment.objects.filter(user=request.user).order_by('-created_at')
 
     return render(request, "user/payment_details.html", {"payments": payments})
+
+
 
 @login_required
 def user_home(request):
@@ -110,3 +101,7 @@ def purchased_projects(request):
     payments = Payment.objects.filter(user=request.user, status="SUCCESS")
 
     return render(request, "user/purchased_projects.html", {"payments": payments})
+
+def project_detail(request, pk):
+    project = get_object_or_404(Project, pk=pk)
+    return render(request, 'user/project_detail.html', {'project': project})

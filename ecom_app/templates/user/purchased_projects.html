@@ -20,7 +20,8 @@
     padding:20px 50px;
 }
 
-/* Card */
+
+/* Card Container */
 .card{
     background:white;
     border-radius:12px;
@@ -28,8 +29,10 @@
     overflow:hidden;
     transition:0.3s;
     position:relative;
+    width:300px;   /* proper card width */
 }
 
+/* Hover effect */
 .card:hover{
     transform:translateY(-6px);
     box-shadow:0 10px 25px rgba(0,0,0,0.15);
@@ -38,10 +41,40 @@
 /* Image */
 .card img{
     width:100%;
-    height:180px;
+    height:200px;
     object-fit:cover;
+    display:block;
 }
 
+/* Card Content */
+.card-content{
+    padding:15px;
+}
+
+.card h3{
+    font-size:18px;
+    margin-bottom:8px;
+}
+
+.card p{
+    font-size:14px;
+    color:#555;
+}
+
+/* Button */
+.card button{
+    margin-top:10px;
+    padding:8px 15px;
+    border:none;
+    background:#0a58ca;
+    color:white;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.card button:hover{
+    background:#084298;
+}
 /* Content */
 .card-content{
     padding:15px;
