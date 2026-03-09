@@ -155,7 +155,7 @@ def edit_project(request, id):
             project.image = request.FILES.get("image")
 
         project.save()
-        return redirect("projects")
+        return redirect("project")
 
     return render(request, "store/edit_project.html", {"project": project})
 
