@@ -22,7 +22,7 @@ from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
-def login_view(request):
+def admin_login_view(request):
 
     if request.method == "POST":
         username = request.POST.get("username")
@@ -38,17 +38,17 @@ def login_view(request):
 
             else:
                 if not user.is_student_registered:
-                    return redirect("student_register")
+                    return redirect("admin_student_register")
                 else:
                     return redirect("user_home")
 
         else:
-            return render(request, "store/login.html", {"error": "Invalid username or password"})
+            return render(request, "store/admin_login.html", {"error": "Invalid username or password"})
 
-    return render(request, "store/login.html")
+    return render(request, "store/admin_login.html")
 
 
-def register_view(request):
+def admin_register_view(request):
 
     if request.method == 'POST':
         username = request.POST.get('username')
@@ -64,13 +64,13 @@ def register_view(request):
         address = request.POST.get('address')
 
         if password != confirm_password:
-            return render(request, 'store/register.html', {'error': 'Passwords do not match'})
+            return render(request, 'store/admin_register.html', {'error': 'Passwords do not match'})
 
         if User.objects.filter(username=username).exists():
-            return render(request, 'store/register.html', {'error': 'Username already exists'})
+            return render(request, 'store/admin_register.html', {'error': 'Username already exists'})
 
         if User.objects.filter(email=email).exists():
-            return render(request, 'store/register.html', {'error': 'Email already exists'})
+            return render(request, 'store/admin_register.html', {'error': 'Email already exists'})
 
         user = CustomUser.objects.create_user(
             username=username,
@@ -86,25 +86,25 @@ def register_view(request):
 
         user.save()
 
-        return redirect('login_view')
+        return redirect('admin_login_view')
 
-    return render(request, 'store/register.html')
+    return render(request, 'store/admin_register.html')
 
 
 
 @login_required
 
-def home(request):
+def admin_home(request):
     projects = Project.objects.all()
-    return render(request, 'store/home.html', {
+    return render(request, 'store/admin_home.html', {
         'projects': projects
     })
 
 
 # ---------------- LOGOUT ----------------
-def logout_view(request):
+def admin_logout_view(request):
     logout(request)
-    return redirect('login_view')
+    return redirect('admin_login_view')
 
 
 
@@ -126,7 +126,7 @@ def admin_dashboard(request):
 
 
 
-def add_project(request):
+def admin_add_project(request):
     if request.method == "POST":
         Project.objects.create(
             name=request.POST['name'],
@@ -137,11 +137,11 @@ def add_project(request):
         )
         return redirect('admin_dashboard')
 
-    return render(request, 'add_project.html')
+    return render(request, 'admin_add_project.html')
 
 
 @login_required
-def edit_project(request, id):
+def admin_edit_project(request, id):
     project = get_object_or_404(Project, id=id)
 
     if request.method == "POST":
@@ -157,31 +157,31 @@ def edit_project(request, id):
         project.save()
         return redirect("projects")
 
-    return render(request, "store/edit_project.html", {"project": project})
+    return render(request, "store/admin_edit_project.html", {"project": project})
 
 
 @login_required
-def delete_project(request, id):
+def admin_delete_project(request, id):
     project = get_object_or_404(Project, id=id)
     project.delete()
-    return redirect("manage_projects")
+    return redirect("admin_project")
 
 @login_required
-def block_user(request, id):
+def admin_block_user(request, id):
     user = get_object_or_404(User, id=id)
     user.is_active = False
     user.save()
-    return redirect("view_students")
+    return redirect("admin_view_students")
 
 # @login_required
-def delete_user(request, user_id):
+def admin_delete_user(request, user_id):
     user = get_object_or_404(User, id=user_id)
     user.delete()
     # This string MUST match the 'name' in urls.py
-    return redirect('view_students')
+    return redirect('admin_view_students')
 
 @login_required
-def add_project(request):
+def admin_add_project(request):
     if not request.user.is_superuser:
         return redirect("login")
 
@@ -196,19 +196,19 @@ def add_project(request):
         )
         return redirect("project")
 
-    return render(request, "store/add_project.html")
+    return render(request, "store/admin_add_project.html")
 
 @login_required
-def view_students(request):
+def admin_view_students(request):
     if not request.user.is_superuser:
         return redirect("login")
 
     students = StudentProfile.objects.select_related("user")
 
-    return render(request, "store/students_detail.html", {"students": students})
+    return render(request, "store/admin_students_detail.html", {"students": students})
 
 @login_required
-def project(request):
+def admin_project(request):
     if not request.user.is_superuser:
         return redirect("login")
 
@@ -216,9 +216,9 @@ def project(request):
     return render(request, "store/project.html", {"projects": projects})
 
 
-def student_list(request):
+def admin_student_list(request):
     students = CustomUser.objects.all()
-    return render(request, 'store/student_list.html', {'students': students})
+    return render(request, 'store/admin_student_list.html', {'students': students})
 
 
 
@@ -231,30 +231,30 @@ def payment_page(request, project_id):
 
 
 @login_required
-def upload_project(request):
+def admin_upload_project(request):
 
     if request.method == "POST":
         form = ProjectForm(request.POST, request.FILES)
 
         if form.is_valid():
             form.save()
-            return redirect('project_list')
+            return redirect('admin_project_list')
 
     else:
         form = ProjectForm()
 
-    return render(request, 'store/upload_project.html', {'form': form})
+    return render(request, 'store/admin_upload_project.html', {'form': form})
 
 
-def project_list(request):
+def admin_project_list(request):
 
     projects = Project.objects.all().order_by('-created_at')
 
-    return render(request, 'store/project_list.html', {'projects': projects})
+    return render(request, 'store/admin_project_list.html', {'projects': projects})
 
 
 
-def student_details(request, id):
+def admin_student_details(request, id):
 
 
     students = User.objects.all()

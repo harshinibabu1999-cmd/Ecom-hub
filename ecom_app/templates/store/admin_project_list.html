@@ -1,4 +1,4 @@
-{% extends 'store/base.html' %}
+{% extends 'store/admin_base.html' %}
 
 {% block content %}
 <style>
@@ -121,7 +121,7 @@
                     <td><span class="badge">{{ project.category }}</span></td>
                     <td>₹{{ project.price }}</td>
                     <td>
-                        <a href="{{ project }}" target="_blank" class="view-btn">
+                        <a href="{{ project }}"  class="view-btn">
                             View
                         </a>
                     </td>
