@@ -105,3 +105,11 @@ def purchased_projects(request):
 def project_detail(request, pk):
     project = get_object_or_404(Project, pk=pk)
     return render(request, 'user/project_detail.html', {'project': project})
+
+def download_project(request, pk):
+
+    project = get_object_or_404(Project, pk=pk)
+
+    return render(request, "user/download_project.html", {
+        "project": project
+    })

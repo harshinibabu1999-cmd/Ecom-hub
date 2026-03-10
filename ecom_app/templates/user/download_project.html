@@ -1,0 +1,26 @@
+{% extends 'user/user_base.html' %}
+
+{% block content %}
+
+<div style="width:600px;margin:auto;text-align:center">
+
+<h2>{{ project.title }}</h2>
+
+<img src="{{ project.project_image.url }}" width="250">
+
+<p>{{ project.description }}</p>
+
+<p><b>Category:</b> {{ project.category }}</p>
+
+<p><b>Price:</b> ₹{{ project.price }}</p>
+
+<br>
+
+<a href="{{ project.google_drive_link }}" target="_blank" 
+   style="padding:12px 20px;background:#0d6efd;color:white;text-decoration:none;border-radius:5px">
+   Download from Google Drive
+</a>
+
+</div>
+
+{% endblock %}

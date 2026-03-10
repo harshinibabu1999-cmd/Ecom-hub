@@ -104,7 +104,7 @@ def admin_home(request):
 # ---------------- LOGOUT ----------------
 def admin_logout_view(request):
     logout(request)
-    return redirect('admin_login_view')
+    return redirect('login_view')
 
 
 
@@ -128,7 +128,7 @@ def admin_dashboard(request):
 
 def admin_add_project(request):
     if request.method == "POST":
-        Project.objects.create(
+        project = Project.objects.create(
             name=request.POST['name'],
             description=request.POST['description'],
             price=request.POST['price'],
@@ -141,8 +141,8 @@ def admin_add_project(request):
 
 
 @login_required
-def admin_edit_project(request, id):
-    project = get_object_or_404(Project, id=id)
+def admin_edit_project(request, pk):
+    project = get_object_or_404(Project, id=pk)
 
     if request.method == "POST":
         project.title = request.POST.get("title")
@@ -155,14 +155,14 @@ def admin_edit_project(request, id):
             project.image = request.FILES.get("image")
 
         project.save()
-        return redirect("project")
+        return redirect("admin_project", pk=project.id)
 
     return render(request, "store/admin_edit_project.html", {"project": project})
 
 
 @login_required
-def admin_delete_project(request, id):
-    project = get_object_or_404(Project, id=id)
+def admin_delete_project(request, pk):
+    project = get_object_or_404(Project, id=pk)
     project.delete()
     return redirect("admin_project")
 
@@ -173,11 +173,11 @@ def admin_block_user(request, id):
     user.save()
     return redirect("admin_view_students")
 
-# @login_required
+
 def admin_delete_user(request, user_id):
     user = get_object_or_404(User, id=user_id)
     user.delete()
-    # This string MUST match the 'name' in urls.py
+  
     return redirect('admin_view_students')
 
 @login_required
@@ -194,7 +194,7 @@ def admin_add_project(request):
             google_drive_link=request.POST.get("drive_link"),
             project_image=request.FILES.get("image"),
         )
-        return redirect("project")
+        return redirect("admin_project")
 
     return render(request, "store/admin_add_project.html")
 
@@ -207,13 +207,9 @@ def admin_view_students(request):
 
     return render(request, "store/admin_students_detail.html", {"students": students})
 
-@login_required
-def project(request):
-    if not request.user.is_superuser:
-        return redirect("login")
-
-    projects = Project.objects.all()
-    return render(request, "store/project.html", {"projects": projects})
+def admin_project(request, pk):
+    project = Project.objects.get(id=pk)
+    return render(request, "store/admin_project.html", {"project": project})
 
 
 def admin_student_list(request):
@@ -254,13 +250,18 @@ def admin_project_list(request):
 
 
 
-def admin_student_details(request, id):
+def admin_student_details(request, pk):
+    student = CustomUser.objects.get(pk=pk)
+    return render(request, 'store/admin_student_details.html', {'student': student})
 
 
-    students = User.objects.all()
+@login_required
+def admin_project_detail(request, pk):
+    project = get_object_or_404(Project, id=pk)
 
-    return render(request, 'store/student_details.html', {'students': students})
-    student = get_object_or_404(CustomUser, id=id)
-    return render(request, 'store/student_details.html', {'student': student})
+    context = {
+        'project': project
+    }
 
+    return render(request, 'store/admin_project_detail.html', context)
 

@@ -5,11 +5,7 @@ from django.contrib.auth.models import AbstractUser
 from django.utils import timezone
  
  
-# ================================
 
-# Custom User Model
-
-# ================================
 
 class CustomUser(AbstractUser):
  
@@ -55,11 +51,7 @@ class Category(models.Model):
     def __str__(self):
         return self.name
         
-# ================================
 
-#  Project Model
-
-# ================================
 
 class Project(models.Model):
  
@@ -98,12 +90,6 @@ class Project(models.Model):
 
         return self.title
  
- 
-# ================================
-
-#  Payment Model (PhonePe Integrated)
-
-# ================================
 
 class Payment(models.Model):
  
@@ -148,13 +134,8 @@ class Payment(models.Model):
     def __str__(self):
 
         return f"{self.user.username} - {self.project.title} - {self.status}"
- 
- 
-# ================================
 
-#  Purchase History Model
 
-# ================================
 
 class Purchase(models.Model):
  
@@ -171,11 +152,7 @@ class Purchase(models.Model):
         return f"{self.user.username} purchased {self.project.title}"
  
  
-# ================================
 
-#  Admin Analytics Helper (Optional)
-
-# ================================
 
 class AdminAnalytics(models.Model):
 

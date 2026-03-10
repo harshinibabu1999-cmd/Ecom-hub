@@ -116,7 +116,9 @@
             <td>{{ project.id }}</td>
 
             <td>
-                <img src="{{ project.image.url }}" class="project-img">
+                {% if project.project_image %}
+                <img src="{{ project.project_image.url }}" class="project-img">
+                {% endif %}
             </td>
 
             <td>{{ project.title }}</td>
@@ -127,11 +129,11 @@
 
             <td>
 
-                <a href="{% url 'edit_project' project.id %}" class="edit-btn">
+                <a href="{% url 'admin_edit_project' project.id %}" class="edit-btn">
                     Edit
                 </a>
 
-                <a href="{% url 'delete_project' project.id %}" class="delete-btn">
+                <a href="{% url 'admin_delete_project' project.id %}" class="delete-btn">
                     Delete
                 </a>
 
