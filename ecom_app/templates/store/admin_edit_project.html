@@ -3,32 +3,27 @@
 
 
 
-<div class="container">
+<h2>Edit Project</h2>
 
-<div class="card">
-
-<h2 class="title">Edit Project</h2>
-
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
 {% csrf_token %}
 
-<input type="text" name="title" value="{{ project.title }}" placeholder="Project Title">
+<label>Title</label>
+<input type="text" name="title" value="{{ project.title }}">
 
-<textarea name="description" placeholder="Description">{{ project.description }}</textarea>
+<label>Category</label>
+<input type="text" name="category" value="{{ project.category }}">
 
-<input type="text" name="category" value="{{ project.category }}" placeholder="Category">
+<label>Price</label>
+<input type="text" name="price" value="{{ project.price }}">
 
-<input type="number" name="price" value="{{ project.price }}" placeholder="Price">
+<label>Description</label>
+<textarea name="description">{{ project.description }}</textarea>
 
-<input type="text" name="drive_link" value="{{ project.drive_link }}" placeholder="Google Drive Link">
+<label>Project Image</label>
+<input type="file" name="project_image">
 
 <button type="submit">Update Project</button>
 
 </form>
-
-<a href="{% url 'project' %}" class="back">Back</a>
-
-</div>
-</div>
-
 {% endblock %}

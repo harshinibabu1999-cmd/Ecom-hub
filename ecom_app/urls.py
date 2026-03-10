@@ -10,19 +10,16 @@ urlpatterns = [
     path('add-project/', views.admin_add_project, name='add_project'),
     path('delete-project/<int:id>/', views.admin_delete_project, name='delete_project'),
     path('edit-project/<int:id>/', views.admin_edit_project, name='edit_project'),
-    path('payment_page/', views.payment_page, name='payment_page'),
-    path('block-user/<int:id>/', views.admin_block_user, name='block_user'),
+    path('payment_page/', views.admin_payment_page, name='payment_page'),
     path('delete-user/<int:user_id>/', views.admin_delete_user, name='delete_user'),
     path('upload-project/', views.admin_upload_project, name='upload_project'),
     path('projects/', views.admin_project_list, name='project_list'),
-    path('student/', views.admin_student_details, name='student_details'),
-    path('project/', views.admin_project, name='project'),
+    path('project/<int:id>/', views.admin_project, name='project'),
 
-    path('upload-project/', views.upload_project, name='upload_project'),
-    path('projects/', views.project_list, name='project_list'),
-    path('student/<int:id>/ ', views.student_details, name='student_details'),
-    path('project/', views.project, name='project'),
-    path('students/', views.student_list, name='student_list'),
+    path('upload-project/', views.admin_upload_project, name='upload_project'),
+    path('student/<int:id>/ ', views.admin_student_details, name='student_details'),
+    path('students/', views.admin_student_list, name='student_list'),
+    path('view-projects/', views.admin_view_project, name='admin_view_project'),
 
     
 
@@ -63,5 +60,6 @@ urlpatterns = [
     path('payment-form/<int:pk>/', views.payment_form, name='payment_form'),
     path('payment-success/<int:pk>/', views.payment_success, name='payment_success'),
     path('purchased-projects/', views.purchased_projects, name='purchased_projects'),
+
 ]
 

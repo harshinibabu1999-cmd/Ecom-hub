@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout, get_user_model
 from django.contrib.auth.decorators import login_required
@@ -6,19 +8,14 @@ from .user_side import *
 from .models import CustomUser, Project, Payment
 from django.shortcuts import render, redirect
 from .forms import ProjectForm
+from django.db.models import Sum
+from django.shortcuts import get_object_or_404
 
 
-
-User = get_user_model()
 
 
 from django.contrib.auth import get_user_model
 
-User = get_user_model()
-
-from django.contrib.auth import authenticate, login
-from django.shortcuts import render, redirect
-from django.contrib.auth import get_user_model
 
 User = get_user_model()
 
@@ -104,40 +101,26 @@ def admin_home(request):
 # ---------------- LOGOUT ----------------
 def admin_logout_view(request):
     logout(request)
-    return redirect('admin_login_view')
-
-
-
-
-
-
-
+    return redirect('login_view')
 
 
 
 @login_required
 def admin_dashboard(request):
+   total_students = CustomUser.objects.filter(role='student').count()
+   total_projects = Project.objects.count()
+   total_sales = Payment.objects.count()
+   current_month = datetime.now().month
+   monthly_revenue = Payment.objects.all().aggregate(total=models.Sum('amount'))['total'] or 0
+   
+   context = {
+       'total_students': total_students,
+       'total_projects': total_projects,
+       'total_sales': total_sales,
+       'monthly_revenue': monthly_revenue,
+   }
    projects = Project.objects.all()
-   return render(request, 'store/admin_dashboard.html', {
-       'projects': projects
-   })
-
-
-
-
-
-def admin_add_project(request):
-    if request.method == "POST":
-        Project.objects.create(
-            name=request.POST['name'],
-            description=request.POST['description'],
-            price=request.POST['price'],
-            drive_link=request.POST['drive_link'],
-            thumbnail=request.FILES['thumbnail']
-        )
-        return redirect('admin_dashboard')
-
-    return render(request, 'admin_add_project.html')
+   return render(request, 'store/admin_dashboard.html', context)
 
 
 @login_required
@@ -149,13 +132,13 @@ def admin_edit_project(request, id):
         project.description = request.POST.get("description")
         project.category = request.POST.get("category")
         project.price = request.POST.get("price")
-        project.drive_link = request.POST.get("drive_link")
+        # project.drive_link = request.POST.get("drive_link")
 
         if request.FILES.get("image"):
             project.image = request.FILES.get("image")
 
         project.save()
-        return redirect("project")
+        return redirect("admin_project")
 
     return render(request, "store/admin_edit_project.html", {"project": project})
 
@@ -163,22 +146,20 @@ def admin_edit_project(request, id):
 @login_required
 def admin_delete_project(request, id):
     project = get_object_or_404(Project, id=id)
-    project.delete()
-    return redirect("admin_project")
+    if request.method == "POST":
+        project.delete()
+        return redirect("admin_project_list")
+    return redirect("admin_project_list")
 
-@login_required
-def admin_block_user(request, id):
-    user = get_object_or_404(User, id=id)
-    user.is_active = False
-    user.save()
-    return redirect("admin_view_students")
+
+
 
 # @login_required
 def admin_delete_user(request, user_id):
     user = get_object_or_404(User, id=user_id)
     user.delete()
     # This string MUST match the 'name' in urls.py
-    return redirect('admin_view_students')
+    return redirect('admin_view_project')
 
 @login_required
 def admin_add_project(request):
@@ -194,7 +175,7 @@ def admin_add_project(request):
             google_drive_link=request.POST.get("drive_link"),
             project_image=request.FILES.get("image"),
         )
-        return redirect("project")
+        return redirect("admin_add_project")
 
     return render(request, "store/admin_add_project.html")
 
@@ -208,12 +189,12 @@ def admin_view_students(request):
     return render(request, "store/admin_students_detail.html", {"students": students})
 
 @login_required
-def project(request):
+def admin_project(request,id):
     if not request.user.is_superuser:
-        return redirect("login")
+        return redirect("admin_login")
 
-    projects = Project.objects.all()
-    return render(request, "store/project.html", {"projects": projects})
+    projects = Project.objects.get(id=id)
+    return render(request, "store/admin_project.html", {"projects": projects})
 
 
 def admin_student_list(request):
@@ -223,11 +204,11 @@ def admin_student_list(request):
 
 
 
-def payment_page(request, project_id):
+def admin_payment_page(request, project_id):
 
     project = Project.objects.get(id=project_id)
 
-    return render(request, 'user/payment.html', {'project': project})
+    return render(request, 'store/admin_payment.html', {'project': project})
 
 
 @login_required
@@ -259,8 +240,11 @@ def admin_student_details(request, id):
 
     students = User.objects.all()
 
-    return render(request, 'store/student_details.html', {'students': students})
+    return render(request, 'store/admin_student_details.html', {'students': students})
     student = get_object_or_404(CustomUser, id=id)
-    return render(request, 'store/student_details.html', {'student': student})
+    return render(request, 'store/admin_student_details.html', {'student': student})
 
 
+def admin_view_project(request):
+    projects = Project.objects.all()
+    return render(request, 'store/admin_view_project.html', {'projects': projects})
