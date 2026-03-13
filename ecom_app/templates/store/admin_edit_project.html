@@ -1,29 +1,113 @@
 {% extends "store/admin_base.html" %}
 {% block content %}
 
+<style>
+
+.page-title{
+    font-size:28px;
+    font-weight:600;
+    margin-bottom:25px;
+}
+
+.form-card{
+    background:#ffffff;
+    padding:35px;
+    border-radius:10px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    max-width:900px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group label{
+    font-weight:500;
+    margin-bottom:6px;
+}
+
+.form-group input,
+.form-group textarea{
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:6px;
+    font-size:14px;
+}
+
+.form-group textarea{
+    resize:none;
+    height:100px;
+}
+
+.full-width{
+    grid-column:1 / span 2;
+}
+
+.btn-update{
+    margin-top:20px;
+    padding:12px 25px;
+    background:#0d6efd;
+    border:none;
+    color:white;
+    font-weight:500;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.btn-update:hover{
+    background:#0b5ed7;
+}
+
+</style>
 
 
-<h2>Edit Project</h2>
+<h2 class="page-title">Edit Project</h2>
+
+<div class="form-card">
 
 <form method="POST" enctype="multipart/form-data">
 {% csrf_token %}
 
-<label>Title</label>
-<input type="text" name="title" value="{{ project.title }}">
+<div class="form-grid">
 
+<div class="form-group">
+<label>Project Title</label>
+<input type="text" name="title" value="{{ project.title }}" required>
+</div>
+
+<div class="form-group">
 <label>Category</label>
-<input type="text" name="category" value="{{ project.category }}">
+<input type="text" name="category" value="{{ project.category }}" required>
+</div>
 
-<label>Price</label>
-<input type="text" name="price" value="{{ project.price }}">
+<div class="form-group">
+<label>Price (₹)</label>
+<input type="number" name="price" value="{{ project.price }}" required>
+</div>
 
+<div class="form-group">
+<label>Project Image</label>
+<input type="file" name="image">
+</div>
+
+<div class="form-group full-width">
 <label>Description</label>
 <textarea name="description">{{ project.description }}</textarea>
+</div>
 
-<label>Project Image</label>
-<input type="file" name="project_image">
+</div>
 
-<button type="submit">Update Project</button>
+<button type="submit" class="btn-update">Update Project</button>
 
 </form>
+
+</div>
+
 {% endblock %}

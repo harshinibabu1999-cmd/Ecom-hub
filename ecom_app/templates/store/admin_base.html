@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>E-Commerce System</title>
+    <title>E-Com Hub</title>
 
     <style>
         /* GENERAL */
@@ -159,7 +159,7 @@
 
             <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
 
-            E-Commerce System
+            E-Com Hub
 
         </div>
 
@@ -184,17 +184,18 @@
             {% if not user.is_student_registered %}
 
 
-            <a href="{% url 'project_list' %}">View Projects</a>
             <a href="{% url 'admin_dashboard' %}">Dashboard</a>
-            <a href="{% url 'add_project' %}">Add Project</a>
             <a href="{% url 'student_list' %}">Student List</a>
+            <a href="{% url 'add_project' %}">Add Project</a>
+            <a href="{% url 'admin_project_list' %}">View Projects</a>
+            <a href="{% url 'admin_payment_history' %}">Payment History</a>
+           
            
             
             {% else %}
 
             <a href="{% url 'home' %}">Home</a>
-            <a href="{% url 'project_list' %}">View Projects</a>
-            <a href="{% url 'admin_payment_page' %}">Payment Details</a>
+            <a href="{% url 'admin_project_list' %}">View Projects</a>
 
             <a href="#">Purchased Projects</a>
 

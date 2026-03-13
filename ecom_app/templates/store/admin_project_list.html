@@ -4,151 +4,103 @@
 
 <style>
 
-.page-title{
-    font-size:24px;
-    font-weight:600;
-    margin-bottom:20px;
+.content-wrapper{
+    padding:30px;
+    font-family:'Segoe UI',sans-serif;
 }
 
-/* Table */
+.title{
+    text-align:center;
+    margin-bottom:30px;
+    color:#333;
+}
+
+.table-container{
+    width:100%;
+    overflow-x:auto;
+    background:white;
+    border-radius:8px;
+    box-shadow:0 4px 6px rgba(0,0,0,0.05);
+}
 
 .project-table{
     width:100%;
     border-collapse:collapse;
-    background:white;
-    border-radius:8px;
-    overflow:hidden;
-    box-shadow:0 2px 8px rgba(0,0,0,0.1);
 }
 
-/* Table header */
-
 .project-table thead{
-    background:#0f2d4a;
-    color:white;
+    background:#f8f9fa;
 }
 
 .project-table th{
-    padding:12px;
-    text-align:center;
-    font-size:15px;
+    padding:15px;
+    text-align:left;
+    font-size:13px;
+    text-transform:uppercase;
 }
-
-/* Table rows */
 
 .project-table td{
-    padding:12px;
-    text-align:center;
-    border-bottom:1px solid #ddd;
-    font-size:14px;
+    padding:15px;
+    border-bottom:1px solid #eee;
 }
-
-/* Row hover */
-
-.project-table tbody tr:hover{
-    background:#f5f7fb;
-}
-
-/* Project image */
 
 .project-img{
-    width:60px;
+    width:80px;
     height:60px;
     object-fit:cover;
-    border-radius:5px;
-}
-
-/* Buttons */
-
-.edit-btn{
-    padding:6px 12px;
-    background:#28a745;
-    color:white;
-    text-decoration:none;
     border-radius:4px;
-    margin-right:5px;
-    font-size:13px;
 }
 
-.edit-btn:hover{
-    background:#218838;
-}
-
-.delete-btn{
-    padding:6px 12px;
-    background:#dc3545;
+.view-btn{
+    background:#2f5be7;
     color:white;
-    text-decoration:none;
+    padding:8px 15px;
     border-radius:4px;
-    font-size:13px;
+    text-decoration:none;
 }
 
-.delete-btn:hover{
-    background:#c82333;
+.view-btn:hover{
+    background:#1e3fb8;
 }
+
 </style>
 
-<div class="page-title">
-    Projects
+<div class="content-wrapper">
+
+<h2 class="title">Available IEEE Projects</h2>
+
+    <div class="table-container">
+        <table class="project-table">
+            <thead>
+                <tr>
+                    <th>Image</th>
+                    <th>Title</th>
+                    <th>Description</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for project in projects %}
+                <tr>
+                    <td>
+                        <img src="{{ project.project_image.url }}" class="project-img" alt="{{ project.title }}">
+                    </td>
+                    <td><strong>{{ project.title }}</strong></td>
+                    <td>{{ project.description|truncatewords:10 }}</td>
+                    <td><span class="badge">{{ project.category }}</span></td>
+                    <td>₹{{ project.price }}</td>
+                    <td>
+                        <a href="{% url 'admin_project_detail' project.id %}"  class="view-btn">
+                            View
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
 </div>
-
-<table class="project-table">
-
-    <thead>
-
-        <tr>
-            <th>ID</th>
-            <th>Image</th>
-            <th>Title</th>
-            <th>Category</th>
-            <th>Price</th>
-            <th>Actions</th>
-        </tr>
-
-    </thead>
-
-    <tbody>
-
-        {% for project in projects %}
-
-        <tr>
-
-            <td>{{ project.id }}</td>
-
-            <td>
-                <img src="{{ project.project_image.url }}" class="project-img">
-            </td>
-
-            <td>{{ project.title }}</td>
-
-            <td>{{ project.category }}</td>
-
-            <td>₹{{ project.price }}</td>
-
-            <td>
-                <td>
-    <a href="{% url 'edit_project' project.id %}" class="btn-edit">Edit</a>
-
-    <a href="{% url 'delete_project' project.id %}" 
-       class="btn-delete"
-       onclick="return confirm('Are you sure you want to delete this project?');">
-       Delete
-    </a>
-</td>
-            </td>
-
-        </tr>
-
-        {% empty %}
-
-        <tr>
-            <td colspan="6">No Projects Available</td>
-        </tr>
-
-        {% endfor %}
-
-    </tbody>
-
-</table>
 
 {% endblock %}

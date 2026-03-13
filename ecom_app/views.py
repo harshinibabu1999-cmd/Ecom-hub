@@ -35,7 +35,7 @@ def admin_login_view(request):
 
             else:
                 if not user.is_student_registered:
-                    return redirect("admin_student_register")
+                    return redirect("student_register")
                 else:
                     return redirect("user_home")
 
@@ -83,19 +83,19 @@ def admin_register_view(request):
 
         user.save()
 
-        return redirect('admin_login_view')
+        return redirect('login_view')
 
     return render(request, 'store/admin_register.html')
 
 
 
-@login_required
 
+
+# ---------------- ADMIN HOME ----------------
+@login_required
 def admin_home(request):
     projects = Project.objects.all()
-    return render(request, 'store/admin_home.html', {
-        'projects': projects
-    })
+    return render(request, 'store/admin_home.html', {'projects': projects})
 
 
 # ---------------- LOGOUT ----------------
@@ -104,67 +104,32 @@ def admin_logout_view(request):
     return redirect('login_view')
 
 
+from datetime import datetime
+
 
 @login_required
 def admin_dashboard(request):
-   total_students = CustomUser.objects.filter(role='student').count()
-   total_projects = Project.objects.count()
-   total_sales = Payment.objects.count()
-   current_month = datetime.now().month
-   monthly_revenue = Payment.objects.all().aggregate(total=models.Sum('amount'))['total'] or 0
-   
-   context = {
-       'total_students': total_students,
-       'total_projects': total_projects,
-       'total_sales': total_sales,
-       'monthly_revenue': monthly_revenue,
-   }
-   projects = Project.objects.all()
-   return render(request, 'store/admin_dashboard.html', context)
+    total_students = CustomUser.objects.filter(is_superuser=False).count()
+    total_projects = Project.objects.count()
+    total_sales = Payment.objects.count()
+    monthly_revenue = Payment.objects.aggregate(total=Sum('amount'))['total'] or 0
+    today = datetime.now().date()
+    today_students = CustomUser.objects.filter(date_joined__date=today, is_superuser=False)
+    context = {
+        'total_students': total_students,
+        'total_projects': total_projects,
+        'total_sales': total_sales,
+        'monthly_revenue': monthly_revenue,
+        'recent_students': today_students[:5],  # Show only the 5 most recent students
+        'today_students': today_students
+    }
+
+    return render(request, 'store/admin_dashboard.html', context)
 
 
-@login_required
-def admin_edit_project(request, id):
-    project = get_object_or_404(Project, id=id)
-
-    if request.method == "POST":
-        project.title = request.POST.get("title")
-        project.description = request.POST.get("description")
-        project.category = request.POST.get("category")
-        project.price = request.POST.get("price")
-        # project.drive_link = request.POST.get("drive_link")
-
-        if request.FILES.get("image"):
-            project.image = request.FILES.get("image")
-
-        project.save()
-        return redirect("admin_project")
-
-    return render(request, "store/admin_edit_project.html", {"project": project})
-
-
-@login_required
-def admin_delete_project(request, id):
-    project = get_object_or_404(Project, id=id)
-    if request.method == "POST":
-        project.delete()
-        return redirect("admin_project_list")
-    return redirect("admin_project_list")
-
-
-
-
-# @login_required
-def admin_delete_user(request, user_id):
-    user = get_object_or_404(User, id=user_id)
-    user.delete()
-    # This string MUST match the 'name' in urls.py
-    return redirect('admin_view_project')
-
+# ---------------- ADD PROJECT ----------------
 @login_required
 def admin_add_project(request):
-    if not request.user.is_superuser:
-        return redirect("login")
 
     if request.method == "POST":
         Project.objects.create(
@@ -175,40 +140,79 @@ def admin_add_project(request):
             google_drive_link=request.POST.get("drive_link"),
             project_image=request.FILES.get("image"),
         )
-        return redirect("admin_add_project")
+        return redirect("admin_project_list")
 
     return render(request, "store/admin_add_project.html")
 
+
+# ---------------- EDIT PROJECT ----------------
 @login_required
-def admin_view_students(request):
-    if not request.user.is_superuser:
-        return redirect("login")
+def admin_edit_project(request, id):
+    project = get_object_or_404(Project, id=id)
 
-    students = StudentProfile.objects.select_related("user")
+    if request.method == "POST":
+        project.title = request.POST.get("title")
+        project.description = request.POST.get("description")
+        project.category = request.POST.get("category")
+        project.price = request.POST.get("price")
 
-    return render(request, "store/admin_students_detail.html", {"students": students})
+        if request.FILES.get("image"):
+            project.project_image = request.FILES.get("image")
+
+        project.save()
+        return redirect("admin_project_list")
+
+    return render(request, "store/admin_edit_project.html", {"project": project})
+
+
+# ---------------- DELETE PROJECT ----------------
+@login_required
+def admin_delete_project(request, id):
+    project = get_object_or_404(Project, id=id)
+    project.delete()
+    return redirect("admin_project_list")
+
+
+# ---------------- PROJECT LIST ----------------
+@login_required
+def admin_project_list(request):
+    projects = Project.objects.all().order_by('-created_at')
+    return render(request, 'store/admin_project_list.html', {'projects': projects})
+
+
 
 @login_required
-def admin_project(request,id):
-    if not request.user.is_superuser:
-        return redirect("admin_login")
-
-    projects = Project.objects.get(id=id)
-    return render(request, "store/admin_project.html", {"projects": projects})
+def admin_project_detail(request, id):
+    project = get_object_or_404(Project, id=id)
+    return render(request, "store/admin_project_detail.html", {"project": project})
 
 
+@login_required
+def admin_delete_student(request, id):
+    user = get_object_or_404(User, id=id)
+    user.delete()
+    return redirect('student_list')
+
+
+
+@login_required
 def admin_student_list(request):
-    students = CustomUser.objects.all()
+    students = CustomUser.objects.filter(is_superuser=False)
     return render(request, 'store/admin_student_list.html', {'students': students})
 
 
+@login_required
+def admin_student_details(request, id):
+    student = get_object_or_404(CustomUser, id=id)
+    return render(request, 'store/admin_student_details.html', {'student': student})
 
 
-def admin_payment_page(request, project_id):
+@login_required
+def admin_view_project(request):
+    projects = Project.objects.all()
+    return render(request, 'store/admin_view_project.html', {'projects': projects})
 
-    project = Project.objects.get(id=project_id)
 
-    return render(request, 'store/admin_payment.html', {'project': project})
 
 
 @login_required
@@ -227,24 +231,21 @@ def admin_upload_project(request):
     return render(request, 'store/admin_upload_project.html', {'form': form})
 
 
-def admin_project_list(request):
+@login_required
+def admin_payment_history(request):
+    payments = Payment.objects.select_related('user', 'project').order_by('-created_at')
 
-    projects = Project.objects.all().order_by('-created_at')
+    context = {
+        'payments': payments
+    }
 
-    return render(request, 'store/admin_project_list.html', {'projects': projects})
-
-
-
-def admin_student_details(request, id):
-
-
-    students = User.objects.all()
-
-    return render(request, 'store/admin_student_details.html', {'students': students})
-    student = get_object_or_404(CustomUser, id=id)
-    return render(request, 'store/admin_student_details.html', {'student': student})
+    return render(request, 'store/admin_payment_history.html', context)
 
 
-def admin_view_project(request):
-    projects = Project.objects.all()
-    return render(request, 'store/admin_view_project.html', {'projects': projects})
+@login_required
+def payment_details(request, id):
+    if id is None:
+        from django.http import HttpResponse
+        return HttpResponse("No ID was provided in the URL!")
+    payment = get_object_or_404(Payment, id=id)
+    return render(request, 'store/admin_payment_details.html', {'payment': payment})

@@ -1,0 +1,134 @@
+{% extends "store/admin_base.html" %}
+
+{% block content %}
+
+<style>
+
+.page-card{
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 4px 10px rgba(0,0,0,0.08);
+}
+
+.page-title{
+font-size:24px;
+font-weight:600;
+margin-bottom:20px;
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+thead{
+background:#1a2134;
+color:white;
+}
+
+thead th{
+padding:12px;
+text-align:left;
+}
+
+tbody td{
+padding:12px;
+border-bottom:1px solid #eee;
+}
+
+.status-success{
+color:green;
+font-weight:600;
+}
+
+.no-data{
+text-align:center;
+padding:20px;
+color:#777;
+}
+.action-btn{
+background:#2563eb;
+color:white;
+border:none;
+padding:6px 14px;
+border-radius:6px;
+font-size:14px;
+cursor:pointer;
+transition:0.3s;
+}
+
+.action-btn:hover{
+background:#1d4ed8;
+transform:scale(1.05);
+box-shadow:0 2px 6px rgba(0,0,0,0.15);
+}
+
+</style>
+
+
+<div class="page-card">
+
+<h2 class="page-title">Payment History</h2>
+
+<table>
+
+<thead>
+<tr>
+<th>Student</th>
+<th>Project</th>
+<th>Amount Paid</th>
+<th>Status</th>
+<th>Payment Date</th>
+<th>Action</th>
+</tr>
+</thead>
+
+<tbody>
+
+{% for payment in payments %}
+
+<tr>
+
+<td>{{ payment.user.username }}</td>
+
+<td>{{ payment.project.title }}</td>
+
+<td>₹ {{ payment.amount }}</td>
+
+<td>
+{% if payment.status == "Success" %}
+<span class="status-success">Paid Successfully</span>
+
+{% else %}
+<span style="color:orange; font-weight:600;">Pending</span>
+
+{% endif %}
+</td>
+<td>{{ payment.created_at }}</td>
+
+
+<td>
+<a href="{% url 'payment_details' payment.id %}"> <button class="action-btn">View</button>
+   </a>
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="5" class="no-data">
+No payment records found
+</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
+{% endblock %}
