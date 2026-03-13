@@ -2,7 +2,6 @@
 
 {% block content %}
 
-<<<<<<< HEAD
 
 <style>
 
@@ -91,28 +90,5 @@
    Delete
    </a> 
 {% endblock %}
-=======
-<h2>{{ project.title }}</h2>
 
-{% if project.project_image %}
-<img src="{{ project.project_image.url }}" width="300">
-{% endif %}
 
-<p><b>Category:</b> {{ project.category }}</p>
-
-<p><b>Price:</b> ₹{{ project.price }}</p>
-
-<p><b>Description:</b></p>
-<p>{{ project.description }}</p>
-
-<a href="{% url 'admin_edit_project' project.id %}" class="edit-btn">
-    Edit</a>
-    <a href="{% url 'admin_delete_project' project.id %}" class="delete-btn">
-                    Delete
-                </a>
-
-   
-
-{% endblock %}
-
->>>>>>> 8beb511dd647c422ff815da6676d8883887abeda

@@ -1,14 +1,10 @@
 import base64
 import hashlib
 import json
-<<<<<<< HEAD
-import uuid
-=======
-import requests
 import uuid
 from django.shortcuts import redirect
 from django.http import JsonResponse
->>>>>>> 8beb511dd647c422ff815da6676d8883887abeda
+
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from .user_side import *

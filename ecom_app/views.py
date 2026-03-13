@@ -127,9 +127,6 @@ def admin_dashboard(request):
     return render(request, 'store/admin_dashboard.html', context)
 
 
-<<<<<<< HEAD
-# ---------------- ADD PROJECT ----------------
-=======
 
 
 
@@ -188,7 +185,7 @@ def admin_delete_user(request, user_id):
   
     return redirect('admin_view_students')
 
->>>>>>> 8beb511dd647c422ff815da6676d8883887abeda
+
 @login_required
 def admin_add_project(request):
 
@@ -201,11 +198,11 @@ def admin_add_project(request):
             google_drive_link=request.POST.get("drive_link"),
             project_image=request.FILES.get("image"),
         )
-<<<<<<< HEAD
+
         return redirect("admin_project_list")
-=======
+
         return redirect("admin_projects")
->>>>>>> 8beb511dd647c422ff815da6676d8883887abeda
+
 
     return render(request, "store/admin_add_project.html")
 
@@ -247,11 +244,11 @@ def admin_project_list(request):
 
 
 @login_required
-<<<<<<< HEAD
+
 def admin_project_detail(request, id):
     project = get_object_or_404(Project, id=id)
     return render(request, "store/admin_project_detail.html", {"project": project})
-=======
+
 def admin_projects(request):
 
     projects = Project.objects.all()
@@ -259,7 +256,7 @@ def admin_projects(request):
     return render(request, "store/admin_project.html", {
         "projects": projects
     })
->>>>>>> 8beb511dd647c422ff815da6676d8883887abeda
+
 
 
 @login_required
@@ -306,19 +303,6 @@ def admin_upload_project(request):
     return render(request, 'store/admin_upload_project.html', {'form': form})
 
 
-@login_required
-def admin_payment_history(request):
-    payments = Payment.objects.select_related('user', 'project').order_by('-created_at')
-
-    context = {
-        'payments': payments
-    }
-
-<<<<<<< HEAD
-    return render(request, 'store/admin_payment_history.html', context)
-=======
-    return render(request, 'store/admin_project_list.html', {'projects': projects})
-
 
 
 def admin_student_details(request, pk):
@@ -333,9 +317,23 @@ def admin_project_detail(request, pk):
     context = {
         'project': project
     }
->>>>>>> 8beb511dd647c422ff815da6676d8883887abeda
+
 
     return render(request, 'store/admin_project_detail.html', context)
+
+
+@login_required
+def admin_payment_history(request):
+    payments = Payment.objects.select_related('user', 'project').order_by('-created_at')
+
+    context = {
+        'payments': payments
+    }
+
+
+    return render(request, 'store/admin_payment_history.html', context)
+
+
 
 @login_required
 def payment_details(request, id):
