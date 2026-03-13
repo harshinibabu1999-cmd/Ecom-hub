@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>E-Commerce System</title>
+<title>E-Com Hub</title>
 
 <style>
 
@@ -17,7 +17,7 @@ background:#f4f6f9;
 /* HEADER */
 
 .header{
-background:#3853c0d2;
+background: #051422;
 color:white;
 padding:15px;
 font-size:22px;
@@ -37,7 +37,7 @@ align-items:center;
 /* TOGGLE BUTTON */
 
 .toggle-btn{
-background:#0f2a44;
+background: #051422;
 color:white;
 border:none;
 padding:8px 12px;
@@ -97,7 +97,7 @@ display:flex;
 
 .sidebar{
 width:250px;
-background:#0f2a44;
+background: #051422;
 min-height:100vh;
 transition:0.3s;
 }
@@ -160,7 +160,7 @@ text-decoration:underline;
 
 <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
 
-E-Commerce System
+E-Com Hub
 
 </div>
 
@@ -197,8 +197,8 @@ E-Commerce System
 
 {% else %}
 
-    <a href="{% url 'login_view' %}">Login</a>
-    <a href="{% url 'register_view' %}">Register</a>
+    <a href="{% url 'admin_login_view' %}">Login</a>
+    <a href="{% url 'admin_register_view' %}">Register</a>
 
 {% endif %}
 

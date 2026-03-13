@@ -89,9 +89,9 @@
 <div class="project-container">
 
     <h2 style="font-size:28px; color:#2f5fd0; text-align:center; margin-bottom:20px; font-weight:bold;">
-        Available Projects
+        Welcome to Admin Dashboard
     </h2>
-
+{% comment %} 
     <table class="project-table">
         <thead>
             <tr>
@@ -111,13 +111,13 @@
                 <td>{{ project.department }}</td>
                 <td>₹ {{ project.price }}</td>
                 <td>
-                    <a href="{% url 'admin_project' project.id %}" class="view-btn">View</a>
+                    <a href="{% url 'admin_projects' %}" class="view-btn">View</a>
                 </td>
 
             </tr>
             {% endfor %}
         </tbody>
-    </table>
+    </table> {% endcomment %}
 
 </div>
 

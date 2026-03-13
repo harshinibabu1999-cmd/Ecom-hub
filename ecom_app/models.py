@@ -128,6 +128,8 @@ class Payment(models.Model):
     amount = models.DecimalField(max_digits=10, decimal_places=2)
  
     status = models.CharField(max_length=10, choices=PAYMENT_STATUS, default='PENDING')
+
+    payment_response = models.TextField(blank=True, null=True)
  
     created_at = models.DateTimeField(default=timezone.now)
  

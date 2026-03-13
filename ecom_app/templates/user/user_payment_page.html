@@ -12,7 +12,7 @@ font-family:'Segoe UI',sans-serif;
 }
 
 .payment-card{
-width:450px;
+width:480px;
 background:white;
 padding:35px;
 border-radius:12px;
@@ -31,7 +31,7 @@ color:#0d6efd;
 background:#f5f7fb;
 padding:15px;
 border-radius:8px;
-margin-bottom:15px;
+margin-bottom:20px;
 }
 
 .payment-info p{
@@ -50,18 +50,54 @@ font-weight:bold;
 color:#198754;
 }
 
-.pay-btn{
+.form-group{
+margin-bottom:15px;
+}
+
+.form-group label{
 display:block;
+font-weight:600;
+margin-bottom:5px;
+}
+
+.form-control{
 width:100%;
-text-align:center;
-padding:12px;
+padding:10px;
+border-radius:6px;
+border:1px solid #ccc;
+font-size:14px;
+}
+
+textarea.form-control{
+resize:none;
+}
+
+.payment-methods{
+margin-top:10px;
+}
+
+.method{
+background:#f5f7fb;
+padding:10px;
+border-radius:6px;
+margin-bottom:8px;
+}
+
+.method input{
+margin-right:8px;
+}
+
+.pay-btn{
+width:100%;
 background:#0d6efd;
 color:white;
-text-decoration:none;
+padding:12px;
+border:none;
 border-radius:8px;
 font-size:16px;
-font-weight:500;
+cursor:pointer;
 margin-top:20px;
+font-weight:500;
 }
 
 .pay-btn:hover{
@@ -85,9 +121,48 @@ background:#0b5ed7;
 <p><b>Transaction ID:</b> {{ payment.transaction_id }}</p>
 </div>
 
-<a href="{% url 'payment_form' payment.id %}" class="pay-btn">
-Proceed to Payment →
+<h3 style="margin-bottom:15px;">Payment Form</h3>
+
+<form method="POST">
+{% csrf_token %}
+
+<div class="form-group">
+<label>Name</label>
+<input type="text" name="name" class="form-control" required>
+</div>
+
+<div class="form-group">
+<label>Phone</label>
+<input type="text" name="phone" class="form-control" required>
+</div>
+
+<div class="form-group">
+<label>Address</label>
+<textarea name="address" class="form-control" rows="3" required></textarea>
+</div>
+
+<h4 style="margin-top:15px;">Select Payment Method</h4>
+
+<div class="payment-methods">
+
+<div class="method">
+<input type="radio" name="payment_method" value="UPI" required> UPI
+</div>
+
+<div class="method">
+<input type="radio" name="payment_method" value="DEBIT_CARD"> Debit Card
+</div>
+
+<div class="method">
+<input type="radio" name="payment_method" value="CREDIT_CARD"> Credit Card
+</div>
+
+</div>
+
+<a href="{% url 'phonepe_pay' payment.id %}" class="pay-btn">
+Proceed to Pay
 </a>
+</form>
 
 </div>
 

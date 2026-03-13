@@ -38,7 +38,7 @@ def admin_login_view(request):
 
             else:
                 if not user.is_student_registered:
-                    return redirect("admin_student_register")
+                    return redirect("student_register")
                 else:
                     return redirect("user_home")
 
@@ -104,7 +104,7 @@ def admin_home(request):
 # ---------------- LOGOUT ----------------
 def admin_logout_view(request):
     logout(request)
-    return redirect('login_view')
+    return redirect('admin_login_view')
 
 
 
@@ -142,6 +142,7 @@ def admin_add_project(request):
 
 @login_required
 def admin_edit_project(request, pk):
+
     project = get_object_or_404(Project, id=pk)
 
     if request.method == "POST":
@@ -152,11 +153,11 @@ def admin_edit_project(request, pk):
         project.drive_link = request.POST.get("drive_link")
 
         if request.FILES.get("image"):
-            project.image = request.FILES.get("image")
+            project.project_image = request.FILES.get("image")
 
         project.save()
-        return redirect("admin_project", pk=project.id)
 
+        return redirect("admin_projects")  
     return render(request, "store/admin_edit_project.html", {"project": project})
 
 
@@ -164,7 +165,7 @@ def admin_edit_project(request, pk):
 def admin_delete_project(request, pk):
     project = get_object_or_404(Project, id=pk)
     project.delete()
-    return redirect("admin_project")
+    return redirect("admin_projects")
 
 @login_required
 def admin_block_user(request, id):
@@ -194,7 +195,7 @@ def admin_add_project(request):
             google_drive_link=request.POST.get("drive_link"),
             project_image=request.FILES.get("image"),
         )
-        return redirect("admin_project")
+        return redirect("admin_projects")
 
     return render(request, "store/admin_add_project.html")
 
@@ -207,9 +208,14 @@ def admin_view_students(request):
 
     return render(request, "store/admin_students_detail.html", {"students": students})
 
-def admin_project(request, pk):
-    project = Project.objects.get(id=pk)
-    return render(request, "store/admin_project.html", {"project": project})
+@login_required
+def admin_projects(request):
+
+    projects = Project.objects.all()
+
+    return render(request, "store/admin_project.html", {
+        "projects": projects
+    })
 
 
 def admin_student_list(request):

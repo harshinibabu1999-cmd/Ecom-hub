@@ -123,10 +123,23 @@
 <h3>{{ payment.project.title }}</h3>
 
 <p class="price">₹{{ payment.amount }}</p>
+{% if payment.payment_status == "SUCCESS" %}
+            <span class="status-success">Success</span>
+        {% else %}
+            <span class="status-pending">Pending</span>
+        {% endif %}
 
-<a href="{% url 'download_project' payment.project.id %}" class="download-btn">
+        {% if payment.payment_status == "SUCCESS" %}
+
+            <a href="{% url 'download_project' payment.project.id %}" class="download-btn">
 Download Project
 </a>
+        {% else %}
+        
+<a href="{% url 'phonepe_pay' payment.id %}" class="pay-btn">
+Proceed to Pay
+</a>
+        {% endif %}
 
 </div>
 

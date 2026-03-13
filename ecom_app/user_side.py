@@ -1,8 +1,10 @@
 import base64
 import hashlib
 import json
-import uuid
 import requests
+import uuid
+from django.shortcuts import redirect
+from django.http import JsonResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from .user_side import *
@@ -10,6 +12,8 @@ from django.conf import settings
 from .models import Project, Payment
 from django.contrib.auth.decorators import login_required
 from .models import CustomUser
+from django.views.decorators.csrf import csrf_exempt
+
 
 
 @login_required
@@ -86,15 +90,20 @@ def payment_form(request, pk):
         payment.payment_mode = request.POST.get("payment_method")
         payment.save()
 
-        return redirect("payment_success", pk=payment.id)
+        return redirect("payment_success", transaction_id=payment.transaction_id)
 
     return render(request, "user/payment_form.html", {"payment": payment})
 
-def payment_success(request, pk):
-    payment = get_object_or_404(Payment, id=pk)
+@csrf_exempt
+def payment_success(request, transaction_id):
 
-    return render(request, "user/payment_success.html", {"payment": payment})
+    payment = Payment.objects.get(transaction_id=transaction_id)
 
+    if payment.status != "SUCCESS":
+        payment.status = "SUCCESS"
+        payment.save()
+
+    return render(request,"user/payment_success.html",{"payment":payment})
 
 @login_required
 def purchased_projects(request):
@@ -108,8 +117,83 @@ def project_detail(request, pk):
 
 def download_project(request, pk):
 
-    project = get_object_or_404(Project, pk=pk)
+    project = get_object_or_404(Project, id=pk)
 
-    return render(request, "user/download_project.html", {
-        "project": project
-    })
+    payment = Payment.objects.filter(
+        user=request.user,
+        project=project,
+        payment_status="SUCCESS"
+    ).first()
+
+    if not payment:
+        return HttpResponse("Payment not completed. Download not allowed.")
+
+    return FileResponse(project.project_file.open(), as_attachment=True)
+
+
+def phonepe_payment(request, pk):
+
+    payment = Payment.objects.get(id=pk)
+
+    transaction_id = payment.transaction_id
+    amount = int(payment.amount * 100)
+
+    payload = {
+        "merchantId": settings.PHONEPE_MERCHANT_ID,
+        "merchantTransactionId": transaction_id,
+        "merchantUserId": str(payment.user.id),
+        "amount": amount,
+        "redirectUrl": settings.SITE_DOMAIN + f"/payment-success/{transaction_id}/",
+        "redirectMode": "POST",
+        "callbackUrl": settings.SITE_DOMAIN + f"/payment-success/{transaction_id}/",
+        "mobileNumber": "9999999999",
+        "paymentInstrument": {
+            "type": "PAY_PAGE"
+        }
+    }
+
+    payload_json = json.dumps(payload)
+
+    payload_base64 = base64.b64encode(payload_json.encode()).decode()
+
+    string = payload_base64 + "/pg/v1/pay" + settings.PHONEPE_SALT_KEY
+
+    sha256 = hashlib.sha256(string.encode()).hexdigest()
+
+    checksum = sha256 + "###" + settings.PHONEPE_SALT_INDEX
+
+    headers = {
+        "Content-Type": "application/json",
+        "X-VERIFY": checksum
+    }
+
+    data = {
+        "request": payload_base64
+    }
+
+    url = settings.PHONEPE_BASE_URL + "/pg/v1/pay"
+
+    response = requests.post(url, json=data, headers=headers)
+
+    res = response.json()
+
+    print(res)
+
+    if res.get("success"):
+
+        pay_url = res['data']['instrumentResponse']['redirectInfo']['url']
+
+        return redirect(pay_url)
+
+    return JsonResponse(res)
+
+def payment_process(request, pk):
+
+    payment = get_object_or_404(Payment, id=pk)
+
+    payment.payment_status = "SUCCESS"
+    payment.payment_mode = request.POST.get("payment_method")
+
+    payment.save()
+
+    return redirect("payment_success", transaction_id=payment.transaction_id)
