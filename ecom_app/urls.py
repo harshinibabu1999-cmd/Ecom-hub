@@ -61,5 +61,6 @@ urlpatterns = [
     path('payment-success/<str:transaction_id>/', views.payment_success, name='payment_success'),
     path('payment-process/', views.payment_process, name='payment_process'),
     path('phonepe-pay/<int:pk>/', views.phonepe_payment, name='phonepe_pay'),
+    path('payment-detail/<int:pk>/', views.view_payment_history, name='view_payment_history')
 ]   
 

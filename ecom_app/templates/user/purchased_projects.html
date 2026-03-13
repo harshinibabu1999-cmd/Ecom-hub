@@ -20,7 +20,7 @@
     padding:20px 50px;
 }
 
-/* Card Container */
+/* Card */
 .card{
     background:white;
     border-radius:12px;
@@ -41,7 +41,6 @@
     width:100%;
     height:200px;
     object-fit:cover;
-    display:block;
 }
 
 /* Content */
@@ -54,19 +53,24 @@
     font-size:18px;
 }
 
-.card-content p{
-    color:#666;
-    font-size:14px;
-}
-
 /* Price */
 .price{
     font-weight:bold;
     color:#0d6efd;
-    margin-top:6px;
 }
 
-/* Download Button */
+/* Status */
+.status-success{
+    color:green;
+    font-weight:600;
+}
+
+.status-pending{
+    color:orange;
+    font-weight:600;
+}
+
+/* Button */
 .download-btn{
     display:block;
     margin-top:12px;
@@ -76,14 +80,13 @@
     color:white;
     text-decoration:none;
     border-radius:6px;
-    font-weight:500;
 }
 
 .download-btn:hover{
     background:#157347;
 }
 
-/* Purchased Badge */
+/* Badge */
 .badge{
     position:absolute;
     top:10px;
@@ -95,14 +98,13 @@
     border-radius:20px;
 }
 
-/* Empty message */
 .empty-msg{
     text-align:center;
-    font-size:16px;
     color:#888;
 }
 
 </style>
+
 
 <h2 class="page-title">📂 My Purchased Projects</h2>
 
@@ -123,23 +125,22 @@
 <h3>{{ payment.project.title }}</h3>
 
 <p class="price">₹{{ payment.amount }}</p>
-{% if payment.payment_status == "SUCCESS" %}
-            <span class="status-success">Success</span>
-        {% else %}
-            <span class="status-pending">Pending</span>
-        {% endif %}
 
-        {% if payment.payment_status == "SUCCESS" %}
+<!-- PAYMENT STATUS -->
+{% if payment.status == "SUCCESS" %}
+<span class="status-success">Payment Successful</span>
 
-            <a href="{% url 'download_project' payment.project.id %}" class="download-btn">
+<a href="{% url 'download_project' payment.project.id %}" class="download-btn">
 Download Project
 </a>
-        {% else %}
-        
-<a href="{% url 'phonepe_pay' payment.id %}" class="pay-btn">
-Proceed to Pay
-</a>
-        {% endif %}
+
+{% else %}
+
+<span class="status-pending">Payment Pending</span>
+
+<span style="color:gray;">Payment Required</span>
+
+{% endif %}
 
 </div>
 

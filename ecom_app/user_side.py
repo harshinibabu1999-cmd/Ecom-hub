@@ -37,7 +37,10 @@ def student_register(request):
 
 def user_project_list(request):
     projects = Project.objects.all()
-    return render(request, "user/user_project_list.html", {"projects": projects})
+    payments = Payment.objects.filter(user=request.user, status="SUCCESS")
+
+
+    return render(request, "user/user_project_list.html", {"projects": projects,"payments":payments})
 
 
 @login_required
@@ -107,9 +110,15 @@ def payment_success(request, transaction_id):
 
 @login_required
 def purchased_projects(request):
-    payments = Payment.objects.filter(user=request.user, status="SUCCESS")
 
-    return render(request, "user/purchased_projects.html", {"payments": payments})
+    payments = Payment.objects.filter(
+        user=request.user,
+        status="SUCCESS"
+    ).select_related("project")
+
+    return render(request,"user/purchased_projects.html",{
+        "payments":payments
+    })
 
 def project_detail(request, pk):
     project = get_object_or_404(Project, pk=pk)
@@ -197,3 +206,7 @@ def payment_process(request, pk):
     payment.save()
 
     return redirect("payment_success", transaction_id=payment.transaction_id)
+
+def view_payment_history(request, pk):
+    payment = get_object_or_404(Payment, id=pk)
+    return render(request,"user/view_payment_history.html",{"payment":payment})
