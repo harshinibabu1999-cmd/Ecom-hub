@@ -3,6 +3,72 @@
 
 <style>
 
+
+.page-title{
+    font-size:28px;
+    font-weight:600;
+    margin-bottom:25px;
+}
+
+.form-card{
+    background:#ffffff;
+    padding:35px;
+    border-radius:10px;
+    box-shadow:0 4px 12px rgba(0,0,0,0.08);
+    max-width:900px;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:20px;
+}
+
+.form-group{
+    display:flex;
+    flex-direction:column;
+}
+
+.form-group label{
+    font-weight:500;
+    margin-bottom:6px;
+}
+
+.form-group input,
+.form-group textarea{
+    padding:10px;
+    border:1px solid #ddd;
+    border-radius:6px;
+    font-size:14px;
+}
+
+.form-group textarea{
+    resize:none;
+    height:100px;
+}
+
+.full-width{
+    grid-column:1 / span 2;
+}
+
+.btn-update{
+    margin-top:20px;
+    padding:12px 25px;
+    background:#0d6efd;
+    border:none;
+    color:white;
+    font-weight:500;
+    border-radius:6px;
+    cursor:pointer;
+}
+
+.btn-update:hover{
+    background:#0b5ed7;
+}
+
+
+
+
 /* Center container */
 
 .container{
@@ -69,30 +135,46 @@ form button:hover{
 
 </style>
 
-<div class="container">
+<h2 class="page-title">Edit Project</h2>
 
-<div class="card">
+<div class="form-card">
 
-<h2 class="title">Edit Project</h2>
-
-<form method="POST">
+<form method="POST" enctype="multipart/form-data">
 {% csrf_token %}
 
-<input type="text" name="title" value="{{ project.title }}" placeholder="Project Title">
+<div class="form-grid">
 
-<textarea name="description" placeholder="Description">{{ project.description }}</textarea>
+<div class="form-group">
+<label>Project Title</label>
+<input type="text" name="title" value="{{ project.title }}" required>
+</div>
 
-<input type="text" name="category" value="{{ project.category }}" placeholder="Category">
+<div class="form-group">
+<label>Category</label>
+<input type="text" name="category" value="{{ project.category }}" required>
+</div>
 
-<input type="number" name="price" value="{{ project.price }}" placeholder="Price">
+<div class="form-group">
+<label>Price (₹)</label>
+<input type="number" name="price" value="{{ project.price }}" required>
+</div>
 
-<input type="text" name="drive_link" value="{{ project.drive_link }}" placeholder="Google Drive Link">
+<div class="form-group">
+<label>Project Image</label>
+<input type="file" name="image">
+</div>
 
-<button type="submit">Update Project</button>
+<div class="form-group full-width">
+<label>Description</label>
+<textarea name="description">{{ project.description }}</textarea>
+</div>
+
+</div>
+
+<button type="submit" class="btn-update">Update Project</button>
 
 </form>
 
-</div>
 </div>
 
 {% endblock %}

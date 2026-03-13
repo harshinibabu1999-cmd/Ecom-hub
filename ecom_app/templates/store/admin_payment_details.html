@@ -1,0 +1,106 @@
+{% extends "store/admin_base.html" %}
+
+{% block content %}
+
+<style>
+
+.details-card{
+background:white;
+padding:30px;
+border-radius:10px;
+box-shadow:0 4px 12px rgba(0,0,0,0.08);
+max-width:700px;
+}
+
+.page-title{
+font-size:24px;
+font-weight:600;
+margin-bottom:25px;
+}
+
+.details-row{
+display:flex;
+justify-content:space-between;
+padding:12px 0;
+border-bottom:1px solid #eee;
+}
+
+.label{
+font-weight:600;
+color:#333;
+}
+
+.value{
+color:#555;
+}
+
+.status{
+color:green;
+font-weight:600;
+}
+
+.back-btn{
+margin-top:20px;
+display:inline-block;
+padding:8px 16px;
+background:#0e1d32;
+color:white;
+border-radius:5px;
+text-decoration:none;
+}
+
+.back-btn:hover{
+background:#162a4a;
+}
+
+</style>
+
+
+<div class="details-card">
+
+<h2 class="page-title">Payment Details</h2>
+
+<div class="details-row">
+<span class="label">Student Name</span>
+<span class="value">{{ payment.user.username }}</span>
+</div>
+
+<div class="details-row">
+<span class="label">Email</span>
+<span class="value">{{ payment.user.email }}</span>
+</div>
+
+<div class="details-row">
+<span class="label">Project Name</span>
+<span class="value">{{ payment.project.title }}</span>
+</div>
+
+<div class="details-row">
+<span class="label">Amount Paid</span>
+<span class="value">₹ {{ payment.amount }}</span>
+</div>
+
+
+
+<div class="details-row">
+<span class="label">Payment Status</span>
+
+{% if payment.status == "Success" %}
+<span class="value-status-success">Paid Successfully</span>
+{% else %}
+<span class="value-status-pending" style="color:orange;">Pending</span>
+{% endif %}
+</div>
+
+<div class="details-row">
+<span class="label">Payment Date</span>
+<span class="value">{{ payment.created_at }}</span>
+</div>
+
+<a href="{% url 'admin_payment_history' %}" class="back-btn">
+← Back to Payment History
+</a>
+
+</div>
+
+{% endblock %}

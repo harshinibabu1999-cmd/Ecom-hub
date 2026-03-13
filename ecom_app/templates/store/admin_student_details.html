@@ -112,7 +112,7 @@
                 <td>{{ student.address }}</td>
                 <td>
 
-                    <a href="{% url 'delete_user' student.id %}" class="btn delete-btn">Delete</a>
+                    <a href="{% url 'admin_delete_student' student.id %}" class="btn delete-btn">Delete</a>
                 </td>
             </tr>
             {% empty %}

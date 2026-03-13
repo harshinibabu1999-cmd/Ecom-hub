@@ -1,32 +1,120 @@
-{% extends 'store/admin_base.html' %}
+{% extends "store/admin_base.html" %}
+
 {% block content %}
 
-<h2 style="text-align:center; font-size:28px; font-weight:bold; margin-top:40px; margin-bottom:25px;">
-    Student List
-</h2>
+<style>
+    .page-card {
+        background: white;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    }
 
-<table border="1" cellpadding="10">
+    .page-title {
+        font-size: 24px;
+        font-weight: 600;
+        color: #141926;
+        margin-bottom: 20px;
+    }
 
-<tr>
-    <th>ID</th>
-    <th>Username</th>
-    <th>Details</th>
-</tr>
+    table {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
-{% for student in students %}
+    thead {
+        background: #1a2134;
+        color: white;
+    }
 
-<tr>
-    <td>{{ student.id }}</td>
-    <td>{{ student.username }}</td>
-    <td>
-        <a href="{% url 'admin_student_details' student.id %}">
-            View
-        </a>
-    </td>
-</tr>
+    tbody td {
+        padding: 12px;
+        border-bottom: 1px solid #eee;
+    }
 
-{% endfor %}
+    tbody tr:hover {
+        background: #f7f9ff;
+    }
 
-</table>
+    .no-data {
+        text-align: center;
+        padding: 20px;
+        color: #777;
+    }
+
+    .action-btn {
+        padding: 6px 12px;
+        border: none;
+        border-radius: 4px;
+        font-size: 13px;
+        cursor: pointer;
+    }
+
+    .view-btn {
+        background: #0e1d32;
+        color: white;
+    }
+
+    .delete-btn {
+        background: #dc3545;
+        color: white;
+    }
+</style>
+
+
+<div class="page-card">
+
+    <h2 class="page-title">Student Details</h2>
+
+    <table>
+
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Phone</th>
+                <th>College</th>
+                <th>Dept</th>
+                <th>Year</th>
+                <th>Address</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            {% for student in students %}
+
+            <tr>
+
+                <td>{{ student.username }}</td>
+                <td>{{ student.email }}</td>
+                <td>{{ student.phone_number }}</td>
+                <td>{{ student.college_name }}</td>
+                <td>{{ student.department }}</td>
+                <td>{{ student.year_of_study }}</td>
+                <td>{{ student.address }}</td>
+
+                <td>
+                   <a href="{% url 'admin_delete_student' student.id %}">
+                        <button class="action-btn delete-btn">Delete</button>
+                    </a>
+                </td>
+
+            </tr>
+
+            {% empty %}
+
+            <tr>
+                <td colspan="8" class="no-data">No students found</td>
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
 
 {% endblock %}
