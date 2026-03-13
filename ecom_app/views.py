@@ -127,7 +127,68 @@ def admin_dashboard(request):
     return render(request, 'store/admin_dashboard.html', context)
 
 
+<<<<<<< HEAD
 # ---------------- ADD PROJECT ----------------
+=======
+
+
+
+def admin_add_project(request):
+    if request.method == "POST":
+        project = Project.objects.create(
+            name=request.POST['name'],
+            description=request.POST['description'],
+            price=request.POST['price'],
+            drive_link=request.POST['drive_link'],
+            thumbnail=request.FILES['thumbnail']
+        )
+        return redirect('admin_dashboard')
+
+    return render(request, 'admin_add_project.html')
+
+
+@login_required
+def admin_edit_project(request, pk):
+
+    project = get_object_or_404(Project, id=pk)
+
+    if request.method == "POST":
+        project.title = request.POST.get("title")
+        project.description = request.POST.get("description")
+        project.category = request.POST.get("category")
+        project.price = request.POST.get("price")
+        project.drive_link = request.POST.get("drive_link")
+
+        if request.FILES.get("image"):
+            project.project_image = request.FILES.get("image")
+
+        project.save()
+
+        return redirect("admin_projects")  
+    return render(request, "store/admin_edit_project.html", {"project": project})
+
+
+@login_required
+def admin_delete_project(request, pk):
+    project = get_object_or_404(Project, id=pk)
+    project.delete()
+    return redirect("admin_projects")
+
+@login_required
+def admin_block_user(request, id):
+    user = get_object_or_404(User, id=id)
+    user.is_active = False
+    user.save()
+    return redirect("admin_view_students")
+
+
+def admin_delete_user(request, user_id):
+    user = get_object_or_404(User, id=user_id)
+    user.delete()
+  
+    return redirect('admin_view_students')
+
+>>>>>>> 8beb511dd647c422ff815da6676d8883887abeda
 @login_required
 def admin_add_project(request):
 
@@ -140,7 +201,11 @@ def admin_add_project(request):
             google_drive_link=request.POST.get("drive_link"),
             project_image=request.FILES.get("image"),
         )
+<<<<<<< HEAD
         return redirect("admin_project_list")
+=======
+        return redirect("admin_projects")
+>>>>>>> 8beb511dd647c422ff815da6676d8883887abeda
 
     return render(request, "store/admin_add_project.html")
 
@@ -182,9 +247,19 @@ def admin_project_list(request):
 
 
 @login_required
+<<<<<<< HEAD
 def admin_project_detail(request, id):
     project = get_object_or_404(Project, id=id)
     return render(request, "store/admin_project_detail.html", {"project": project})
+=======
+def admin_projects(request):
+
+    projects = Project.objects.all()
+
+    return render(request, "store/admin_project.html", {
+        "projects": projects
+    })
+>>>>>>> 8beb511dd647c422ff815da6676d8883887abeda
 
 
 @login_required
@@ -239,8 +314,28 @@ def admin_payment_history(request):
         'payments': payments
     }
 
+<<<<<<< HEAD
     return render(request, 'store/admin_payment_history.html', context)
+=======
+    return render(request, 'store/admin_project_list.html', {'projects': projects})
 
+
+
+def admin_student_details(request, pk):
+    student = CustomUser.objects.get(pk=pk)
+    return render(request, 'store/admin_student_details.html', {'student': student})
+
+
+@login_required
+def admin_project_detail(request, pk):
+    project = get_object_or_404(Project, id=pk)
+
+    context = {
+        'project': project
+    }
+>>>>>>> 8beb511dd647c422ff815da6676d8883887abeda
+
+    return render(request, 'store/admin_project_detail.html', context)
 
 @login_required
 def payment_details(request, id):

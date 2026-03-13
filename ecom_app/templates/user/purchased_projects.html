@@ -20,7 +20,6 @@
     padding:20px 50px;
 }
 
-
 /* Card Container */
 .card{
     background:white;
@@ -29,10 +28,9 @@
     overflow:hidden;
     transition:0.3s;
     position:relative;
-    width:300px;   /* proper card width */
+    width:300px;
 }
 
-/* Hover effect */
 .card:hover{
     transform:translateY(-6px);
     box-shadow:0 10px 25px rgba(0,0,0,0.15);
@@ -46,35 +44,6 @@
     display:block;
 }
 
-/* Card Content */
-.card-content{
-    padding:15px;
-}
-
-.card h3{
-    font-size:18px;
-    margin-bottom:8px;
-}
-
-.card p{
-    font-size:14px;
-    color:#555;
-}
-
-/* Button */
-.card button{
-    margin-top:10px;
-    padding:8px 15px;
-    border:none;
-    background:#0a58ca;
-    color:white;
-    border-radius:6px;
-    cursor:pointer;
-}
-
-.card button:hover{
-    background:#084298;
-}
 /* Content */
 .card-content{
     padding:15px;
@@ -90,7 +59,7 @@
     font-size:14px;
 }
 
-/* Price Badge */
+/* Price */
 .price{
     font-weight:bold;
     color:#0d6efd;
@@ -154,10 +123,23 @@
 <h3>{{ payment.project.title }}</h3>
 
 <p class="price">₹{{ payment.amount }}</p>
+{% if payment.payment_status == "SUCCESS" %}
+            <span class="status-success">Success</span>
+        {% else %}
+            <span class="status-pending">Pending</span>
+        {% endif %}
 
-<a href="{{ payment.project.drive_link }}" target="_blank" class="download-btn">
-⬇ Download Project
+        {% if payment.payment_status == "SUCCESS" %}
+
+            <a href="{% url 'download_project' payment.project.id %}" class="download-btn">
+Download Project
 </a>
+        {% else %}
+        
+<a href="{% url 'phonepe_pay' payment.id %}" class="pay-btn">
+Proceed to Pay
+</a>
+        {% endif %}
 
 </div>
 

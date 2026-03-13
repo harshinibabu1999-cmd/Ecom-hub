@@ -36,6 +36,7 @@
 </style>
 <div class="project-container">
 
+<<<<<<< HEAD
     <h2 style="font-size:28px; color:#182137; text-align:center; margin-bottom:20px; font-weight:bold;">
        Admin Dashboard
     </h2>
@@ -150,6 +151,38 @@ No users registered today
 </tbody>
 
 </table>
+=======
+    <h2 style="font-size:28px; color:#2f5fd0; text-align:center; margin-bottom:20px; font-weight:bold;">
+        Welcome to Admin Dashboard
+    </h2>
+{% comment %} 
+    <table class="project-table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Project Name</th>
+                <th>Department</th>
+                <th>Price</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            {% for project in projects %}
+            <tr>
+                <td>{{ project.id }}</td>
+                <td>{{ project.project_name }}</td>
+                <td>{{ project.department }}</td>
+                <td>₹ {{ project.price }}</td>
+                <td>
+                    <a href="{% url 'admin_projects' %}" class="view-btn">View</a>
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table> {% endcomment %}
+>>>>>>> 8beb511dd647c422ff815da6676d8883887abeda
 
 </div>
 

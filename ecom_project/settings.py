@@ -126,4 +126,34 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 PHONEPE_MERCHANT_ID = "YOUR_MERCHANT_ID"
 PHONEPE_SALT_KEY = "YOUR_SALT_KEY"
 
+PHONEPE_MERCHANT_ID = "PGTESTPAYUAT86"
+PHONEPE_SALT_KEY = "96434309-7796-489d-8924-ab56988a6076"
+PHONEPE_SALT_INDEX = "1"
+ 
+PHONEPE_BASE_URL = "https://api-preprod.phonepe.com/apis/pg-sandbox"
+ 
+SITE_DOMAIN = "http://127.0.0.1:8000"
+
+LOGIN_URL = '/'
+
+CSRF_TRUSTED_ORIGINS = [
+    "http://127.0.0.1:8000",
+    "http://localhost:8000"
+]
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
