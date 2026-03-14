@@ -83,7 +83,7 @@ def admin_register_view(request):
 
         user.save()
 
-        return redirect('login_view')
+        return redirect('admin_login_view')
 
     return render(request, 'store/admin_register.html')
 
@@ -101,7 +101,7 @@ def admin_home(request):
 # ---------------- LOGOUT ----------------
 def admin_logout_view(request):
     logout(request)
-    return redirect('login_view')
+    return redirect('admin_login_view')
 
 
 from datetime import datetime
@@ -133,11 +133,13 @@ def admin_dashboard(request):
 def admin_add_project(request):
     if request.method == "POST":
         project = Project.objects.create(
-            name=request.POST['name'],
-            description=request.POST['description'],
-            price=request.POST['price'],
-            drive_link=request.POST['drive_link'],
-            thumbnail=request.FILES['thumbnail']
+            title=request.POST.get("title"),
+            description=request.POST.get("description"),
+            category=request.POST.get("category"),
+            price=request.POST.get("price"),
+            google_drive_link=request.POST.get("google_drive_link"),
+            project_image=request.FILES.get("project_image"),
+            file=request.FILES.get("file")
         )
         return redirect('admin_dashboard')
 
@@ -154,10 +156,13 @@ def admin_edit_project(request, pk):
         project.description = request.POST.get("description")
         project.category = request.POST.get("category")
         project.price = request.POST.get("price")
-        project.drive_link = request.POST.get("drive_link")
+        project.google_drive_link = request.POST.get("google_drive_link")
 
         if request.FILES.get("image"):
             project.project_image = request.FILES.get("image")
+
+        if request.FILES.get("file"):
+            project.file = request.FILES.get("file")
 
         project.save()
 
@@ -207,10 +212,9 @@ def admin_add_project(request):
     return render(request, "store/admin_add_project.html")
 
 
-# ---------------- EDIT PROJECT ----------------
 @login_required
-def admin_edit_project(request, id):
-    project = get_object_or_404(Project, id=id)
+def admin_edit_project(request, pk):
+    project = get_object_or_404(Project, id=pk)
 
     if request.method == "POST":
         project.title = request.POST.get("title")
@@ -229,8 +233,8 @@ def admin_edit_project(request, id):
 
 # ---------------- DELETE PROJECT ----------------
 @login_required
-def admin_delete_project(request, id):
-    project = get_object_or_404(Project, id=id)
+def admin_delete_project(request, pk):
+    project = get_object_or_404(Project, id=pk)
     project.delete()
     return redirect("admin_project_list")
 
@@ -263,7 +267,7 @@ def admin_projects(request):
 def admin_delete_student(request, id):
     user = get_object_or_404(User, id=id)
     user.delete()
-    return redirect('student_list')
+    return redirect('admin_student_list')
 
 
 
@@ -336,7 +340,7 @@ def admin_payment_history(request):
 
 
 @login_required
-def payment_details(request, id):
+def admin_payment_details(request, id):
     if id is None:
         from django.http import HttpResponse
         return HttpResponse("No ID was provided in the URL!")

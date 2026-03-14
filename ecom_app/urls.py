@@ -19,8 +19,8 @@ urlpatterns = [
     path('add-project/', views.admin_add_project, name='admin_add_project'),
     path('delete-project/<int:pk>/', views.admin_delete_project, name='admin_delete_project'),
     path('edit-project/<int:pk>/', views.admin_edit_project, name='admin_edit_project'),
-    path('payment_history/', views.admin_payment_history, name='admin_payment_history'),
-    path('delete-user/<int:user_id>/', views.admin_delete_user, name='delete_user'),
+    path('admin-payment_history/', views.admin_payment_history, name='admin_payment_history'),
+    path('delete-user/<int:user_id>/', views.admin_delete_user, name='admin_delete_user'),
     path('upload-project/', views.admin_upload_project, name='upload_project'),
     path('projects/', views.admin_project_list, name='admin_project_list'),
     path('student/<int:pk>', views.admin_student_details, name='admin_student_details'),
@@ -32,15 +32,12 @@ urlpatterns = [
 
     path('delete-student/<int:id>/', views.admin_delete_student, name='admin_delete_student'),
 
-    path('student-list/', views.admin_student_list, name='student_list'),
 
-    path('student/<int:id>/', views.admin_student_details, name='student_details'),
 
     path('view-projects/', views.admin_view_project, name='admin_view_project'),
 
-    path('payment-history/', views.admin_payment_history, name='admin_payment_history'),
 
-    path('payment-details/<int:id>/', views.payment_details, name='payment_details'),
+    path('payment-details/<int:id>/', views.admin_payment_details, name='admin_payment_details'),
     
 
 
@@ -70,7 +67,7 @@ urlpatterns = [
     path('student-register/',views.student_register,name='student_register'),
     path('payment-details/',views.payment_details,name='payment_details'),
     path('user-home/',views.user_home,name='user_home'),
-    path("view-projects/", views.user_project_list, name="user_project_list"),
+    path("user_view-projects/", views.user_project_list, name="user_project_list"),
     path('projects/<int:pk>/', views.project_detail, name='project_detail'),
     path('student-register/',views.student_register,name='student_register'),
     path('buy/<int:pk>/', views.initiate_payment, name='initiate_payment'),
@@ -82,7 +79,7 @@ urlpatterns = [
     path('payment-success/<str:transaction_id>/', views.payment_success, name='payment_success'),
     path('payment-process/', views.payment_process, name='payment_process'),
     path('phonepe-pay/<int:pk>/', views.phonepe_payment, name='phonepe_pay'),
-    path('payment-detail/<int:pk>/', views.view_payment_history, name='view_payment_history')
+    # path('payment-detail/<int:pk>/', views.payment_detail, name='payment_detail')
 ]   
 
 

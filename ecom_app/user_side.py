@@ -2,9 +2,10 @@ import base64
 import hashlib
 import json
 import uuid
+import requests
 from django.shortcuts import redirect
 from django.http import JsonResponse
-
+from django.http import FileResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import *
 from .user_side import *
@@ -13,7 +14,7 @@ from .models import Project, Payment
 from django.contrib.auth.decorators import login_required
 from .models import CustomUser
 from django.views.decorators.csrf import csrf_exempt
-
+from django.http import FileResponse, HttpResponse
 
 
 @login_required
@@ -131,14 +132,13 @@ def download_project(request, pk):
     payment = Payment.objects.filter(
         user=request.user,
         project=project,
-        payment_status="SUCCESS"
+        status="SUCCESS"
     ).first()
 
     if not payment:
-        return HttpResponse("Payment not completed. Download not allowed.")
+        return redirect("user_home")
 
-    return FileResponse(project.project_file.open(), as_attachment=True)
-
+    return redirect(project.google_drive_link)
 
 def phonepe_payment(request, pk):
 
@@ -200,7 +200,7 @@ def payment_process(request, pk):
 
     payment = get_object_or_404(Payment, id=pk)
 
-    payment.payment_status = "SUCCESS"
+    payment.status = "SUCCESS"
     payment.payment_mode = request.POST.get("payment_method")
 
     payment.save()

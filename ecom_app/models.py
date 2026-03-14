@@ -85,6 +85,8 @@ class Project(models.Model):
     project_image = models.ImageField(upload_to='project_images/')
 
     created_at = models.DateTimeField(auto_now_add=True)
+
+    file = models.FileField(upload_to="projects/")
  
     def __str__(self):
 
@@ -136,8 +138,6 @@ class Payment(models.Model):
     def __str__(self):
 
         return f"{self.user.username} - {self.project.title} - {self.status}"
-
-
 
 class Purchase(models.Model):
  
