@@ -25,15 +25,7 @@ urlpatterns = [
     path('students/', views.admin_student_list, name='admin_student_list'),
     path('admin-project/<int:pk>/', views.admin_project_detail, name='admin_project_detail'),
     path('delete-student/<int:id>/', views.admin_delete_student, name='admin_delete_student'),
-<<<<<<< HEAD
-    path('view-projects/', views.admin_view_project, name='admin_view_project'),
-=======
 
-
-
-
-
->>>>>>> 1993b0979d958b364ed65bff7682a57686414863
     path('payment-details/<int:id>/', views.admin_payment_details, name='admin_payment_details'),
     
 

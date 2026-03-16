@@ -88,12 +88,7 @@ class Project(models.Model):
 
     created_at = models.DateTimeField(auto_now_add=True)
 
-<<<<<<< HEAD
-    file = models.FileField(upload_to="projects/")
 
-=======
- 
->>>>>>> 1993b0979d958b364ed65bff7682a57686414863
  
     def __str__(self):
 
