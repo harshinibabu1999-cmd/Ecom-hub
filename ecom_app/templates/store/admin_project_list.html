@@ -3,74 +3,80 @@
 {% block content %}
 
 <style>
+    .content-wrapper {
+        padding: 30px;
+        font-family: 'Segoe UI', sans-serif;
+    }
 
-.content-wrapper{
-    padding:30px;
-    font-family:'Segoe UI',sans-serif;
-}
+    .title {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
+    }
 
-.title{
-    text-align:center;
-    margin-bottom:30px;
-    color:#333;
-}
+    .table-container {
+        width: 100%;
+        overflow-x: auto;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
 
-.table-container{
-    width:100%;
-    overflow-x:auto;
-    background:white;
-    border-radius:8px;
-    box-shadow:0 4px 6px rgba(0,0,0,0.05);
-}
+    .project-table {
+        width: 100%;
+        border-collapse: collapse;
+    }
 
-.project-table{
-    width:100%;
-    border-collapse:collapse;
-}
+    .project-table thead {
+        background: #f8f9fa;
+    }
 
-.project-table thead{
-    background:#f8f9fa;
-}
+    .project-table th {
+        padding: 15px;
+        text-align: left;
+        font-size: 13px;
+        text-transform: uppercase;
+    }
 
-.project-table th{
-    padding:15px;
-    text-align:left;
-    font-size:13px;
-    text-transform:uppercase;
-}
+    .project-table td {
+        padding: 15px;
+        border-bottom: 1px solid #eee;
+    }
 
-.project-table td{
-    padding:15px;
-    border-bottom:1px solid #eee;
-}
+    .project-img {
+        width: 80px;
+        height: 60px;
+        object-fit: cover;
+        border-radius: 4px;
+    }
 
-.project-img{
-    width:80px;
-    height:60px;
-    object-fit:cover;
-    border-radius:4px;
-}
+    .view-btn {
+        background: #2f5be7;
+        color: white;
+        padding: 8px 15px;
+        border-radius: 4px;
+        text-decoration: none;
+    }
 
-.view-btn{
-    background:#2f5be7;
-    color:white;
-    padding:8px 15px;
-    border-radius:4px;
-    text-decoration:none;
-}
+    .view-btn:hover {
+        background: #1e3fb8;
+    }
 
-.view-btn:hover{
-    background:#1e3fb8;
-}
-
+    .badge {
+        background: #f1f3f5;
+        padding: 5px 10px;
+        border-radius: 12px;
+        font-size: 12px;
+    }
 </style>
 
 <div class="content-wrapper">
 
-<h2 class="title">Available IEEE Projects</h2>
+    <h2 class="title">Available IEEE Projects</h2>
 
     <div class="table-container">
         <table class="project-table">
+
             <thead>
                 <tr>
                     <th>Image</th>
@@ -81,29 +87,44 @@
                     <th>Action</th>
                 </tr>
             </thead>
+
             <tbody>
+
                 {% for project in projects %}
                 <tr>
+
                     <td>
+                        {% if project.project_image %}
                         <img src="{{ project.project_image.url }}" class="project-img" alt="{{ project.title }}">
+                        {% else %}
+                        <span>No Image</span>
+                        {% endif %}
                     </td>
+
                     <td><strong>{{ project.title }}</strong></td>
+
                     <td>{{ project.description|truncatewords:10 }}</td>
-                    <td><span class="badge">{{ project.category }}</span></td>
-                    <td>₹{{ project.price }}</td>
+
                     <td>
+                        <span class="badge">{{ project.category }}</span>
+                    </td>
 
-                        <a href="{% url 'admin_project_detail' project.id %}"  class="view-btn">
+                    <td>₹{{ project.price }}</td>
 
-
+                    <td>
+                        <a href="{% url 'admin_project_detail' project.id %}" class="view-btn">
                             View
                         </a>
                     </td>
+
                 </tr>
                 {% endfor %}
+
             </tbody>
+
         </table>
     </div>
+
 </div>
 
 {% endblock %}

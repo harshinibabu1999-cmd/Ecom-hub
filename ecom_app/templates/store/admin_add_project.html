@@ -22,7 +22,8 @@
     form {
         display: flex;
         flex-direction: column;
-        gap: 15px; /* Spacing between fields */
+        gap: 15px;
+        /* Spacing between fields */
     }
 
     input[type="text"],
@@ -37,11 +38,14 @@
         font-size: 15px;
         outline: none;
         transition: border-color 0.3s, box-shadow 0.3s;
-        box-sizing: border-box; /* Crucial for width alignment */
+        box-sizing: border-box;
+        /* Crucial for width alignment */
     }
 
     /* Focus effect for better UX */
-    input:focus, textarea:focus, select:focus {
+    input:focus,
+    textarea:focus,
+    select:focus {
         border-color: #2f5be7;
         box-shadow: 0 0 5px rgba(47, 91, 231, 0.2);
     }
@@ -89,24 +93,36 @@
     <form method="POST" enctype="multipart/form-data">
         {% csrf_token %}
 
-        <input type="text" name="title" placeholder="Project Title" required>
+        <label>Title</label>
+        <input type="text" name="title">
 
-        <textarea name="description" placeholder="Description" required></textarea>
+        <label>Description</label>
+        <textarea name="description"></textarea>
 
-        <select name="category" required>
-            <option value="">Select Category</option>
-            <option value="CSE">Computer Science</option>
-            <option value="ECE">Electronics</option>
-            <option value="EEE">Electrical</option>
-            <option value="IT">Information Technology</option>
-            <option value="MECH">Mechanical</option>
+        <label>Category</label>
+        <select name="category">
+            <option value="AI">Artificial Intelligence</option>
+            <option value="ML">Machine Learning</option>
+            <option value="DL">Deep Learning</option>
+            <option value="WEB">Web Development</option>
+            <option value="IOT">Internet of Things</option>
+            <option value="DATA">Data Science</option>
         </select>
 
-        <input type="number" step="0.01" name="price" placeholder="Price" required>
-        <input type="url" name="drive_link" placeholder="Google Drive Link" required>
-        <input type="file" name="image" required>
+        <label>Price</label>
+        <input type="text" name="price">
 
-        <button type="submit">Upload Project</button>
+        <label>Google Drive Link</label>
+        <input type="url" name="drive_link">
+
+        <label>Project Image</label>
+        <input type="file" name="image">
+
+        <label>Project Video</label>
+        <input type="file" name="video">
+
+        <button type="submit">Add Project</button>
+
     </form>
 </div>
 

@@ -20,16 +20,20 @@ urlpatterns = [
     path('delete-project/<int:pk>/', views.admin_delete_project, name='admin_delete_project'),
     path('edit-project/<int:pk>/', views.admin_edit_project, name='admin_edit_project'),
     path('admin-payment_history/', views.admin_payment_history, name='admin_payment_history'),
-    path('delete-user/<int:user_id>/', views.admin_delete_user, name='admin_delete_user'),
-    path('upload-project/', views.admin_upload_project, name='upload_project'),
     path('projects/', views.admin_project_list, name='admin_project_list'),
     path('student/<int:pk>', views.admin_student_details, name='admin_student_details'),
-    path('projects/', views.admin_projects, name='admin_projects'),
-    path('upload-project/', views.admin_upload_project, name='admin_upload_project'),
     path('students/', views.admin_student_list, name='admin_student_list'),
     path('admin-project/<int:pk>/', views.admin_project_detail, name='admin_project_detail'),
     path('delete-student/<int:id>/', views.admin_delete_student, name='admin_delete_student'),
+<<<<<<< HEAD
     path('view-projects/', views.admin_view_project, name='admin_view_project'),
+=======
+
+
+
+
+
+>>>>>>> 1993b0979d958b364ed65bff7682a57686414863
     path('payment-details/<int:id>/', views.admin_payment_details, name='admin_payment_details'),
     
 

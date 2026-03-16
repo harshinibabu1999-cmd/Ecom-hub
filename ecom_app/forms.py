@@ -5,4 +5,5 @@ class ProjectForm(forms.ModelForm):
 
     class Meta:
         model = Project
-        fields = ['title', 'description', 'category', 'price', 'google_drive_link', 'project_image']
+        fields = ['title', 'video', 'description', 'category', 'price', 'google_drive_link', 'project_image']
+    
