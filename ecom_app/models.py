@@ -74,6 +74,8 @@ class Project(models.Model):
  
     title = models.CharField(max_length=255)
 
+    video = models.FileField(upload_to='videos/', null=True, blank=True)
+
     description = models.TextField()
 
     category = models.CharField(max_length=50, choices=CATEGORY_CHOICES)
@@ -82,11 +84,11 @@ class Project(models.Model):
 
     google_drive_link = models.URLField()
 
-    project_image = models.ImageField(upload_to='project_images/')
+    project_image = models.ImageField(upload_to='projects/', null=True, blank=True)
 
     created_at = models.DateTimeField(auto_now_add=True)
 
-    file = models.FileField(upload_to="projects/")
+ 
  
     def __str__(self):
 

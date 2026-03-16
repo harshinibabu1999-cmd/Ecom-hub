@@ -2,39 +2,56 @@
 
 <table border="1" cellpadding="10">
 
-<tr>
-<th>Image</th>
-<td><img src="{{ project.image.url }}" width="150"></td>
-</tr>
+    <tr>
+        <th>Image</th>
+        <td>
+            {% if project.image %}
+            <img src="{{ project.image.url }}" width="150">
+            {% endif %}
+        </td>
+    </tr>
 
-<tr>
-<th>Title</th>
-<td>{{ project.title }}</td>
-</tr>
+    <tr>
+        <th>Video</th>
+        <td>
+            {% if project.video %}
+            <video width="320" height="240" controls>
+                <source src="{{ project.video.url }}">
+            </video>
+            {% else %}
+            No video available
+            {% endif %}
+        </td>
+    </tr>
 
-<tr>
-<th>Description</th>
-<td>{{ project.description }}</td>
-</tr>
+    <tr>
+        <th>Title</th>
+        <td>{{ project.title }}</td>
+    </tr>
 
-<tr>
-<th>Category</th>
-<td>{{ project.category }}</td>
-</tr>
+    <tr>
+        <th>Description</th>
+        <td>{{ project.description }}</td>
+    </tr>
 
-<tr>
-<th>Price</th>
-<td>₹{{ project.price }}</td>
-</tr>
+    <tr>
+        <th>Category</th>
+        <td>{{ project.category }}</td>
+    </tr>
 
-<tr>
-<td colspan="2">
+    <tr>
+        <th>Price</th>
+        <td>₹{{ project.price }}</td>
+    </tr>
 
-<a href="{% url 'edit_project' project.id %}">Edit</a>
+    <tr>
+        <td colspan="2">
 
-<a href="{% url 'delete_project' project.id %}">Delete</a>
+            <a href="{% url 'admin_edit_project' project.id %}">Edit</a>
 
-</td>
-</tr>
+            <a href="{% url 'admin_delete_project' project.id %}">Delete</a>
+
+        </td>
+    </tr>
 
 </table>
