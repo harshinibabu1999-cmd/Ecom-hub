@@ -126,7 +126,7 @@ def admin_add_project(request):
             price=request.POST.get("price"),
             google_drive_link=request.POST.get("drive_link"),
             project_image=request.FILES.get("image"),
-            video=request.FILES.get("video")   
+            video=request.FILES.get("video")   # ✅ add this
         )
 
         return redirect("admin_project_list")
