@@ -28,15 +28,8 @@ urlpatterns = [
     path('upload-project/', views.admin_upload_project, name='admin_upload_project'),
     path('students/', views.admin_student_list, name='admin_student_list'),
     path('admin-project/<int:pk>/', views.admin_project_detail, name='admin_project_detail'),
-
-
     path('delete-student/<int:id>/', views.admin_delete_student, name='admin_delete_student'),
-
-
-
     path('view-projects/', views.admin_view_project, name='admin_view_project'),
-
-
     path('payment-details/<int:id>/', views.admin_payment_details, name='admin_payment_details'),
     
 
@@ -79,7 +72,7 @@ urlpatterns = [
     path('payment-success/<str:transaction_id>/', views.payment_success, name='payment_success'),
     path('payment-process/', views.payment_process, name='payment_process'),
     path('phonepe-pay/<int:pk>/', views.phonepe_payment, name='phonepe_pay'),
-    # path('payment-detail/<int:pk>/', views.payment_detail, name='payment_detail')
+   
 ]   
 
 

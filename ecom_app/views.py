@@ -91,14 +91,11 @@ def admin_register_view(request):
 
 
 
-# ---------------- ADMIN HOME ----------------
 @login_required
 def admin_home(request):
     projects = Project.objects.all()
     return render(request, 'store/admin_home.html', {'projects': projects})
 
-
-# ---------------- LOGOUT ----------------
 def admin_logout_view(request):
     logout(request)
     return redirect('admin_login_view')
@@ -125,25 +122,6 @@ def admin_dashboard(request):
     }
 
     return render(request, 'store/admin_dashboard.html', context)
-
-
-
-
-
-def admin_add_project(request):
-    if request.method == "POST":
-        project = Project.objects.create(
-            title=request.POST.get("title"),
-            description=request.POST.get("description"),
-            category=request.POST.get("category"),
-            price=request.POST.get("price"),
-            google_drive_link=request.POST.get("google_drive_link"),
-            project_image=request.FILES.get("project_image"),
-            file=request.FILES.get("file")
-        )
-        return redirect('admin_dashboard')
-
-    return render(request, 'admin_add_project.html')
 
 
 @login_required
@@ -176,12 +154,6 @@ def admin_delete_project(request, pk):
     project.delete()
     return redirect("admin_projects")
 
-@login_required
-def admin_block_user(request, id):
-    user = get_object_or_404(User, id=id)
-    user.is_active = False
-    user.save()
-    return redirect("admin_view_students")
 
 
 def admin_delete_user(request, user_id):
@@ -211,7 +183,6 @@ def admin_add_project(request):
 
     return render(request, "store/admin_add_project.html")
 
-
 @login_required
 def admin_edit_project(request, pk):
     project = get_object_or_404(Project, id=pk)
@@ -231,27 +202,18 @@ def admin_edit_project(request, pk):
     return render(request, "store/admin_edit_project.html", {"project": project})
 
 
-# ---------------- DELETE PROJECT ----------------
 @login_required
 def admin_delete_project(request, pk):
     project = get_object_or_404(Project, id=pk)
     project.delete()
     return redirect("admin_project_list")
 
-
-# ---------------- PROJECT LIST ----------------
 @login_required
 def admin_project_list(request):
     projects = Project.objects.all().order_by('-created_at')
     return render(request, 'store/admin_project_list.html', {'projects': projects})
 
 
-
-@login_required
-
-def admin_project_detail(request, id):
-    project = get_object_or_404(Project, id=id)
-    return render(request, "store/admin_project_detail.html", {"project": project})
 
 def admin_projects(request):
 
@@ -262,13 +224,11 @@ def admin_projects(request):
     })
 
 
-
 @login_required
 def admin_delete_student(request, id):
     user = get_object_or_404(User, id=id)
     user.delete()
     return redirect('admin_student_list')
-
 
 
 @login_required
@@ -278,17 +238,9 @@ def admin_student_list(request):
 
 
 @login_required
-def admin_student_details(request, id):
-    student = get_object_or_404(CustomUser, id=id)
-    return render(request, 'store/admin_student_details.html', {'student': student})
-
-
-@login_required
 def admin_view_project(request):
     projects = Project.objects.all()
     return render(request, 'store/admin_view_project.html', {'projects': projects})
-
-
 
 
 @login_required
@@ -305,8 +257,6 @@ def admin_upload_project(request):
         form = ProjectForm()
 
     return render(request, 'store/admin_upload_project.html', {'form': form})
-
-
 
 
 def admin_student_details(request, pk):
@@ -336,7 +286,6 @@ def admin_payment_history(request):
 
 
     return render(request, 'store/admin_payment_history.html', context)
-
 
 
 @login_required

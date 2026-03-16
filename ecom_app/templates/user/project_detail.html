@@ -12,19 +12,21 @@
 }
 
 .detail-card{
-    width:250px;
+    width:350px;
     background:white;
     padding:30px;
     border-radius:12px;
     box-shadow:0 6px 25px rgba(0,0,0,0.1);
+    text-align:center;
 }
 
 .project-image{
     width:70%;
-    height:100px;
+    height:150px;
     object-fit:cover;
     border-radius:10px;
-    align: center;
+    display:block;
+    margin:auto;
 }
 
 .project-title{
@@ -57,16 +59,24 @@
     color:#0d6efd;
 }
 
-.buy-btn{
-    display:inline-block;
+/* BUTTON GROUP */
+
+.button-group{
+    display:flex;
+    gap:15px;
     margin-top:25px;
-    padding:12px 30px;
+}
+
+.buy-btn{
+    flex:1;
+    padding:12px 20px;
     background:#0d6efd;
     color:white;
     text-decoration:none;
     border-radius:8px;
     font-weight:600;
     font-size:16px;
+    text-align:center;
 }
 
 .buy-btn:hover{
@@ -90,9 +100,15 @@
 <p class="price">Price: ₹{{ project.price }}</p>
 </div>
 
+<div class="button-group">
+
+<a href="#" class="buy-btn">🎬 Output Video</a>
+
 <a href="{% url 'initiate_payment' project.id %}" class="buy-btn">
 💳 Buy Now
 </a>
+
+</div>
 
 </div>
 
