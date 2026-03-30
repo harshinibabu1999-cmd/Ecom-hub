@@ -3,76 +3,100 @@
 
 <style>
 
-.container{
-    max-width:700px;
-    margin:40px auto;
+.payment-container{
+max-width:700px;
+margin:auto;
+padding:20px;
 }
 
 .payment-card{
-    background:white;
-    padding:30px;
-    border-radius:12px;
-    box-shadow:0 6px 18px rgba(0,0,0,0.1);
+background:white;
+padding:30px;
+border-radius:12px;
+box-shadow:0 6px 18px rgba(0,0,0,0.1);
 }
 
 .title{
-    font-size:24px;
-    font-weight:600;
-    margin-bottom:25px;
-    text-align:center;
+font-size:24px;
+font-weight:600;
+margin-bottom:25px;
+text-align:center;
 }
+
+/* GRID ROW */
 
 .detail-row{
-    display:flex;
-    justify-content:space-between;
-    padding:12px 0;
-    border-bottom:1px solid #eee;
+display:grid;
+grid-template-columns:200px 1fr;
+padding:12px 0;
+border-bottom:1px solid #eee;
+align-items:center;
 }
+
+/* LABEL */
 
 .label{
-    font-weight:600;
-    color:#555;
+font-weight:600;
+color:#555;
 }
+
+/* VALUE */
 
 .value{
-    color:#222;
+color:#222;
+word-break:break-word;
 }
 
+/* STATUS */
+
 .status-success{
-    color:green;
-    font-weight:600;
+color:green;
+font-weight:600;
 }
 
 .status-pending{
-    color:orange;
-    font-weight:600;
+color:orange;
+font-weight:600;
 }
 
 .status-failed{
-    color:red;
-    font-weight:600;
+color:red;
+font-weight:600;
 }
 
+/* BUTTON */
+
 .btn-back{
-    margin-top:25px;
-    display:block;
-    width:120px;
-    text-align:center;
-    padding:10px;
-    background:#0f2a44;
-    color:white;
-    border-radius:6px;
-    text-decoration:none;
+margin-top:25px;
+display:inline-block;
+padding:10px 18px;
+background:#0f2a44;
+color:white;
+border-radius:6px;
+text-decoration:none;
 }
 
 .btn-back:hover{
-    background:#163b5f;
+background:#163b5f;
+}
+
+/* MOBILE */
+
+@media (max-width:600px){
+
+.detail-row{
+grid-template-columns:140px 1fr;
+}
+
+.payment-card{
+padding:20px;
+}
+
 }
 
 </style>
 
-
-<div class="container">
+<div class="payment-container">
 
 <div class="payment-card">
 
@@ -93,11 +117,6 @@
 <span class="value">{{ payment.transaction_id }}</span>
 </div>
 
-{% comment %} <div class="detail-row">
-<span class="label">PhonePe Transaction ID</span>
-<span class="value">{{ payment.phonepe_transaction_id|default:"-" }}</span>
-</div> {% endcomment %}
-
 <div class="detail-row">
 <span class="label">Payment Mode</span>
 <span class="value">{{ payment.payment_mode }}</span>
@@ -109,9 +128,10 @@
 </div>
 
 <div class="detail-row">
+
 <span class="label">Status</span>
 
-<span class="
+<span class="value
 {% if payment.status == 'SUCCESS' %}
 status-success
 {% elif payment.status == 'FAILED' %}
@@ -120,7 +140,9 @@ status-failed
 status-pending
 {% endif %}
 ">
+
 {{ payment.status }}
+
 </span>
 
 </div>
@@ -129,8 +151,6 @@ status-pending
 <span class="label">Payment Date</span>
 <span class="value">{{ payment.created_at }}</span>
 </div>
-
-
 
 <a href="{% url 'payment_details' %}" class="btn-back">Back</a>
 

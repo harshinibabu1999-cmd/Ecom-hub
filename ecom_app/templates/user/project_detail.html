@@ -102,7 +102,7 @@
 
 <div class="button-group">
 
-<a href="#" class="buy-btn">🎬 Output Video</a>
+<a href="{% url 'view_output_video' project.id %}" class="buy-btn">🎬 Output Video</a>
 
 <a href="{% url 'initiate_payment' project.id %}" class="buy-btn">
 💳 Buy Now

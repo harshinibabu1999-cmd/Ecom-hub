@@ -210,3 +210,10 @@ def payment_process(request, pk):
 def view_payment_history(request, pk):
     payment = get_object_or_404(Payment, id=pk)
     return render(request,"user/view_payment_history.html",{"payment":payment})
+
+
+def view_output_video(request, pk):
+
+    project = get_object_or_404(Project, id=pk)
+
+    return render(request, "user/output_video.html", {"project": project})

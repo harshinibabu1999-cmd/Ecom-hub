@@ -1,120 +1,167 @@
-{% extends "user/user_base.html" %} {% block content %}
+{% extends "user/user_base.html" %}
+{% block content %}
 
 <style>
-  .page-title {
-    font-size: 28px;
-    font-weight: 600;
-    margin-bottom: 20px;
-  }
 
-  /* Card container */
-  .payment-card {
-    background: white;
-    padding: 25px;
-    border-radius: 12px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  }
+.page-title{
+font-size:28px;
+font-weight:600;
+margin-bottom:20px;
+}
 
-  /* Table */
-  .payment-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 15px;
-  }
+/* Card container */
 
-  .payment-table thead {
-    background: #0d6efd;
-    color: white;
-  }
+.payment-card{
+background:white;
+padding:25px;
+border-radius:12px;
+box-shadow:0 4px 20px rgba(0,0,0,0.08);
+max-width:1100px;
+margin:auto;
+}
 
-  .payment-table th,
-  .payment-table td {
-    padding: 12px 15px;
-    text-align: center;
-  }
+/* Table wrapper (important for mobile) */
 
-  .payment-table tbody tr {
-    border-bottom: 1px solid #eee;
-  }
+.table-container{
+width:100%;
+overflow-x:auto;
+}
 
-  .payment-table tbody tr:hover {
-    background: #f5f8ff;
-  }
+/* Table */
 
-  /* Status badge */
-  .status-success {
-    background: #d4edda;
-    color: #155724;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 13px;
-  }
+.payment-table{
+width:100%;
+border-collapse:collapse;
+font-size:15px;
+min-width:700px;
+}
 
-  .status-pending {
-    background: #fff3cd;
-    color: #856404;
-    padding: 5px 10px;
-    border-radius: 20px;
-    font-size: 13px;
-  }
+.payment-table thead{
+background:#0d6efd;
+color:white;
+}
 
-  .empty-msg {
-    text-align: center;
-    padding: 20px;
-    color: #888;
-  }
+.payment-table th,
+.payment-table td{
+padding:12px 15px;
+text-align:center;
+}
+
+.payment-table tbody tr{
+border-bottom:1px solid #eee;
+}
+
+.payment-table tbody tr:hover{
+background:#f5f8ff;
+}
+
+/* Status badge */
+
+.status-success{
+background:#d4edda;
+color:#155724;
+padding:5px 10px;
+border-radius:20px;
+font-size:13px;
+}
+
+.status-pending{
+background:#fff3cd;
+color:#856404;
+padding:5px 10px;
+border-radius:20px;
+font-size:13px;
+}
+
+.empty-msg{
+text-align:center;
+padding:20px;
+color:#888;
+}
+
+/* Mobile adjustments */
+
+@media (max-width:600px){
+
+.payment-card{
+padding:15px;
+}
+
+.page-title{
+font-size:22px;
+}
+
+}
+
 </style>
 
 <div class="payment-card">
-  <h2 class="page-title">💳 My Payment History</h2>
 
-  <table class="payment-table">
-    <thead>
-      <tr>
-        <th>Transaction ID</th>
-        <th>Project</th>
-        <th>Payment Mode</th>
-        <th>Amount</th>
-        <th>Status</th>
-        <th>Date</th>
-        <th>Action</th>
-      </tr>
-    </thead>
+<h2 class="page-title">💳 My Payment History</h2>
 
-    <tbody>
-      {% for payment in payments %}
+<div class="table-container">
 
-      <tr>
-        <td>{{ payment.transaction_id }}</td>
-        <td>{{ payment.project.title }}</td>
-        <td>{{ payment.payment_mode }}</td>
-        <td>₹{{ payment.amount }}</td>
+<table class="payment-table">
 
-        <td>
-          {% if payment.status == "SUCCESS" %}
-          <span class="status-success">Success</span>
-          {% else %}
-          <span class="status-pending">Pending</span>
-          {% endif %}
-        </td>
+<thead>
 
-        <td>{{ payment.created_at|date:"d M Y" }}</td>
-        <td>
-          {% comment %} <a href="{% url 'view_payment_history' payment.id %}"
-            ><button>View</button></a
-          > {% endcomment %}
-        </td>
-      </tr>
+<tr>
+<th>Transaction ID</th>
+<th>Project</th>
+<th>Payment Mode</th>
+<th>Amount</th>
+<th>Status</th>
+<th>Date</th>
+<th>Action</th>
+</tr>
 
-      {% empty %}
+</thead>
 
-      <tr>
-        <td colspan="7" class="empty-msg">No Payment History Found</td>
-      </tr>
+<tbody>
 
-      {% endfor %}
-    </tbody>
-  </table>
+{% for payment in payments %}
+
+<tr>
+
+<td>{{ payment.transaction_id }}</td>
+<td>{{ payment.project.title }}</td>
+<td>{{ payment.payment_mode }}</td>
+<td>₹{{ payment.amount }}</td>
+
+<td>
+{% if payment.status == "SUCCESS" %}
+<span class="status-success">Success</span>
+{% else %}
+<span class="status-pending">Pending</span>
+{% endif %}
+</td>
+
+<td>{{ payment.created_at|date:"d M Y" }}</td>
+
+<td>
+<a href="{% url 'view_payment_history' payment.id %}">
+<button>View</button>
+</a>
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="7" class="empty-msg">
+No Payment History Found
+</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
+
+</div>
+
 </div>
 
 {% endblock %}
