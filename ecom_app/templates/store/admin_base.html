@@ -6,148 +6,174 @@
     <title>E-Com Hub</title>
 
     <style>
-        /* GENERAL */
+      /* GLOBAL */
+body {
+    margin: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    background: #f1f5f9;
+}
 
-        body {
-            margin: 0;
-            font-family: Arial, Helvetica, sans-serif;
-            background: #f4f6f9;
-        }
+/* HEADER (TOP NAVBAR) */
+.header {
+    background: linear-gradient(180deg, #0a2540, #0d3b66);
+    color: white;
+    padding: 15px 20px;
+    font-size: 20px;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
 
-        /* HEADER */
+/* HEADER LEFT */
+.header-left {
+    display: flex;
+    align-items: center;
+}
 
-        .header {
-            background: #051422;
-            color: white;
-            padding: 15px;
-            font-size: 22px;
-            font-weight: bold;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-        }
+/* TOGGLE BUTTON */
+.toggle-btn {
+    background: transparent;
+    color: white;
+    border: none;
+    font-size: 20px;
+    margin-right: 15px;
+    cursor: pointer;
+}
 
-        /* LEFT HEADER PART */
+/* PROFILE */
+.profile-menu {
+    position: relative;
+}
 
-        .header-left {
-            display: flex;
-            align-items: center;
-        }
+.profile-icon {
+    background: white;
+    padding: 8px 12px;
+    border-radius: 50%;
+    cursor: pointer;
+}
 
-        /* TOGGLE BUTTON */
+/* DROPDOWN */
+.dropdown {
+    display: none;
+    position: absolute;
+    right: 0;
+    top: 40px;
+    background: white;
+    border-radius: 6px;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.15);
+    min-width: 120px;
+}
 
-        .toggle-btn {
-            background: #051422;
-            color: white;
-            border: none;
-            padding: 8px 12px;
-            cursor: pointer;
-            border-radius: 4px;
-            font-size: 18px;
-            margin-right: 15px;
-        }
+.dropdown a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #333;
+}
 
-        /* PROFILE MENU */
+.dropdown a:hover {
+    background: #f2f2f2;
+}
 
-        .profile-menu {
-            position: relative;
-        }
+/* LAYOUT */
+.page {
+    display: flex;
+}
 
-        .profile-icon {
-            background: #ffffff;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 16px;
-        }
+/* SIDEBAR */
+.sidebar {
+    width: 240px;
+    background: linear-gradient(180deg, #0a2540, #0d3b66);
+    min-height: 100vh;
+    transition: 0.3s;
+}
 
-        /* DROPDOWN */
+/* COLLAPSE */
+.sidebar.closed {
+    width: 0;
+    overflow: hidden;
+}
 
-        .dropdown {
-            display: none;
-            position: absolute;
-            right: 0;
-            top: 40px;
-            background: white;
-            border-radius: 6px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-            min-width: 120px;
-        }
+/* SIDEBAR LINKS */
+.sidebar a {
+    display: block;
+    color: #cbd5e1;
+    padding: 12px 20px;
+    text-decoration: none;
+    border-radius: 6px;
+    margin: 5px 10px;
+}
 
-        .dropdown a {
-            display: block;
-            padding: 10px;
-            text-decoration: none;
-            color: #333;
-            font-size: 14px;
-        }
+.sidebar a:hover {
+    background: #1e293b;
+    color: white;
+}
 
-        .dropdown a:hover {
-            background: #f2f2f2;
-        }
+/* MAIN CONTENT */
+.main-content {
+    flex: 1;
+    padding: 20px;
+}
 
-        /* PAGE LAYOUT */
+/* DASHBOARD CARDS */
+.dashboard-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+}
 
-        .page {
-            display: flex;
-        }
+.card {
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    text-align: center;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+    transition: 0.3s;
+}
 
-        /* SIDEBAR */
+.card:hover {
+    transform: translateY(-5px);
+}
 
-        .sidebar {
-            width: 250px;
-            background: #051422;
-            min-height: 100vh;
-            transition: 0.3s;
-        }
+/* TABLE */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    background: white;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-top: 15px;
+}
 
-        /* SIDEBAR HIDE */
+th {
+    background: #0f172a;
+    color: white;
+    padding: 12px;
+}
 
-        .sidebar.closed {
-            width: 0;
-            overflow: hidden;
-        }
+td {
+    padding: 10px;
+}
 
-        /* SIDEBAR LINKS */
+tr:nth-child(even) {
+    background: #f8fafc;
+}
 
-        .sidebar a {
-            display: block;
-            color: white;
-            padding: 14px 20px;
-            text-decoration: none;
-            font-size: 16px;
-        }
+/* RESPONSIVE */
+@media (max-width: 768px) {
+    .dashboard-cards {
+        grid-template-columns: 1fr;
+    }
 
-        .sidebar a:hover {
-            background: #051422;
-        }
+    table {
+        font-size: 14px;
+    }
+}
+</style>
 
-        /* MAIN CONTENT */
 
-        .main-content {
-            flex: 1;
-            padding: 20px;
-            transition: 0.3s;
-        }
-
-        /* NAV */
-
-        .nav {
-            margin-bottom: 20px;
-        }
-
-        .nav a {
-            text-decoration: none;
-            margin-right: 15px;
-            color: #051422;
-            font-weight: 500;
-        }
-
-        .nav a:hover {
-            text-decoration: underline;
-        }
-    </style>
 
 </head>
 
@@ -185,13 +211,13 @@
 
 
 
-            <a href="{% url 'admin_dashboard' %}">Dashboard</a>
-            <a href="{% url 'admin_student_list' %}">Student List</a>
-            <a href="{% url 'admin_add_project' %}">Add Project</a>
-            <a href="{% url 'admin_project_list' %}">View Projects</a>
-            <a href="{% url 'admin_payment_history' %}">Payment History</a>
-           
-           
+            <a href="{% url 'admin_dashboard' %}">  🏠 Dashboard</a>
+            <a href="{% url 'admin_student_list' %}">📋Student List</a>
+            <a href="{% url 'admin_add_project' %}">➕Add Project</a>
+            <a href="{% url 'admin_project_list' %}">📦View Projects</a>
+            <a href="{% url 'admin_payment_history' %}">💳Payment History</a>
+
+
 
 
             {% else %}
@@ -200,9 +226,9 @@
             <a href="{% url 'admin_project_list' %}">View Projects</a>
 
             <a href="{% url 'payment_details' %}">Payment Details</a>
- 
+
             <a href="#">Purchased Projects</a>
-            
+
 
             {% endif %}
 
@@ -261,4 +287,3 @@
 </body>
 
 </html>
-

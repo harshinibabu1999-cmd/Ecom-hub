@@ -51,7 +51,7 @@
     }
 
     .view-btn {
-        background: #2f5be7;
+        background: #1c2030;
         color: white;
         padding: 8px 15px;
         border-radius: 4px;
@@ -59,7 +59,7 @@
     }
 
     .view-btn:hover {
-        background: #1e3fb8;
+        background: #161925;
     }
 
     .badge {
@@ -67,6 +67,79 @@
         padding: 5px 10px;
         border-radius: 12px;
         font-size: 12px;
+    }
+
+    .page-container {
+        padding: 30px;
+    }
+
+    table img {
+        border-radius: 6px;
+    }
+
+    a {
+        text-decoration: none;
+        padding: 6px 10px;
+        border-radius: 5px;
+        margin-right: 5px;
+    }
+
+    a[href*="edit"] {
+        background: #171f2c;
+        color: white;
+    }
+
+    a[href*="delete"] {
+        background: #ef4444;
+        color: white;
+    }
+
+    /* Page spacing */
+
+    .page-container {
+        padding: 30px;
+    }
+
+    /* Table style */
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        background: white;
+        border-radius: 10px;
+        overflow: hidden;
+    }
+
+    th {
+        background: #0f172a;
+        color: white;
+        padding: 12px;
+    }
+
+    td {
+        padding: 12px;
+    }
+
+    tr:nth-child(even) {
+        background: #f8fafc;
+    }
+
+    /* Buttons */
+
+    .edit-btn {
+        background: #191f29;
+        color: white;
+        padding: 6px 10px;
+        border-radius: 5px;
+        text-decoration: none;
+    }
+
+    .delete-btn {
+        background: #ef4444;
+        color: white;
+        padding: 6px 10px;
+        border-radius: 5px;
+        text-decoration: none;
     }
 </style>
 
@@ -102,21 +175,21 @@
                     </td>
 
 
-                <td><strong>{{ project.title }}</strong></td>
+                    <td><strong>{{ project.title }}</strong></td>
 
-                <td>{{ project.description|truncatewords:10 }}</td>
+                    <td>{{ project.description|truncatewords:10 }}</td>
 
-                <td>
-                    <span class="badge">{{ project.category }}</span>
-                </td>
+                    <td>
+                        <span class="badge">{{ project.category }}</span>
+                    </td>
 
-                <td>₹{{ project.price }}</td>
+                    <td>₹{{ project.price }}</td>
 
-                <td>
-                    <a href="{% url 'admin_project_detail' project.id %}" class="view-btn">
-                        View
-                    </a>
-                </td>
+                    <td>
+                        <a href="{% url 'admin_project_detail' project.id %}" class="view-btn">
+                            View
+                        </a>
+                    </td>
 
                 </tr>
                 {% endfor %}

@@ -3,66 +3,133 @@
 {% block content %}
 
 <style>
-   .page-card {
-      background: white;
-      padding: 30px;
-      border-radius: 10px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
-   }
 
-   .page-title {
-      font-size: 24px;
-      font-weight: 600;
-      margin-bottom: 20px;
-   }
+/* PAGE CARD */
+.page-card {
+   background: #ffffff;
+   padding: 30px;
+   border-radius: 16px;
+   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+}
 
-   table {
-      width: 100%;
-      border-collapse: collapse;
-   }
+/* TITLE */
+.page-title {
+   font-size: 24px;
+   font-weight: 600;
+   margin-bottom: 20px;
+   color: #0f172a;
+}
 
-   thead {
-      background: #1a2134;
-      color: white;
-   }
+/* TABLE */
+table {
+   width: 100%;
+   border-collapse: separate;
+   border-spacing: 0 10px;
+}
 
-   thead th {
-      padding: 12px;
-      text-align: left;
-   }
+/* HEADER */
+thead tr {
+   background: #0f172a;
+   color: white;
+}
 
-   tbody td {
-      padding: 12px;
-      border-bottom: 1px solid #eee;
-   }
+thead th {
+   padding: 14px;
+   text-align: left;
+   font-size: 14px;
+   font-weight: 500;
+}
 
-   .status-success {
-      color: green;
-      font-weight: 600;
-   }
+/* ROUNDED HEADER */
+thead th:first-child {
+   border-top-left-radius: 10px;
+   border-bottom-left-radius: 10px;
+}
 
-   .no-data {
-      text-align: center;
-      padding: 20px;
-      color: #777;
-   }
+thead th:last-child {
+   border-top-right-radius: 10px;
+   border-bottom-right-radius: 10px;
+}
 
-   .action-btn {
-      background: #2563eb;
-      color: white;
-      border: none;
-      padding: 6px 14px;
-      border-radius: 6px;
-      font-size: 14px;
-      cursor: pointer;
-      transition: 0.3s;
-   }
+/* BODY ROWS */
+tbody tr {
+   background: #ffffff;
+   box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+   transition: all 0.2s ease;
+}
 
-   .action-btn:hover {
-      background: #1d4ed8;
-      transform: scale(1.05);
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
-   }
+tbody tr:hover {
+   transform: scale(1.01);
+   background: #f8fafc;
+}
+
+/* CELLS */
+tbody td {
+   padding: 14px;
+   font-size: 14px;
+   color: #334155;
+}
+
+/* ROUNDED ROW */
+tbody td:first-child {
+   border-top-left-radius: 10px;
+   border-bottom-left-radius: 10px;
+}
+
+tbody td:last-child {
+   border-top-right-radius: 10px;
+   border-bottom-right-radius: 10px;
+}
+
+/* STATUS BADGES */
+.status {
+   padding: 5px 12px;
+   border-radius: 20px;
+   font-size: 12px;
+   font-weight: 600;
+   display: inline-block;
+}
+
+.status-success {
+   background: #dcfce7;
+   color: #16a34a;
+}
+
+.status-pending {
+   background: #fef3c7;
+   color: #d97706;
+}
+
+/* AMOUNT STYLE */
+.amount {
+   font-weight: 600;
+   color: #0f172a;
+}
+
+/* BUTTON */
+.action-btn {
+   background: linear-gradient(135deg, #1e293b, #0f172a);
+   color: white;
+   border: none;
+   padding: 6px 14px;
+   border-radius: 8px;
+   font-size: 13px;
+   cursor: pointer;
+   transition: 0.2s;
+}
+
+.action-btn:hover {
+   background: linear-gradient(135deg, #334155, #1e293b);
+   transform: scale(1.05);
+}
+
+/* NO DATA */
+.no-data {
+   text-align: center;
+   padding: 20px;
+   color: #777;
+}
+
 </style>
 
 
@@ -93,22 +160,21 @@
 
             <td>{{ payment.project.title }}</td>
 
-            <td>₹ {{ payment.amount }}</td>
+            <td class="amount">₹ {{ payment.amount }}</td>
 
             <td>
                {% if payment.status == "SUCCESS" %}
-               <span class="status-success">Paid Successfully</span>
-
+               <span class="status status-success">Paid Successfully</span>
                {% else %}
-               <span style="color:orange; font-weight:600;">Pending</span>
-
+               <span class="status status-pending">Pending</span>
                {% endif %}
             </td>
+
             <td>{{ payment.created_at }}</td>
 
-
             <td>
-               <a href="{% url 'admin_payment_details' payment.id %}"> <button class="action-btn">View</button>
+               <a href="{% url 'admin_payment_details' payment.id %}">
+                  <button class="action-btn">View</button>
                </a>
             </td>
 
@@ -117,7 +183,7 @@
          {% empty %}
 
          <tr>
-            <td colspan="5" class="no-data">
+            <td colspan="6" class="no-data">
                No payment records found
             </td>
          </tr>

@@ -6,6 +6,8 @@ from django.db.models import Sum
 from .models import CustomUser, Project, Payment
 from .forms import ProjectForm
 from .user_side import *
+from django.utils.timezone import now
+from django.utils.timezone import localtime
 
 User = get_user_model()
 
@@ -85,28 +87,38 @@ def admin_register_view(request):
     return render(request, 'store/admin_register.html')
 
 
-# ---------------- ADMIN DASHBOARD ----------------
+
 @login_required
 def admin_dashboard(request):
+    # Total counts
     total_students = CustomUser.objects.filter(is_superuser=False).count()
     total_projects = Project.objects.count()
     total_sales = Payment.objects.count()
     monthly_revenue = Payment.objects.aggregate(total=Sum('amount'))['total'] or 0
 
-    today = datetime.now().date()
-    today_students = CustomUser.objects.filter(date_joined__date=today, is_superuser=False)
+    # Today's date
+    today = now().date()
+
+    # Today's registered students
+    today_students = CustomUser.objects.filter(
+        is_superuser=False,
+        date_joined__date=today  # Make sure your CustomUser has 'date_joined' field
+    )
+
+    # Recent students (last 5)
+    recent_students = CustomUser.objects.filter(
+        is_superuser=False
+    ).order_by('-date_joined')[:5]
 
     context = {
         'total_students': total_students,
         'total_projects': total_projects,
         'total_sales': total_sales,
         'monthly_revenue': monthly_revenue,
-        'recent_students': today_students[:5],
-        'today_students': today_students
+        'today_students': today_students,
+        'recent_students': recent_students,
     }
-
     return render(request, 'store/admin_dashboard.html', context)
-
 
 # ---------------- ADMIN LOGOUT ----------------
 def admin_logout_view(request):

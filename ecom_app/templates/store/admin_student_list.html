@@ -3,68 +3,133 @@
 {% block content %}
 
 <style>
-    .page-card {
-        background: white;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    body {
+        background: #f4f7fb;
+        font-family: 'Segoe UI', sans-serif;
     }
 
+    /* Card */
+    .page-card {
+        background: #ffffff;
+        padding: 25px;
+        border-radius: 16px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        margin: 30px;
+        transition: 0.3s;
+    }
+
+    .page-card:hover {
+        transform: translateY(-3px);
+    }
+
+    /* Title */
     .page-title {
-        font-size: 24px;
+        font-size: 26px;
         font-weight: 600;
-        color: #141926;
+        color: #1e293b;
         margin-bottom: 20px;
     }
 
+    /* Table */
     table {
         width: 100%;
         border-collapse: collapse;
+        border-radius: 12px;
+        overflow: hidden;
     }
 
     thead {
-        background: #1a2134;
-        color: white;
+        background: linear-gradient(90deg, #0f172a, #1e293b);
+        color: #fff;
+    }
+
+    thead th {
+        padding: 14px;
+        font-weight: 500;
+        text-align: left;
     }
 
     tbody td {
-        padding: 12px;
-        border-bottom: 1px solid #eee;
+        padding: 14px;
+        border-bottom: 1px solid #e2e8f0;
+        color: #334155;
+    }
+
+    /* Row Effects */
+    tbody tr {
+        transition: 0.2s;
     }
 
     tbody tr:hover {
-        background: #f7f9ff;
+        background: #f1f5f9;
     }
 
+    tbody tr:nth-child(even) {
+        background: #f8fafc;
+    }
+
+    /* No Data */
     .no-data {
         text-align: center;
         padding: 20px;
-        color: #777;
+        color: #94a3b8;
+        font-weight: 500;
     }
 
+    /* Buttons */
     .action-btn {
-        padding: 6px 12px;
+        padding: 6px 14px;
         border: none;
-        border-radius: 4px;
+        border-radius: 8px;
         font-size: 13px;
         cursor: pointer;
-    }
-
-    .view-btn {
-        background: #0e1d32;
-        color: white;
+        transition: 0.3s;
     }
 
     .delete-btn {
-        background: #dc3545;
+        background: #ef4444;
         color: white;
+    }
+
+    .delete-btn:hover {
+        background: #dc2626;
+        transform: scale(1.05);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+
+        table thead {
+            display: none;
+        }
+
+        table tr {
+            display: block;
+            margin-bottom: 15px;
+            background: white;
+            border-radius: 10px;
+            padding: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        table td {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px;
+            font-size: 14px;
+        }
+
+        table td::before {
+            content: attr(data-label);
+            font-weight: 600;
+            color: #64748b;
+        }
     }
 </style>
 
-
 <div class="page-card">
 
-    <h2 class="page-title">Student Details</h2>
+    <h2 class="page-title">🎓 Student Details</h2>
 
     <table>
 
@@ -86,21 +151,19 @@
             {% for student in students %}
 
             <tr>
+                <td data-label="Name">{{ student.username }}</td>
+                <td data-label="Email">{{ student.email }}</td>
+                <td data-label="Phone">{{ student.phone_number }}</td>
+                <td data-label="College">{{ student.college_name }}</td>
+                <td data-label="Dept">{{ student.department }}</td>
+                <td data-label="Year">{{ student.year_of_study }}</td>
+                <td data-label="Address">{{ student.address }}</td>
 
-                <td>{{ student.username }}</td>
-                <td>{{ student.email }}</td>
-                <td>{{ student.phone_number }}</td>
-                <td>{{ student.college_name }}</td>
-                <td>{{ student.department }}</td>
-                <td>{{ student.year_of_study }}</td>
-                <td>{{ student.address }}</td>
-
-                <td>
-                   <a href="{% url 'admin_delete_student' student.id %}">
+                <td data-label="Actions">
+                    <a href="{% url 'admin_delete_student' student.id %}">
                         <button class="action-btn delete-btn">Delete</button>
                     </a>
                 </td>
-
             </tr>
 
             {% empty %}

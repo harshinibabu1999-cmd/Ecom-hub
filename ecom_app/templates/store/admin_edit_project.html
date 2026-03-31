@@ -54,7 +54,7 @@
 .btn-update{
     margin-top:20px;
     padding:12px 25px;
-    background:#0d6efd;
+    background:#1b222e;
     border:none;
     color:white;
     font-weight:500;
@@ -63,7 +63,7 @@
 }
 
 .btn-update:hover{
-    background:#0b5ed7;
+    background:#171f2a;
 }
 
 
@@ -159,6 +159,11 @@ form button:hover{
 <div class="form-group">
 <label>Project Image</label>
 <input type="file" name="image">
+</div>
+
+<div class="form-group">
+<label>Google Drive Link</label>
+<input type="text" name="drive_link" value="{{ project.google_drive_link }}">
 </div>
 
 <div class="form-group">

@@ -1,57 +1,167 @@
-<h2>Project Details</h2>
+<h2 class="page-title">Project Details</h2>
 
-<table border="1" cellpadding="10">
+<style>
+/* Page title */
+.page-title {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    margin-top: 30px;
+    color: #1F2937; /* Darker grey for modern look */
+}
 
-    <tr>
-        <th>Image</th>
-        <td>
+/* Card container */
+.project-card {
+    max-width: 800px;
+    margin: 40px auto;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+    padding: 30px;
+    font-family: 'Inter', sans-serif;
+}
+
+/* Card row */
+.project-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.project-row:last-child {
+    margin-bottom: 0;
+}
+
+/* Row title */
+.project-row h3 {
+    width: 150px;
+    font-size: 16px;
+    font-weight: 600;
+    color: #374151;
+    margin: 0;
+}
+
+/* Row content */
+.project-row .content {
+    flex: 1;
+    font-size: 14px;
+    color: #6B7280;
+}
+
+/* Image & video styling */
+.project-row img,
+.project-row video {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+/* Buttons container */
+.action-btns {
+    text-align: center;
+    margin-top: 30px;
+}
+
+/* Buttons */
+.action-btns a {
+    text-decoration: none;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    margin: 0 10px;
+    display: inline-block;
+    transition: 0.2s;
+}
+
+/* Edit button */
+.action-btns a.edit {
+    background-color: #2563EB; /* Blue */
+    color: white;
+}
+
+.action-btns a.edit:hover {
+    background-color: #1D4ED8;
+}
+
+/* Delete button */
+.action-btns a.delete {
+    background-color: #EF4444; /* Red */
+    color: white;
+}
+
+.action-btns a.delete:hover {
+    background-color: #B91C1C;
+}
+
+/* Responsive design */
+@media (max-width: 600px) {
+    .project-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .project-row h3 {
+        margin-bottom: 8px;
+    }
+
+    .project-row .content {
+        width: 100%;
+    }
+}
+</style>
+
+<div class="project-card">
+
+    <div class="project-row">
+        <h3>Image</h3>
+        <div class="content">
             {% if project.image %}
-            <img src="{{ project.image.url }}" width="150">
-            {% endif %}
-        </td>
-    </tr>
-
-    <tr>
-        <th>Video</th>
-        <td>
-            {% if project.video %}
-            <video width="320" height="240" controls>
-                <source src="{{ project.video.url }}">
-            </video>
+                <img src="{{ project.image.url }}">
             {% else %}
-            No video available
+                No image available
             {% endif %}
-        </td>
-    </tr>
+        </div>
+    </div>
 
-    <tr>
-        <th>Title</th>
-        <td>{{ project.title }}</td>
-    </tr>
+    <div class="project-row">
+        <h3>Video</h3>
+        <div class="content">
+            {% if project.video %}
+                <video controls>
+                    <source src="{{ project.video.url }}">
+                </video>
+            {% else %}
+                No video available
+            {% endif %}
+        </div>
+    </div>
 
-    <tr>
-        <th>Description</th>
-        <td>{{ project.description }}</td>
-    </tr>
+    <div class="project-row">
+        <h3>Title</h3>
+        <div class="content">{{ project.title }}</div>
+    </div>
 
-    <tr>
-        <th>Category</th>
-        <td>{{ project.category }}</td>
-    </tr>
+    <div class="project-row">
+        <h3>Description</h3>
+        <div class="content">{{ project.description }}</div>
+    </div>
 
-    <tr>
-        <th>Price</th>
-        <td>₹{{ project.price }}</td>
-    </tr>
+    <div class="project-row">
+        <h3>Category</h3>
+        <div class="content">{{ project.category }}</div>
+    </div>
 
-    <tr>
-        <td colspan="2">
+    <div class="project-row">
+        <h3>Price</h3>
+        <div class="content"><b>₹{{ project.price }}</b></div>
+    </div>
 
-            <a href="{% url 'admin_edit_project' project.id %}">Edit</a>
+    <div class="action-btns">
+        <a href="{% url 'admin_edit_project' project.id %}" class="edit">Edit</a>
+        <a href="{% url 'admin_delete_project' project.id %}" class="delete">Delete</a>
+    </div>
 
-            <a href="{% url 'admin_delete_project' project.id %}">Delete</a>
-
-        </td>
-    </tr>
-
-</table>
+</div>
