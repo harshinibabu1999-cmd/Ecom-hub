@@ -2,105 +2,130 @@
 {% block content %}
 
 <style>
-
-.payment-container{
-max-width:700px;
-margin:auto;
-padding:20px;
+/* PAGE */
+.payment-page{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:85vh;
+    padding:20px;
+    font-family:'Segoe UI',sans-serif;
 }
 
+/* CARD */
 .payment-card{
-background:white;
-padding:30px;
-border-radius:12px;
-box-shadow:0 6px 18px rgba(0,0,0,0.1);
+    width:700px;
+    background:white;
+    padding:35px;
+    border-radius:18px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.1);
+    animation:fadeIn 0.5s ease;
 }
 
+/* TITLE */
 .title{
-font-size:24px;
-font-weight:600;
-margin-bottom:25px;
-text-align:center;
+    font-size:24px;
+    font-weight:600;
+    margin-bottom:25px;
+    text-align:center;
+    color:#222;
 }
 
-/* GRID ROW */
-
+/* ROW */
 .detail-row{
-display:grid;
-grid-template-columns:200px 1fr;
-padding:12px 0;
-border-bottom:1px solid #eee;
-align-items:center;
+    display:grid;
+    grid-template-columns:200px 1fr;
+    padding:14px 0;
+    border-bottom:1px solid #f0f0f0;
+    align-items:center;
 }
 
 /* LABEL */
-
 .label{
-font-weight:600;
-color:#555;
+    font-weight:600;
+    color:#555;
+    font-size:14px;
 }
 
 /* VALUE */
-
 .value{
-color:#222;
-word-break:break-word;
+    color:#222;
+    font-size:14px;
+    word-break:break-word;
 }
 
 /* STATUS */
-
 .status-success{
-color:green;
-font-weight:600;
+    color:#28a745;
+    font-weight:600;
 }
 
 .status-pending{
-color:orange;
-font-weight:600;
+    color:#ff9800;
+    font-weight:600;
 }
 
 .status-failed{
-color:red;
-font-weight:600;
+    color:#dc3545;
+    font-weight:600;
 }
 
 /* BUTTON */
+.btn-back, .btn-pay{
+    margin-top:25px;
+    display:inline-block;
+    padding:10px 20px;
+    border-radius:8px;
+    text-decoration:none;
+    font-size:14px;
+    transition:0.3s;
+}
 
 .btn-back{
-margin-top:25px;
-display:inline-block;
-padding:10px 18px;
-background:#0f2a44;
-color:white;
-border-radius:6px;
-text-decoration:none;
+    background:linear-gradient(135deg,#0f4c81,#1e88e5);
+    color:white;
 }
 
 .btn-back:hover{
-background:#163b5f;
+    background:linear-gradient(135deg,#0a2a43,#0f4c81);
+}
+
+.btn-pay{
+    background:linear-gradient(135deg,#ff9800,#ffb74d);
+    color:white;
+    margin-left:10px;
+}
+
+.btn-pay:hover{
+    background:linear-gradient(135deg,#e68900,#ff9800);
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
 }
 
 /* MOBILE */
-
 @media (max-width:600px){
-
-.detail-row{
-grid-template-columns:140px 1fr;
+    .detail-row{
+        grid-template-columns:1fr;
+        gap:5px;
+    }
+    .label{
+        font-size:13px;
+    }
+    .value{
+        font-size:13px;
+    }
 }
-
-.payment-card{
-padding:20px;
-}
-
-}
-
 </style>
 
-<div class="payment-container">
+<div class="payment-page">
 
 <div class="payment-card">
 
-<div class="title">Payment Details</div>
+<div class="title">💳 Payment Details</div>
 
 <div class="detail-row">
 <span class="label">User</span>
@@ -128,23 +153,15 @@ padding:20px;
 </div>
 
 <div class="detail-row">
-
 <span class="label">Status</span>
-
 <span class="value
-{% if payment.status == 'SUCCESS' %}
-status-success
-{% elif payment.status == 'FAILED' %}
-status-failed
-{% else %}
-status-pending
+{% if payment.status == 'SUCCESS' %}status-success
+{% elif payment.status == 'FAILED' %}status-failed
+{% else %}status-pending
 {% endif %}
 ">
-
 {{ payment.status }}
-
 </span>
-
 </div>
 
 <div class="detail-row">
@@ -152,10 +169,14 @@ status-pending
 <span class="value">{{ payment.created_at }}</span>
 </div>
 
-<a href="{% url 'payment_details' %}" class="btn-back">Back</a>
+<!-- BACK BUTTON + PAY BUTTON IF PENDING -->
+<a href="{% url 'payment_details' %}" class="btn-back">← Back</a>
+
+{% if payment.status == 'PENDING' %}
+<a href="{% url 'user_payment_page' payment.id %}" class="btn-pay">Pay Now</a>
+{% endif %}
 
 </div>
-
 </div>
 
 {% endblock %}

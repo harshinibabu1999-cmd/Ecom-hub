@@ -3,127 +3,165 @@
 {% block content %}
 
 <style>
-    /* Container for the whole page */
-    .card {
-        background: #fff;
-        padding: 25px;
-        margin: 20px;
-        border-radius: 10px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-        font-family: 'Segoe UI', sans-serif;
-    }
+/* STUDENT PAGE WRAPPER */
+.student-page {
+    background: linear-gradient(135deg,#eef2ff,#f8fafc);
+    padding: 20px;
+    min-height: 80vh;
+    position: relative; /* important for z-index stacking */
+    z-index: 1; /* lower than sidebar */
+}
 
-    .section-title {
-        color: #2f5be7;
-        font-size: 24px;
-        margin-bottom: 20px;
-        border-bottom: 2px solid #f0f2f5;
-        padding-bottom: 10px;
-    }
+/* CARD */
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 14px;
+    box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+    position: relative;
+    z-index: 1; /* ensures sidebar stays on top */
+}
 
-    /* Table Wrapper for horizontal scrolling on small screens */
-    .table-responsive {
-        overflow-x: auto;
-        -webkit-overflow-scrolling: touch;
-    }
+/* SECTION TITLE */
+.section-title {
+    font-size: 26px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #0f172a;
+}
 
+/* TABLE WRAPPER */
+.table-responsive {
+    overflow-x: auto;
+}
+
+/* TABLE */
+.styled-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 14px;
+}
+
+.styled-table thead {
+    background: #0f172a;
+    color: white;
+}
+
+.styled-table th,
+.styled-table td {
+    padding: 14px;
+    text-align: left;
+    font-size: 13px;
+}
+
+.styled-table td {
+    border-bottom: 1px solid #f1f5f9;
+}
+
+.styled-table tbody tr:hover {
+    background: #f9fafb;
+}
+
+/* TEXT STYLES */
+.name {
+    font-weight: 600;
+    color: #0f172a;
+}
+
+.email {
+    color: #2563eb;
+    font-size: 13px;
+}
+
+/* BADGES */
+.badge {
+    background: #e2e8f0;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-size: 12px;
+}
+
+/* BUTTONS */
+.btn {
+    padding: 6px 12px;
+    border-radius: 6px;
+    font-size: 13px;
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.delete-btn {
+    background: #fee2e2;
+    color: #dc2626;
+}
+
+.delete-btn:hover {
+    background: #dc2626;
+    color: white;
+}
+
+/* EMPTY TABLE */
+.no-data {
+    text-align: center;
+    padding: 30px;
+    color: #64748b;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
     .styled-table {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 14px;
-        text-align: left;
+        display: block;
+        overflow-x: auto;
     }
-
-    .styled-table thead tr {
-        background-color: #2f5be7;
-        color: #ffffff;
-        text-transform: uppercase;
-        letter-spacing: 0.5px;
-    }
-
-    .styled-table th,
-    .styled-table td {
-        padding: 15px 12px;
-        border-bottom: 1px solid #edf0f5;
-    }
-
-    .styled-table tbody tr:hover {
-        background-color: #f8faff;
-    }
-
-    /* Action Buttons */
-    .btn {
-        text-decoration: none;
-        padding: 6px 12px;
-        border-radius: 4px;
-        font-size: 13px;
-        font-weight: 600;
-        transition: 0.3s;
-    }
-
-    .delete-btn {
-        background-color: #fff1f0;
-        color: #ff4d4f;
-        border: 1px solid #ffa39e;
-    }
-
-    .delete-btn:hover {
-        background-color: #ff4d4f;
-        color: #fff;
-    }
-
-    /* Empty state styling */
-    .no-data {
-        text-align: center;
-        color: #888;
-        padding: 40px !important;
-    }
+}
 </style>
 
+<!-- STUDENT CONTENT -->
+<div class="student-page">
+    <div class="card">
+        <h2 class="section-title">👨‍🎓 Student Details</h2>
 
-
-<div class="card">
-    <h2 class="section-title">Student Details</h2>
-
-
-    <table class="styled-table">
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>College</th>
-                <th>Dept</th>
-                <th>Year</th>
-                <th>Address</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-
-        <tbody>
-            {% for student in students %}
-            <tr>
-                <td>{{ student.username }}</td>
-                <td>{{ student.email }}</td>
-                <td>{{ student.phone_number }}</td>
-                <td>{{ student.college_name }}</td>
-                <td>{{ student.department }}</td>
-                <td>{{ student.year_of_study }}</td>
-                <td>{{ student.address }}</td>
-                <td>
-
-                    <a href="{% url 'admin_delete_student' student.id %}" class="btn delete-btn">Delete</a>
-                </td>
-            </tr>
-            {% empty %}
-            <tr>
-                <td colspan="8">No students found</td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
+        <div class="table-responsive">
+            <table class="styled-table">
+                <thead>
+                    <tr>
+                        <th>Name</th>
+                        <th>Email</th>
+                        <th>Phone</th>
+                        <th>College</th>
+                        <th>Dept</th>
+                        <th>Year</th>
+                        <th>Address</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for student in students %}
+                    <tr>
+                        <td class="name">{{ student.username }}</td>
+                        <td class="email">{{ student.email }}</td>
+                        <td>{{ student.phone_number }}</td>
+                        <td>{{ student.college_name }}</td>
+                        <td><span class="badge">{{ student.department }}</span></td>
+                        <td><span class="badge">{{ student.year_of_study }}</span></td>
+                        <td>{{ student.address|truncatewords:6 }}</td>
+                        <td>
+                            <a href="{% url 'admin_delete_student' student.id %}" 
+                               class="btn delete-btn"
+                               onclick="return confirm('Delete this student?')">
+                               Delete
+                            </a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="8" class="no-data">No students found</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-
-
 
 {% endblock %}

@@ -3,58 +3,84 @@
 
 <style>
 
+/* PAGE CENTER */
 .success-wrapper{
     display:flex;
     justify-content:center;
     align-items:center;
-    height:70vh;
-    font-family:'Segoe UI',sans-serif;
+    min-height:80vh;
 }
 
+/* CARD */
 .success-card{
     background:white;
-    padding:40px;
+    padding:35px;
     width:420px;
-    border-radius:12px;
+    border-radius:18px;
     text-align:center;
-    box-shadow:0 6px 25px rgba(0,0,0,0.1);
+    box-shadow:0 15px 40px rgba(0,0,0,0.1);
+    animation:fadeIn 0.5s ease;
 }
 
+/* ICON */
 .success-icon{
     font-size:60px;
     color:#28a745;
+    margin-bottom:10px;
 }
 
+/* TITLE */
 .success-card h2{
-    margin-top:10px;
-    margin-bottom:20px;
+    margin:10px 0;
+    font-size:22px;
+    color:#222;
 }
 
+/* TEXT */
+.success-card p{
+    color:#666;
+    font-size:14px;
+}
+
+/* DETAILS BOX */
 .details{
-    background:#f5f7fb;
+    background:#f5f8fc;
     padding:15px;
-    border-radius:8px;
-    margin-top:15px;
+    border-radius:10px;
+    margin-top:18px;
+    text-align:left;
 }
 
 .details p{
-    margin:8px 0;
-    font-size:16px;
+    margin:6px 0;
+    font-size:14px;
 }
 
+/* BUTTON */
 .home-btn{
     display:inline-block;
-    margin-top:20px;
-    padding:10px 25px;
-    background:#0d6efd;
+    margin-top:22px;
+    padding:10px 22px;
+
+    background:linear-gradient(135deg,#0f4c81,#1e88e5);
     color:white;
     text-decoration:none;
-    border-radius:8px;
-    font-size:15px;
+
+    border-radius:10px;
+    font-size:14px;
+    font-weight:500;
+
+    transition:0.3s;
 }
 
 .home-btn:hover{
-    background:#0b5ed7;
+    background:linear-gradient(135deg,#0a2a43,#0f4c81);
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
 }
 
 </style>
@@ -70,11 +96,13 @@
 <p>Your payment has been completed successfully.</p>
 
 <div class="details">
-<p><b>Project:</b> {{ payment.project.title }}</p>
-<p><b>Amount Paid:</b> ₹{{ payment.amount }}</p>
+    <p><b>Project:</b> {{ payment.project.title }}</p>
+    <p><b>Amount Paid:</b> ₹{{ payment.amount }}</p>
 </div>
 
-<a href="{% url 'user_home' %}" class="home-btn">Back to Projects</a>
+<a href="{% url 'user_home' %}" class="home-btn">
+Back to Projects
+</a>
 
 </div>
 

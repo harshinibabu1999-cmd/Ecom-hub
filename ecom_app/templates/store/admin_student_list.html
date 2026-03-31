@@ -3,117 +3,177 @@
 {% block content %}
 
 <style>
-    .page-card {
-        background: white;
-        padding: 30px;
-        border-radius: 10px;
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-    }
 
-    .page-title {
-        font-size: 24px;
-        font-weight: 600;
-        color: #141926;
-        margin-bottom: 20px;
-    }
+/* BACKGROUND */
+body{
+    background:linear-gradient(135deg,#eef2ff,#f8fafc);
+    font-family:'Segoe UI',sans-serif;
+}
 
-    table {
-        width: 100%;
-        border-collapse: collapse;
-    }
+/* CARD */
+.page-card{
+    background:white;
+    padding:25px;
+    margin:25px;
+    border-radius:14px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.08);
+}
 
-    thead {
-        background: #1a2134;
-        color: white;
-    }
+/* TITLE */
+.page-title{
+    font-size:26px;
+    font-weight:600;
+    color:#0f172a;
+    margin-bottom:20px;
+}
 
-    tbody td {
-        padding: 12px;
-        border-bottom: 1px solid #eee;
-    }
+/* TABLE */
+.table{
+    width:100%;
+    border-collapse:collapse;
+}
 
-    tbody tr:hover {
-        background: #f7f9ff;
-    }
+/* HEADER */
+.table thead{
+    background:#0f172a;
+    color:white;
+}
 
-    .no-data {
-        text-align: center;
-        padding: 20px;
-        color: #777;
-    }
+.table th{
+    padding:14px;
+    font-size:13px;
+    text-align:left;
+}
 
-    .action-btn {
-        padding: 6px 12px;
-        border: none;
-        border-radius: 4px;
-        font-size: 13px;
-        cursor: pointer;
-    }
+/* BODY */
+.table td{
+    padding:14px;
+    border-bottom:1px solid #f1f5f9;
+}
 
-    .view-btn {
-        background: #0e1d32;
-        color: white;
-    }
+/* ROW HOVER */
+.table tbody tr:hover{
+    background:#f9fafb;
+}
 
-    .delete-btn {
-        background: #dc3545;
-        color: white;
+/* NAME */
+.name{
+    font-weight:600;
+    color:#111827;
+}
+
+/* EMAIL */
+.email{
+    color:#2563eb;
+    font-size:13px;
+}
+
+/* BADGE */
+.badge{
+    background:#e2e8f0;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:12px;
+}
+
+/* BUTTON */
+.btn{
+    padding:6px 12px;
+    border-radius:6px;
+    text-decoration:none;
+    font-size:13px;
+    transition:0.3s;
+}
+
+/* DELETE */
+.delete-btn{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+.delete-btn:hover{
+    background:#dc2626;
+    color:white;
+}
+
+/* EMPTY */
+.no-data{
+    text-align:center;
+    padding:30px;
+    color:#64748b;
+}
+
+/* RESPONSIVE */
+@media(max-width:768px){
+    .table{
+        display:block;
+        overflow-x:auto;
     }
+}
+
 </style>
 
 
 <div class="page-card">
 
-    <h2 class="page-title">Student Details</h2>
+<h2 class="page-title">👨‍🎓 Student Details</h2>
 
-    <table>
+<table class="table">
 
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Email</th>
-                <th>Phone</th>
-                <th>College</th>
-                <th>Dept</th>
-                <th>Year</th>
-                <th>Address</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
+<thead>
+<tr>
+<th>Name</th>
+<th>Email</th>
+<th>Phone</th>
+<th>College</th>
+<th>Dept</th>
+<th>Year</th>
+<th>Address</th>
+<th>Action</th>
+</tr>
+</thead>
 
-        <tbody>
+<tbody>
 
-            {% for student in students %}
+{% for student in students %}
 
-            <tr>
+<tr>
 
-                <td>{{ student.username }}</td>
-                <td>{{ student.email }}</td>
-                <td>{{ student.phone_number }}</td>
-                <td>{{ student.college_name }}</td>
-                <td>{{ student.department }}</td>
-                <td>{{ student.year_of_study }}</td>
-                <td>{{ student.address }}</td>
+<td class="name">{{ student.username }}</td>
 
-                <td>
-                   <a href="{% url 'admin_delete_student' student.id %}">
-                        <button class="action-btn delete-btn">Delete</button>
-                    </a>
-                </td>
+<td class="email">{{ student.email }}</td>
 
-            </tr>
+<td>{{ student.phone_number }}</td>
 
-            {% empty %}
+<td>{{ student.college_name }}</td>
 
-            <tr>
-                <td colspan="8" class="no-data">No students found</td>
-            </tr>
+<td><span class="badge">{{ student.department }}</span></td>
 
-            {% endfor %}
+<td><span class="badge">{{ student.year_of_study }}</span></td>
 
-        </tbody>
+<td>{{ student.address|truncatewords:6 }}</td>
 
-    </table>
+<td>
+<a href="{% url 'admin_delete_student' student.id %}" 
+   class="btn delete-btn"
+   onclick="return confirm('Are you sure to delete this student?')">
+   Delete
+</a>
+</td>
+
+</tr>
+
+{% empty %}
+
+<tr>
+<td colspan="8" class="no-data">No students found</td>
+</tr>
+
+{% endfor %}
+
+</tbody>
+
+</table>
 
 </div>
 

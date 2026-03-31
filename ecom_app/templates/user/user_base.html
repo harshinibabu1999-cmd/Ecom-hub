@@ -1,216 +1,241 @@
 <!doctype html>
-
 <html lang="en">
 <head>
 
 <meta charset="UTF-8">
 <title>E-Com Hub</title>
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- GOOGLE FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
 
 /* GLOBAL */
-
 *{
-box-sizing:border-box;
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
 }
 
 body{
-margin:0;
-font-family:Arial, Helvetica, sans-serif;
-background:#f4f6f9;
+    font-family:'Poppins',sans-serif;
+    background:#f5f7fb;
 }
 
 /* HEADER */
-
 .header{
-background:#051422;
-color:white;
-padding:15px;
-font-size:22px;
-font-weight:bold;
-display:flex;
-align-items:center;
-justify-content:space-between;
+    background:linear-gradient(135deg,#0a2a43,#0f4c81);
+    color:white;
+    padding:15px 25px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    box-shadow:0 4px 12px rgba(0,0,0,0.1);
 }
 
+/* LEFT */
 .header-left{
-display:flex;
-align-items:center;
+    display:flex;
+    align-items:center;
+    gap:15px;
+    font-size:20px;
+    font-weight:600;
 }
 
 /* MENU BUTTON */
-
 .toggle-btn{
-background:#051422;
-color:white;
-border:none;
-padding:8px 12px;
-cursor:pointer;
-border-radius:4px;
-font-size:18px;
-margin-right:15px;
+    background:rgba(255,255,255,0.15);
+    border:none;
+    color:white;
+    padding:8px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    font-size:18px;
+    transition:0.3s;
+}
+
+.toggle-btn:hover{
+    background:rgba(255,255,255,0.3);
 }
 
 /* PROFILE */
-
 .profile-menu{
-position:relative;
+    position:relative;
 }
 
 .profile-icon{
-background:white;
-color:black;
-padding:8px 12px;
-border-radius:50%;
-cursor:pointer;
-font-size:16px;
+    width:40px;
+    height:40px;
+    background:white;
+    color:#0f4c81;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    cursor:pointer;
+    font-size:18px;
+    font-weight:bold;
+    box-shadow:0 4px 10px rgba(0,0,0,0.15);
 }
 
 /* DROPDOWN */
-
 .dropdown{
-display:none;
-position:absolute;
-right:0;
-top:40px;
-background:white;
-border-radius:6px;
-box-shadow:0 3px 10px rgba(0,0,0,0.2);
-min-width:120px;
+    display:none;
+    position:absolute;
+    right:0;
+    top:55px;
+    background:white;
+    border-radius:10px;
+    box-shadow:0 8px 25px rgba(0,0,0,0.15);
+    overflow:hidden;
+    min-width:140px;
 }
 
 .dropdown a{
-display:block;
-padding:10px;
-text-decoration:none;
-color:#333;
-font-size:14px;
+    display:block;
+    padding:12px;
+    text-decoration:none;
+    color:#333;
+    font-size:14px;
+    transition:0.2s;
 }
 
 .dropdown a:hover{
-background:#f2f2f2;
+    background:#f1f5f9;
 }
 
-/* PAGE LAYOUT */
-
+/* PAGE */
 .page{
-display:flex;
+    display:flex;
+    transition: margin-left 0.3s;
 }
 
 /* SIDEBAR */
-
 .sidebar{
-width:250px;
-background:#051422;
-min-height:100vh;
-transition:0.3s;
+    width:240px;
+    background:linear-gradient(180deg,#0a2a43,#0f4c81);
+    min-height:100vh;
+    padding-top:20px;
+    transition: all 0.3s ease;
+    overflow:hidden;
 }
 
+/* COLLAPSED SIDEBAR (desktop & tablet) */
+.sidebar.active{
+    width:0;
+    padding:0;
+}
+
+/* SIDEBAR LINKS */
 .sidebar a{
-display:block;
-color:white;
-padding:14px 20px;
-text-decoration:none;
-font-size:16px;
+    display:block;
+    color:white;
+    padding:14px 22px;
+    text-decoration:none;
+    font-size:15px;
+    margin:5px 10px;
+    border-radius:8px;
+    transition:0.3s;
 }
 
 .sidebar a:hover{
-background:#0a2238;
+    background:rgba(255,255,255,0.15);
 }
 
 /* MAIN CONTENT */
-
 .main-content{
-flex:1;
-padding:20px;
+    flex:1;
+    padding:25px;
+    transition:margin-left 0.3s;
+}
+
+/* SHIFT MAIN CONTENT WHEN SIDEBAR COLLAPSES */
+.sidebar.active ~ .main-content{
+    margin-left:0;
+}
+
+/* CONTENT BOX */
+.content{
+    background:white;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.08);
 }
 
 /* PROJECT GRID */
-
 .project-container{
-display:grid;
-grid-template-columns:repeat(3,1fr);
-gap:20px;
-padding:20px;
-max-width:1100px;
-margin:auto;
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+    max-width:1100px;
+    margin:auto;
 }
 
 /* CARD */
-
 .card{
-background:#ffffff;
-border-radius:12px;
-overflow:hidden;
-box-shadow:0 6px 18px rgba(0,0,0,0.08);
-display:flex;
-flex-direction:column;
+    background:white;
+    border-radius:14px;
+    overflow:hidden;
+    box-shadow:0 6px 20px rgba(0,0,0,0.08);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 12px 30px rgba(0,0,0,0.15);
 }
 
 /* IMAGE */
-
 .image-box{
-width:100%;
-height:160px;
-overflow:hidden;
+    width:100%;
+    height:160px;
+    overflow:hidden;
 }
 
 .image-box img{
-width:100%;
-height:100%;
-object-fit:cover;
+    width:100%;
+    height:100%;
+    object-fit:cover;
 }
 
 /* TABLET */
-
 @media (max-width:900px){
-
-.project-container{
-grid-template-columns:repeat(2,1fr);
-}
-
+    .project-container{
+        grid-template-columns:repeat(2,1fr);
+    }
 }
 
 /* MOBILE */
-
 @media (max-width:600px){
 
-.page{
-flex-direction:column;
-}
+    .page{
+        flex-direction:column;
+    }
 
-/* sidebar hidden by default */
+    .sidebar{
+        position:fixed;
+        left:-240px; /* match sidebar width */
+        top:0;
+        height:100%;
+        z-index:1000;
+    }
 
-.sidebar{
-position:fixed;
-left:-250px;
-top:0;
-height:100%;
-z-index:1000;
-}
+    .sidebar.active{
+        left:0;
+        width:240px;
+        padding-top:20px;
+    }
 
-/* sidebar open */
+    .main-content{
+        width:100%;
+        padding:15px;
+        margin-left:0;
+    }
 
-.sidebar.active{
-left:0;
-}
-
-/* content full width */
-
-.main-content{
-width:100%;
-padding:15px;
-}
-
-/* project grid */
-
-.project-container{
-grid-template-columns:1fr;
-padding:10px;
-}
-
+    .project-container{
+        grid-template-columns:1fr;
+    }
 }
 
 </style>
@@ -220,71 +245,66 @@ padding:10px;
 <body>
 
 <!-- HEADER -->
-
 <div class="header">
 
-<div class="header-left">
+    <div class="header-left">
+        <button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+        E-Com Hub
+    </div>
 
-<button class="toggle-btn" onclick="toggleSidebar()">☰</button>
+    <div class="profile-menu">
+        <div class="profile-icon" onclick="toggleProfile()">👤</div>
 
-E-Com Hub
-
-</div>
-
-<div class="profile-menu">
-
-<div class="profile-icon" onclick="toggleProfile()">👤</div>
-
-<div class="dropdown" id="profileDropdown">
-
-<a href="{% url 'logout_view' %}">Logout</a>
-
-</div>
-
-</div>
+        <div class="dropdown" id="profileDropdown">
+            <a href="{% url 'admin_logout_view' %}">Logout</a>
+        </div>
+    </div>
 
 </div>
 
 <!-- PAGE -->
-
 <div class="page">
 
 <!-- SIDEBAR -->
-
 <div class="sidebar" id="sidebar">
 
 {% if user.is_authenticated %}
-
-{% if not user.is_student_registered %}
-
-<a href="{% url 'student_register' %}">User Dashboard</a>
-
+    {% if not user.is_student_registered %}
+        <a href="{% url 'student_register' %}">User Dashboard</a>
+    {% else %}
+        <a href="{% url 'user_home' %}">Home</a>
+        <a href="{% url 'user_project_list' %}">View Projects</a>
+        <a href="{% url 'payment_details' %}">Payment Details</a>
+        <a href="{% url 'purchased_projects' %}">Purchased Projects</a>
+    {% endif %}
 {% else %}
-
-<a href="{% url 'user_home' %}">Home</a> <a href="{% url 'user_project_list' %}">View Projects</a> <a href="{% url 'payment_details' %}">Payment Details</a> <a href="{% url 'purchased_projects' %}">Purchased Projects</a>
-
-{% endif %}
-
-{% else %}
-
-<a href="{% url 'admin_login_view' %}">Login</a> <a href="{% url 'admin_register_view' %}">Register</a>
-
+    <a href="{% url 'admin_login_view' %}">Login</a>
+    <a href="{% url 'admin_register_view' %}">Register</a>
 {% endif %}
 
 </div>
 
 <!-- MAIN CONTENT -->
-
 <div class="main-content">
-
-<div class="content">
-
-{% block content %}
-
-{% endblock %}
-
-</div>
-
+    <div class="content">
+        {% block content %}
+        <!-- Example project cards -->
+        <div class="project-container">
+            <div class="card">
+                <div class="image-box"><img src="https://via.placeholder.com/300x160" alt="Project"></div>
+                <h3>Project 1</h3>
+            </div>
+            <div class="card">
+                <div class="image-box"><img src="https://via.placeholder.com/300x160" alt="Project"></div>
+                <h3>Project 2</h3>
+            </div>
+            <div class="card">
+                <div class="image-box"><img src="https://via.placeholder.com/300x160" alt="Project"></div>
+                <h3>Project 3</h3>
+            </div>
+        </div>
+        {% endblock %}
+    </div>
 </div>
 
 </div>
@@ -292,23 +312,25 @@ E-Com Hub
 <script>
 
 /* SIDEBAR TOGGLE */
-
 function toggleSidebar(){
-let sidebar=document.getElementById("sidebar");
-sidebar.classList.toggle("active");
+    const sidebar = document.getElementById("sidebar");
+    sidebar.classList.toggle("active");
 }
 
 /* PROFILE DROPDOWN */
-
 function toggleProfile(){
-let menu=document.getElementById("profileDropdown");
+    const menu = document.getElementById("profileDropdown");
+    menu.style.display = (menu.style.display==="block") ? "none" : "block";
+}
 
-if(menu.style.display==="block"){
-menu.style.display="none";
-}else{
-menu.style.display="block";
-}
-}
+/* CLOSE SIDEBAR WHEN CLICK OUTSIDE */
+document.addEventListener('click', function(event) {
+    const sidebar = document.getElementById("sidebar");
+    const toggle = document.querySelector(".toggle-btn");
+    if(!sidebar.contains(event.target) && !toggle.contains(event.target)){
+        sidebar.classList.remove("active");
+    }
+});
 
 </script>
 

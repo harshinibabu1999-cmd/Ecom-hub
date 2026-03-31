@@ -2,91 +2,137 @@
 {% block content %}
 
 <style>
-.register-container {
-    width: 400px;
-    margin: 60px auto;
-    padding: 40px;
-    background: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+
+/* PAGE CENTER */
+.register-page{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:80vh;
 }
 
+/* CARD */
+{% comment %} .register-container {
+    width: 400px;
+    padding: 35px;
+    background: #ffffff;
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    animation: fadeIn 0.5s ease;
+} {% endcomment %}
+
+/* TITLE */
 .register-container h2 {
     text-align: center;
     margin-bottom: 25px;
-    color: #3f51b5;
+    color: #0f4c81;
+    font-weight: 600;
 }
 
+/* LABEL */
 .register-container label {
     display: block;
-    margin-top: 10px;
+    margin-top: 12px;
     font-weight: 500;
+    color: #444;
+    font-size:14px;
 }
 
+/* INPUT */
 .register-container input,
 .register-container select {
     width: 100%;
-    padding: 8px;
-    margin-top: 5px;
-    border-radius: 8px;
-    border: 1px solid #ccc;
+    padding: 10px 12px;
+    margin-top: 6px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    outline: none;
+    transition: 0.3s;
+    font-size:14px;
 }
 
+.register-container input:focus,
+.register-container select:focus {
+    border-color: #0f4c81;
+    box-shadow: 0 0 6px rgba(15,76,129,0.2);
+}
+
+/* BUTTON */
 .register-container button {
     width: 100%;
-    margin-top: 20px;
-    padding: 10px;
+    margin-top: 22px;
+    padding: 11px;
     border: none;
-    border-radius: 8px;
-    background: #3f51b5;
+    border-radius: 10px;
+
+    background: linear-gradient(135deg,#0f4c81,#1e88e5);
     color: white;
-    font-size: 16px;
+    font-size: 15px;
+    font-weight: 500;
+
     cursor: pointer;
+    transition: 0.3s;
 }
 
 .register-container button:hover {
-    background: #303f9f;
+    background: linear-gradient(135deg,#0a2a43,#0f4c81);
 }
 
+/* ERROR */
 .error {
     color: red;
     text-align: center;
+    margin-bottom: 10px;
+    font-size:13px;
 }
+
+/* ANIMATION */
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
 </style>
 
-<div class="register-container">
-    <h2>Register</h2>
+<div class="register-page">
 
-    {% if error %}
-        <p class="error">{{ error }}</p>
-    {% endif %}
+    <div class="register-container">
 
-    <form method="POST">
-        {% csrf_token %}
+        <h2>Register</h2>
 
-        <label>Username</label>
-        <input type="text" name="username" required>
+        {% if error %}
+            <p class="error">{{ error }}</p>
+        {% endif %}
 
-        <label>Email</label>
-        <input type="email" name="email" required>
+        <form method="POST">
+            {% csrf_token %}
 
-        <label>phone number</label>
-        <input type="numeric" name="phone number" required>
+            <label>Username</label>
+            <input type="text" name="username" required>
 
-        <label>Password</label>
-        <input type="password" name="password" required>
+            <label>Email</label>
+            <input type="email" name="email" required>
 
-        <label>Confirm Password</label>
-        <input type="password" name="confirm_password" required>
+            <label>Phone Number</label>
+            <input type="text" name="phone number" required>
 
-        <label>Select Role</label>
-        <select name="role">
-            <option value="STUDENT">Student</option>
-            <option value="ADMIN">Admin</option>
-        </select>
+            <label>Password</label>
+            <input type="password" name="password" required>
 
-        <button type="submit">Register</button>
-    </form>
+            <label>Confirm Password</label>
+            <input type="password" name="confirm_password" required>
+
+            <label>Select Role</label>
+            <select name="role">
+                <option value="STUDENT">Student</option>
+                <option value="ADMIN">Admin</option>
+            </select>
+
+            <button type="submit">Register</button>
+        </form>
+
+    </div>
+
 </div>
 
 {% endblock %}

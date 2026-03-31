@@ -2,17 +2,109 @@
 
 {% block content %}
 
+<style>
+
+/* BACKGROUND */
+body{
+    background:linear-gradient(135deg,#eef2ff,#f8fafc);
+    font-family:'Segoe UI',sans-serif;
+}
+
+/* CONTAINER */
+.container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    padding:40px 20px;
+}
+
+/* CARD */
+.form-card{
+    width:500px;
+    background:white;
+    padding:30px;
+    border-radius:14px;
+    box-shadow:0 10px 30px rgba(0,0,0,0.1);
+}
+
+/* TITLE */
+.form-title{
+    text-align:center;
+    font-size:24px;
+    font-weight:600;
+    margin-bottom:20px;
+    color:#0f172a;
+}
+
+/* FORM GROUP */
+.form-card p{
+    margin-bottom:15px;
+}
+
+/* INPUTS */
+.form-card input,
+.form-card textarea,
+.form-card select{
+    width:100%;
+    padding:10px;
+    border:1px solid #e5e7eb;
+    border-radius:8px;
+    font-size:14px;
+    margin-top:5px;
+    outline:none;
+    transition:0.3s;
+}
+
+/* FOCUS */
+.form-card input:focus,
+.form-card textarea:focus,
+.form-card select:focus{
+    border-color:#2563eb;
+    box-shadow:0 0 0 3px rgba(37,99,235,0.15);
+}
+
+/* BUTTON */
+.submit-btn{
+    width:100%;
+    margin-top:20px;
+    padding:12px;
+    background:linear-gradient(135deg,#2563eb,#3b82f6);
+    color:white;
+    border:none;
+    border-radius:8px;
+    font-size:15px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+/* BUTTON HOVER */
+.submit-btn:hover{
+    box-shadow:0 6px 18px rgba(37,99,235,0.4);
+    transform:translateY(-2px);
+}
+
+</style>
+
+
 <div class="container">
-<h2>Upload IEEE Project</h2>
+
+<div class="form-card">
+
+<h2 class="form-title">📤 Upload IEEE Project</h2>
 
 <form method="POST" enctype="multipart/form-data">
     {% csrf_token %}
 
     {{ form.as_p }}
 
-    <button type="submit">Upload Project</button>
+    <button type="submit" class="submit-btn">
+        Upload Project
+    </button>
 
 </form>
+
+</div>
+
 </div>
 
 {% endblock %}

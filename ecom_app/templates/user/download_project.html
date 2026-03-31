@@ -2,24 +2,114 @@
 
 {% block content %}
 
-<div style="width:600px;margin:auto;text-align:center">
+<style>
 
-<h2>{{ project.title }}</h2>
+/* PAGE CENTER */
+.download-wrapper{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:80vh;
+}
 
-<img src="{{ project.project_image.url }}" width="250">
+/* CARD */
+.download-card{
+    width:450px;
+    background:white;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.1);
+    text-align:center;
+    animation:fadeIn 0.5s ease;
+}
 
-<p>{{ project.description }}</p>
+/* IMAGE */
+.project-image{
+    width:100%;
+    height:180px;
+    object-fit:cover;
+    border-radius:12px;
+}
 
-<p><b>Category:</b> {{ project.category }}</p>
+/* TITLE */
+.project-title{
+    margin-top:15px;
+    font-size:20px;
+    font-weight:600;
+    color:#222;
+}
 
-<p><b>Price:</b> ₹{{ project.price }}</p>
+/* DESCRIPTION */
+.project-desc{
+    margin-top:10px;
+    font-size:14px;
+    color:#666;
+    line-height:1.5;
+}
 
-<br>
+/* INFO BOX */
+.project-info{
+    background:#f5f8fc;
+    padding:15px;
+    border-radius:10px;
+    margin-top:18px;
+    text-align:left;
+}
 
-<a href="{{ project.google_drive_link }}" target="_blank" 
-   style="padding:12px 20px;background:#0d6efd;color:white;text-decoration:none;border-radius:5px">
-   Download from Google Drive
+.project-info p{
+    margin:6px 0;
+    font-size:14px;
+}
+
+/* BUTTON */
+.download-btn{
+    display:block;
+    margin-top:20px;
+    padding:12px;
+
+    background:linear-gradient(135deg,#0f4c81,#1e88e5);
+    color:white;
+    text-decoration:none;
+
+    border-radius:10px;
+    font-size:15px;
+    font-weight:500;
+
+    transition:0.3s;
+}
+
+.download-btn:hover{
+    background:linear-gradient(135deg,#0a2a43,#0f4c81);
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+</style>
+
+<div class="download-wrapper">
+
+<div class="download-card">
+
+<img src="{{ project.project_image.url }}" class="project-image">
+
+<div class="project-title">{{ project.title }}</div>
+
+<p class="project-desc">{{ project.description }}</p>
+
+<div class="project-info">
+    <p><b>Category:</b> {{ project.category }}</p>
+    <p><b>Price:</b> ₹{{ project.price }}</p>
+</div>
+
+<a href="{{ project.google_drive_link }}" target="_blank" class="download-btn">
+⬇ Download from Google Drive
 </a>
+
+</div>
 
 </div>
 

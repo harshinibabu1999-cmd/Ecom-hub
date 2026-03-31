@@ -1,12 +1,106 @@
 {% extends 'store/admin_base.html' %}
 {% block content %}
 
-<div>
+<style>
 
-    <h1>
-        Welcome
-    </h1>
+/* WRAPPER */
+.welcome-container{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    height:70vh;
+}
 
+/* CARD */
+.welcome-card{
+    background:white;
+    padding:40px;
+    border-radius:16px;
+    text-align:center;
+    box-shadow:0 10px 30px rgba(0,0,0,0.08);
+    max-width:500px;
+    width:100%;
+}
+
+/* TITLE */
+.welcome-title{
+    font-size:28px;
+    font-weight:600;
+    color:#0f172a;
+    margin-bottom:10px;
+}
+
+/* SUBTEXT */
+.welcome-sub{
+    color:#64748b;
+    margin-bottom:25px;
+}
+
+/* BUTTONS */
+.actions{
+    display:flex;
+    gap:15px;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+.btn{
+    padding:10px 18px;
+    border-radius:8px;
+    text-decoration:none;
+    font-size:14px;
+    transition:0.3s;
+}
+
+/* PRIMARY */
+.btn-primary{
+    background:linear-gradient(135deg,#2563eb,#1e40af);
+    color:white;
+}
+
+.btn-primary:hover{
+    transform:translateY(-2px);
+    box-shadow:0 6px 15px rgba(0,0,0,0.15);
+}
+
+/* SECONDARY */
+.btn-secondary{
+    background:#f1f5f9;
+    color:#0f172a;
+}
+
+.btn-secondary:hover{
+    background:#e2e8f0;
+}
+
+</style>
+
+
+<div class="welcome-container">
+
+<div class="welcome-card">
+
+    <div class="welcome-title">
+        👋 Welcome, {{ request.user.username }}
+    </div>
+
+    <div class="welcome-sub">
+        Manage your projects, students, and payments easily from your dashboard.
+    </div>
+
+    <div class="actions">
+
+        <a href="{% url 'admin_dashboard' %}" class="btn btn-primary">
+            Go to Dashboard
+        </a>
+
+        <a href="{% url 'admin_add_project' %}" class="btn btn-secondary">
+            Add Project
+        </a>
+
+    </div>
+
+</div>
 
 </div>
 

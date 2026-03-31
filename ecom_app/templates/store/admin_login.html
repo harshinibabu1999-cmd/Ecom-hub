@@ -1,20 +1,34 @@
 {% extends 'store/admin_base.html' %}
+{% block body_class %}auth-page{% endblock %}
 {% block content %}
 
 <style>
+/* --- PAGE CENTERING --- */
+.login-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    padding: 20px;
+    background: linear-gradient(135deg,#eef2ff,#f8fafc);
+}
+
+/* --- LOGIN CARD --- */
 .login-container {
-    width: 400px;
-    margin: 80px auto;
-    padding: 40px;
-    background: #ffffff;
-    border-radius: 15px;
-    box-shadow: 0 12px 30px rgba(0,0,0,0.08);
+    width: 380px;
+    max-width: 100%;
+    padding: 35px;
+    background: #f7f7f7;
+    border-radius: 16px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    animation: fadeIn 0.5s ease;
+    transition: all 0.3s ease;
 }
 
 .login-container h2 {
     text-align: center;
-    margin-bottom: 30px;
-    color: #3f51b5;
+    margin-bottom: 25px;
+    color: #0f4c81;
     font-weight: 600;
 }
 
@@ -22,54 +36,59 @@
     display: block;
     margin-top: 15px;
     font-weight: 500;
-    color: #333;
+    color: #444;
+    font-size:14px;
 }
 
 .login-container input {
     width: 100%;
-    padding: 10px;
+    padding: 10px 12px;
     margin-top: 6px;
-    border-radius: 8px;
-    border: 1px solid #ddd;
+    border-radius: 10px;
+    border: 1px solid #d4d4d4;
     outline: none;
     transition: 0.3s;
+    font-size:14px;
 }
 
 .login-container input:focus {
-    border-color: #3f51b5;
-    box-shadow: 0 0 5px rgba(63,81,181,0.2);
+    border-color: #0f4c81;
+    box-shadow: 0 0 6px rgba(15,76,129,0.2);
 }
 
 .login-container button {
     width: 100%;
     margin-top: 25px;
-    padding: 12px;
+    padding: 11px;
     border: none;
-    border-radius: 8px;
-    background: #3f51b5;
+    border-radius: 10px;
+    background: linear-gradient(135deg,#0f4c81,#1e88e5);
     color: white;
-    font-size: 16px;
+    font-size: 15px;
+    font-weight: 500;
     cursor: pointer;
     transition: 0.3s;
 }
 
 .login-container button:hover {
-    background: #2c3a9c;
+    background: linear-gradient(135deg,#0a2a43,#0f4c81);
 }
 
 .error-message {
     color: red;
     text-align: center;
-    margin-bottom: 15px;
+    margin-bottom: 10px;
+    font-size:13px;
 }
 
 .register-link {
     text-align: center;
     margin-top: 18px;
+    font-size:14px;
 }
 
 .register-link a {
-    color: #3f51b5;
+    color: #0f4c81;
     text-decoration: none;
     font-weight: 500;
 }
@@ -77,33 +96,94 @@
 .register-link a:hover {
     text-decoration: underline;
 }
+
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
+}
+
+/* --- MOBILE RESPONSIVE --- */
+@media(max-width:480px){
+    .login-container {
+        width: 100%;
+        padding: 25px 20px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    }
+
+    .login-container h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .login-container button {
+        font-size: 14px;
+        padding: 10px;
+    }
+}
+
+/* --- SIDEBAR MOBILE TOGGLE --- */
+@media(max-width:768px){
+    .sidebar {
+        position: fixed;
+        left: -250px; /* hidden initially */
+        top: 0;
+        height: 100%;
+        width: 240px;
+        z-index: 1000;
+        transition: left 0.3s ease;
+    }
+
+    .sidebar.active {
+        left: 0; /* show when active */
+    }
+
+    .main-content {
+        margin-left: 0 !important;
+        transition: margin-left 0.3s ease;
+    }
+
+    .toggle-btn {
+        display: block; /* show hamburger */
+    }
+}
 </style>
 
-<div class="login-container">
-    <h2>Login</h2>
+<div class="login-page">
+    <div class="login-container">
 
-    {% if error %}
-        <div class="error-message">
-            {{ error }}
+        <h2>Login</h2>
+
+        {% if error %}
+            <div class="error-message">
+                {{ error }}
+            </div>
+        {% endif %}
+
+        <form method="POST">
+            {% csrf_token %}
+
+            <label>Username</label>
+            <input type="text" name="username" required>
+
+            <label>Password</label>
+            <input type="password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <div class="register-link">
+            Don’t have an account?
+            <a href="{% url 'admin_register_view' %}">Register</a>
         </div>
-    {% endif %}
 
-    <form method="POST">
-        {% csrf_token %}
-
-        <label>Username</label>
-        <input type="username" name="username" required>
-
-        <label>Password</label>
-        <input type="password" name="password" required>
-
-        <button type="submit">Login</button>
-    </form>
-
-    <div class="register-link">
-        Don’t have an account?
-        <a href="{% url 'admin_register_view' %}">Register</a>
     </div>
 </div>
+
+<script>
+function toggleSidebar(){
+    const sidebar = document.getElementById("sidebar");
+    sidebar.classList.toggle("active");
+}
+</script>
 
 {% endblock %}

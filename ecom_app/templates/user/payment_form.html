@@ -1,29 +1,38 @@
-{% extends "user/User_base.html" %}
+{% extends "user/user_base.html" %}
 {% block content %}
 
 <style>
 
-.payment-container{
+/* PAGE */
+.payment-page{
     display:flex;
     justify-content:center;
     align-items:center;
-    margin-top:40px;
+    min-height:85vh;
+    padding:20px;
 }
 
+/* CARD */
 .payment-card{
-    width:450px;
+    width:480px;
     background:white;
-    padding:30px;
-    border-radius:12px;
-    box-shadow:0 4px 20px rgba(0,0,0,0.1);
+    padding:35px;
+    border-radius:18px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.1);
     font-family:'Segoe UI',sans-serif;
+    animation:fadeIn 0.5s ease;
 }
 
-.payment-card h2{
+/* TITLE */
+.payment-title{
     text-align:center;
-    margin-bottom:20px;
+    font-size:22px;
+    font-weight:600;
+    margin-bottom:25px;
+    color:#222;
 }
 
+/* INPUT GROUP */
 .form-group{
     margin-bottom:15px;
 }
@@ -32,91 +41,126 @@
     font-weight:600;
     display:block;
     margin-bottom:5px;
+    font-size:14px;
 }
 
 .form-control{
     width:100%;
     padding:10px;
-    border-radius:6px;
-    border:1px solid #ccc;
+    border-radius:8px;
+    border:1px solid #ddd;
+    font-size:14px;
+    transition:0.3s;
+}
+
+.form-control:focus{
+    border-color:#1e88e5;
+    outline:none;
+    box-shadow:0 0 0 2px rgba(30,136,229,0.1);
 }
 
 textarea.form-control{
     resize:none;
 }
 
+/* PAYMENT METHODS */
 .payment-methods{
     margin-top:15px;
 }
 
 .method{
-    background:#f5f7fb;
-    padding:10px;
-    border-radius:6px;
-    margin-bottom:8px;
+    background:#f5f8fc;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:10px;
+    display:flex;
+    align-items:center;
+    cursor:pointer;
+    transition:0.3s;
 }
 
+.method:hover{
+    background:#e9f2ff;
+}
+
+.method input{
+    margin-right:10px;
+}
+
+/* BUTTON */
 .pay-btn{
     width:100%;
-    background:#0d6efd;
+    background:linear-gradient(135deg,#0f4c81,#1e88e5);
     color:white;
     padding:12px;
     border:none;
-    border-radius:8px;
+    border-radius:10px;
     font-size:16px;
     cursor:pointer;
-    margin-top:15px;
+    margin-top:20px;
+    font-weight:500;
+    transition:0.3s;
 }
 
 .pay-btn:hover{
-    background:#084fc7;
+    background:linear-gradient(135deg,#0a2a43,#0f4c81);
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
 }
 
 </style>
 
-<div class="payment-container">
+<div class="payment-page">
 
 <div class="payment-card">
 
-<h2>💳 Payment Form</h2>
+<div class="payment-title">
+💳 Secure Payment
+</div>
 
 <form method="POST">
 {% csrf_token %}
 
 <div class="form-group">
 <label>Name</label>
-<input type="text" name="name" class="form-control" required>
+<input type="text" name="name" class="form-control" placeholder="Enter your name" required>
 </div>
 
 <div class="form-group">
 <label>Phone</label>
-<input type="text" name="phone" class="form-control" required>
+<input type="text" name="phone" class="form-control" placeholder="Enter phone number" required>
 </div>
 
 <div class="form-group">
 <label>Address</label>
-<textarea name="address" class="form-control" rows="3" required></textarea>
+<textarea name="address" class="form-control" rows="3" placeholder="Enter your address" required></textarea>
 </div>
 
-<h3>Select Payment Method</h3>
+<h4 style="margin-top:15px;">Select Payment Method</h4>
 
 <div class="payment-methods">
 
-<div class="method">
+<label class="method">
 <input type="radio" name="payment_method" value="UPI" required> UPI
-</div>
+</label>
 
-<div class="method">
+<label class="method">
 <input type="radio" name="payment_method" value="CARD"> Debit / Credit Card
-</div>
+</label>
 
-<div class="method">
+<label class="method">
 <input type="radio" name="payment_method" value="COD"> Cash on Delivery
-</div>
+</label>
 
 </div>
 
-<button type="submit" class="pay-btn">Proceed to Pay</button>
+<button type="submit" class="pay-btn">
+Proceed to Pay →
+</button>
 
 </form>
 

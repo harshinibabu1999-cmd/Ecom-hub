@@ -4,104 +4,149 @@
 
 <style>
 
+/* PAGE CENTER */
 .payment-wrapper{
-display:flex;
-justify-content:center;
-margin-top:60px;
-font-family:'Segoe UI',sans-serif;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:85vh;
 }
 
+/* CARD */
 .payment-card{
-width:480px;
-background:white;
-padding:35px;
-border-radius:12px;
-box-shadow:0 6px 20px rgba(0,0,0,0.1);
+    width:500px;
+    background:white;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.1);
+    animation:fadeIn 0.5s ease;
 }
 
+/* TITLE */
 .payment-title{
-text-align:center;
-margin-bottom:25px;
-font-size:24px;
-font-weight:600;
-color:#0d6efd;
+    text-align:center;
+    margin-bottom:20px;
+    font-size:22px;
+    font-weight:600;
+    color:#0f4c81;
 }
 
+/* INFO BOX */
 .payment-info{
-background:#f5f7fb;
-padding:15px;
-border-radius:8px;
-margin-bottom:20px;
+    background:#f5f8fc;
+    padding:15px;
+    border-radius:10px;
+    margin-bottom:20px;
 }
 
 .payment-info p{
-margin:8px 0;
-font-size:15px;
+    margin:6px 0;
+    font-size:14px;
 }
 
+/* STATUS */
 .status{
-color:#ff9800;
-font-weight:bold;
+    color:#ff9800;
+    font-weight:600;
 }
 
+/* AMOUNT */
 .amount{
-font-size:18px;
-font-weight:bold;
-color:#198754;
+    font-size:18px;
+    font-weight:600;
+    color:#198754;
 }
 
+/* FORM */
 .form-group{
-margin-bottom:15px;
+    margin-bottom:14px;
 }
 
 .form-group label{
-display:block;
-font-weight:600;
-margin-bottom:5px;
+    display:block;
+    font-weight:500;
+    margin-bottom:5px;
+    font-size:14px;
+    color:#444;
 }
 
 .form-control{
-width:100%;
-padding:10px;
-border-radius:6px;
-border:1px solid #ccc;
-font-size:14px;
+    width:100%;
+    padding:10px;
+    border-radius:10px;
+    border:1px solid #ddd;
+    font-size:14px;
+    outline:none;
+    transition:0.3s;
+}
+
+.form-control:focus{
+    border-color:#0f4c81;
+    box-shadow:0 0 6px rgba(15,76,129,0.2);
 }
 
 textarea.form-control{
-resize:none;
+    resize:none;
 }
 
+/* SECTION TITLE */
+.section-title{
+    margin-top:15px;
+    margin-bottom:8px;
+    font-size:15px;
+    font-weight:600;
+}
+
+/* PAYMENT METHODS */
 .payment-methods{
-margin-top:10px;
+    margin-top:10px;
 }
 
+/* METHOD BOX */
 .method{
-background:#f5f7fb;
-padding:10px;
-border-radius:6px;
-margin-bottom:8px;
+    background:#f5f8fc;
+    padding:10px;
+    border-radius:8px;
+    margin-bottom:8px;
+    font-size:14px;
+    transition:0.3s;
+    cursor:pointer;
+}
+
+.method:hover{
+    background:#eaf2fb;
 }
 
 .method input{
-margin-right:8px;
+    margin-right:8px;
 }
 
+/* BUTTON */
 .pay-btn{
-width:100%;
-background:#0d6efd;
-color:white;
-padding:12px;
-border:none;
-border-radius:8px;
-font-size:16px;
-cursor:pointer;
-margin-top:20px;
-font-weight:500;
+    display:block;
+    width:100%;
+    text-align:center;
+    margin-top:20px;
+    padding:12px;
+
+    background:linear-gradient(135deg,#0f4c81,#1e88e5);
+    color:white;
+    text-decoration:none;
+
+    border-radius:10px;
+    font-size:15px;
+    font-weight:500;
+    transition:0.3s;
 }
 
 .pay-btn:hover{
-background:#0b5ed7;
+    background:linear-gradient(135deg,#0a2a43,#0f4c81);
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
 }
 
 </style>
@@ -115,13 +160,13 @@ background:#0b5ed7;
 </div>
 
 <div class="payment-info">
-<p><b>Project:</b> {{ payment.project.title }}</p>
-<p class="amount"><b>Amount:</b> ₹{{ payment.amount }}</p>
-<p class="status"><b>Status:</b> {{ payment.status }}</p>
-<p><b>Transaction ID:</b> {{ payment.transaction_id }}</p>
+    <p><b>Project:</b> {{ payment.project.title }}</p>
+    <p class="amount"><b>Amount:</b> ₹{{ payment.amount }}</p>
+    <p class="status"><b>Status:</b> {{ payment.status }}</p>
+    <p><b>Transaction ID:</b> {{ payment.transaction_id }}</p>
 </div>
 
-<h3 style="margin-bottom:15px;">Payment Form</h3>
+<h3 class="section-title">Payment Form</h3>
 
 <form method="POST">
 {% csrf_token %}
@@ -141,7 +186,7 @@ background:#0b5ed7;
 <textarea name="address" class="form-control" rows="3" required></textarea>
 </div>
 
-<h4 style="margin-top:15px;">Select Payment Method</h4>
+<h4 class="section-title">Select Payment Method</h4>
 
 <div class="payment-methods">
 
@@ -162,6 +207,7 @@ background:#0b5ed7;
 <a href="{% url 'phonepe_pay' payment.id %}" class="pay-btn">
 Proceed to Pay
 </a>
+
 </form>
 
 </div>

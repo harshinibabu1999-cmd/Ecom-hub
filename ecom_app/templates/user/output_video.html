@@ -4,67 +4,111 @@
 
 <style>
 
-.video-container{
-display:flex;
-justify-content:center;
-padding:30px 20px;
+/* PAGE */
+.video-page{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    min-height:80vh;
+    padding:20px;
 }
 
+/* CARD */
 .video-card{
-background:white;
-padding:30px;
-border-radius:12px;
-box-shadow:0 6px 20px rgba(0,0,0,0.1);
-text-align:center;
-max-width:700px;
-width:100%;
+    width:750px;
+    background:white;
+    padding:30px;
+    border-radius:18px;
+    box-shadow:0 15px 40px rgba(0,0,0,0.1);
+    text-align:center;
+    animation:fadeIn 0.5s ease;
 }
 
-.title{
-font-size:22px;
-margin-bottom:20px;
+/* TITLE */
+.video-title{
+    font-size:22px;
+    font-weight:600;
+    margin-bottom:20px;
+    color:#222;
 }
 
 /* VIDEO */
-
 .video-wrapper{
-width:100%;
+    width:100%;
+    border-radius:12px;
+    overflow:hidden;
 }
 
 .video-wrapper video{
-width:100%;
-height:auto;
-border-radius:10px;
+    width:100%;
+    border-radius:12px;
+}
+
+/* NO VIDEO BOX */
+.no-video-box{
+    background:#f5f8fc;
+    padding:25px;
+    border-radius:12px;
+    margin-top:10px;
 }
 
 .no-video{
-color:#666;
-font-size:15px;
+    color:#777;
+    font-size:15px;
+}
+
+/* BACK BUTTON */
+.back-btn{
+    display:inline-block;
+    margin-top:20px;
+    padding:10px 20px;
+    border-radius:8px;
+    background:linear-gradient(135deg,#0f4c81,#1e88e5);
+    color:white;
+    text-decoration:none;
+    font-size:14px;
+    transition:0.3s;
+}
+
+.back-btn:hover{
+    background:linear-gradient(135deg,#0a2a43,#0f4c81);
+}
+
+/* ANIMATION */
+@keyframes fadeIn{
+    from{opacity:0; transform:translateY(20px);}
+    to{opacity:1; transform:translateY(0);}
 }
 
 </style>
 
-<div class="video-container">
+<div class="video-page">
 
 <div class="video-card">
 
-<h2 class="title">{{ project.title }} - Output Video</h2>
+<div class="video-title">
+🎬 {{ project.title }} - Output Video
+</div>
 
 {% if project.video %}
 
 <div class="video-wrapper">
-
-<video controls>
-<source src="{{ project.video.url }}">
-</video>
-
+    <video controls>
+        <source src="{{ project.video.url }}">
+    </video>
 </div>
 
 {% else %}
 
-<p class="no-video">No output video uploaded yet.</p>
+<div class="no-video-box">
+    <p class="no-video">No output video uploaded yet.</p>
+</div>
 
 {% endif %}
+
+<a href="{% url 'user_home' %}" class="back-btn">
+← Back to Projects
+</a>
 
 </div>
 

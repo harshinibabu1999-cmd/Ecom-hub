@@ -11,7 +11,7 @@ urlpatterns = [
 
     path('admin-dashboard/', views.admin_dashboard, name='admin_dashboard'),
 
-    path('logout/', views.admin_logout_view, name='logout_view'),
+    path('logout/', views.admin_logout_view, name='admin_logout_view'),
 
 
 
