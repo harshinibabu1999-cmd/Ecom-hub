@@ -2,6 +2,7 @@
 {% block content %}
 
 <style>
+
 /* PAGE */
 .payment-page{
     display:flex;
@@ -15,6 +16,7 @@
 /* CARD */
 .payment-card{
     width:700px;
+    max-width:100%;
     background:white;
     padding:35px;
     border-radius:18px;
@@ -31,13 +33,14 @@
     color:#222;
 }
 
-/* ROW */
+/* ROW - INLINE FORMAT */
 .detail-row{
-    display:grid;
-    grid-template-columns:200px 1fr;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
     padding:14px 0;
     border-bottom:1px solid #f0f0f0;
-    align-items:center;
+    flex-wrap:wrap;
 }
 
 /* LABEL */
@@ -51,10 +54,10 @@
 .value{
     color:#222;
     font-size:14px;
-    word-break:break-word;
+    text-align:right;
 }
 
-/* STATUS */
+/* STATUS COLORS */
 .status-success{
     color:#28a745;
     font-weight:600;
@@ -70,17 +73,25 @@
     font-weight:600;
 }
 
+/* BUTTON GROUP */
+.btn-group{
+    margin-top:25px;
+    display:flex;
+    gap:10px;
+    flex-wrap:wrap;
+}
+
 /* BUTTON */
 .btn-back, .btn-pay{
-    margin-top:25px;
-    display:inline-block;
     padding:10px 20px;
     border-radius:8px;
     text-decoration:none;
     font-size:14px;
     transition:0.3s;
+    text-align:center;
 }
 
+/* BACK BUTTON */
 .btn-back{
     background:linear-gradient(135deg,#0f4c81,#1e88e5);
     color:white;
@@ -90,10 +101,10 @@
     background:linear-gradient(135deg,#0a2a43,#0f4c81);
 }
 
+/* PAY BUTTON */
 .btn-pay{
     background:linear-gradient(135deg,#ff9800,#ffb74d);
     color:white;
-    margin-left:10px;
 }
 
 .btn-pay:hover{
@@ -108,17 +119,30 @@
 
 /* MOBILE */
 @media (max-width:600px){
+
+    .payment-card{
+        padding:20px;
+    }
+
     .detail-row{
-        grid-template-columns:1fr;
-        gap:5px;
+        flex-direction:column;
+        align-items:flex-start;
+        gap:4px;
     }
-    .label{
-        font-size:13px;
-    }
+
     .value{
-        font-size:13px;
+        text-align:left;
+    }
+
+    .btn-group{
+        flex-direction:column;
+    }
+
+    .btn-back, .btn-pay{
+        width:100%;
     }
 }
+
 </style>
 
 <div class="payment-page">
@@ -127,33 +151,35 @@
 
 <div class="title">💳 Payment Details</div>
 
+<!-- DETAILS -->
+
 <div class="detail-row">
-<span class="label">User</span>
+<span class="label">User:</span>
 <span class="value">{{ payment.user }}</span>
 </div>
 
 <div class="detail-row">
-<span class="label">Project</span>
+<span class="label">Project:</span>
 <span class="value">{{ payment.project.title }}</span>
 </div>
 
 <div class="detail-row">
-<span class="label">Transaction ID</span>
+<span class="label">Transaction ID:</span>
 <span class="value">{{ payment.transaction_id }}</span>
 </div>
 
 <div class="detail-row">
-<span class="label">Payment Mode</span>
+<span class="label">Payment Mode:</span>
 <span class="value">{{ payment.payment_mode }}</span>
 </div>
 
 <div class="detail-row">
-<span class="label">Amount</span>
+<span class="label">Amount:</span>
 <span class="value">₹ {{ payment.amount }}</span>
 </div>
 
 <div class="detail-row">
-<span class="label">Status</span>
+<span class="label">Status:</span>
 <span class="value
 {% if payment.status == 'SUCCESS' %}status-success
 {% elif payment.status == 'FAILED' %}status-failed
@@ -165,16 +191,18 @@
 </div>
 
 <div class="detail-row">
-<span class="label">Payment Date</span>
+<span class="label">Payment Date:</span>
 <span class="value">{{ payment.created_at }}</span>
 </div>
 
-<!-- BACK BUTTON + PAY BUTTON IF PENDING -->
-<a href="{% url 'payment_details' %}" class="btn-back">← Back</a>
+<!-- BUTTONS -->
+<div class="btn-group">
+    <a href="{% url 'payment_details' %}" class="btn-back">← Back</a>
 
-{% if payment.status == 'PENDING' %}
-<a href="{% url 'user_payment_page' payment.id %}" class="btn-pay">Pay Now</a>
-{% endif %}
+    {% if payment.status == 'PENDING' %}
+    <a href="{% url 'user_payment_page' payment.id %}" class="btn-pay">Pay Now</a>
+    {% endif %}
+</div>
 
 </div>
 </div>

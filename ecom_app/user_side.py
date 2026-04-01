@@ -217,3 +217,6 @@ def view_output_video(request, pk):
     project = get_object_or_404(Project, id=pk)
 
     return render(request, "user/output_video.html", {"project": project})
+
+def learning_page(request):
+    return render(request, "user/learning_page.html")

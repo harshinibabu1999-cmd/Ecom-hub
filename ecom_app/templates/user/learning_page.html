@@ -1,0 +1,165 @@
+{% extends "user/user_base.html" %}
+
+{% block content %}
+
+<style>
+
+/* PAGE */
+.learning-container{
+    padding:40px;
+    font-family:'Segoe UI',sans-serif;
+}
+
+/* HERO */
+.hero{
+    background:linear-gradient(135deg,#0f4c81,#1e88e5);
+    color:white;
+    padding:50px;
+    border-radius:20px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    flex-wrap:wrap;
+    margin-bottom:40px;
+}
+
+.hero-text{
+    max-width:500px;
+}
+
+.hero h1{
+    font-size:36px;
+    margin-bottom:10px;
+}
+
+.hero p{
+    font-size:16px;
+    opacity:0.9;
+}
+
+.hero-btn{
+    margin-top:20px;
+    display:inline-block;
+    padding:12px 25px;
+    background:white;
+    color:#1e88e5;
+    border-radius:25px;
+    text-decoration:none;
+    font-weight:600;
+    transition:0.3s;
+}
+
+.hero-btn:hover{
+    background:#f1f1f1;
+}
+
+/* SECTION TITLE */
+.section-title{
+    font-size:24px;
+    font-weight:600;
+    margin-bottom:20px;
+}
+
+/* CARDS GRID */
+.card-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+    gap:20px;
+    margin-bottom:40px;
+}
+
+/* CARD */
+.card{
+    background:white;
+    padding:25px;
+    border-radius:16px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.08);
+    transition:0.3s;
+}
+
+.card:hover{
+    transform:translateY(-5px);
+}
+
+.card h4{
+    margin-bottom:10px;
+}
+
+.card p{
+    font-size:14px;
+    color:#555;
+}
+
+/* ABOUT SECTION */
+.about-box{
+    background:#ffffff;
+    padding:30px;
+    border-radius:16px;
+    box-shadow:0 6px 20px rgba(0,0,0,0.08);
+}
+
+.about-box p{
+    color:#555;
+    line-height:1.6;
+}
+
+</style>
+
+
+<div class="learning-container">
+
+    <!-- HERO -->
+    <div class="hero">
+        <div class="hero-text">
+            <h1>Learning Hub 🚀</h1>
+            <p>Upgrade your skills, explore projects, and manage everything in one place.</p>
+            
+        </div>
+    </div>
+
+    <!-- FEATURES -->
+    <div>
+        <div class="section-title">✨ Features</div>
+
+        <div class="card-grid">
+
+            <div class="card">
+                <h4>📁 View Projects</h4>
+                <p>Browse and explore all available projects with ease.</p>
+            </div>
+
+            <div class="card">
+                <h4>💳 Secure Payments</h4>
+                <p>Make safe and reliable payments for premium content.</p>
+            </div>
+
+            <div class="card">
+                <h4>⬇️ Download Resources</h4>
+                <p>Access and download your purchased projects anytime.</p>
+            </div>
+
+            <div class="card">
+                <h4>📘 Learning Materials</h4>
+                <p>Improve your skills with curated tutorials and guides.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ABOUT -->
+    <div>
+        <div class="section-title">📖 About This Platform</div>
+
+        <div class="about-box">
+            <p>
+                E-Com Hub is a complete platform designed for learners and developers.
+                It allows you to explore real-world projects, purchase them securely,
+                and access all resources in one place. Whether you're learning or building,
+                this platform helps you grow faster.
+            </p>
+        </div>
+    </div>
+
+</div>
+
+{% endblock %}

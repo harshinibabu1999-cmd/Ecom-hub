@@ -70,6 +70,7 @@ urlpatterns = [
     path('phonepe-pay/<int:pk>/', views.phonepe_payment, name='phonepe_pay'),
     path('output-video/<int:pk>/', views.view_output_video, name='view_output_video'),
     path('view-payment-history/<int:pk>/', views.view_payment_history, name='view_payment_history'),
+    path('learning/', views.learning_page, name='learning_page'),
    
 ]   
 
